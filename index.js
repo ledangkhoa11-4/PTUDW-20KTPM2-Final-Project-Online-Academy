@@ -3,6 +3,7 @@ import express, { urlencoded } from 'express';
 import {engine} from 'express-handlebars'
 import express_handlebars_sections from 'express-handlebars-sections'
 const app = express();
+app.use('/public',express.static("public"))
 
 app.use(urlencoded({
     extended: false,
@@ -21,11 +22,11 @@ app.set('views', './views');
 
 
 
-app.use("/", (req,res)=>{
+app.get("/", (req,res)=>{
     res.render("home")
 })
 
 
 app.listen(process.env.PORT, ()=>{
-    console.log("Server running at port " + process.env.PORT);
+    console.log(`Server running at http://127.0.0.1:${process.env.PORT}`);
 })

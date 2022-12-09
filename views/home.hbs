@@ -1,1 +1,98 @@
-<h1>body</h1>
+<link rel="stylesheet" href="/public/css/jarallax.css">
+<link rel="stylesheet" href="/public/css/quote.css">
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="/public/css/slick.css">
+
+  
+<div class="container-lg"> 
+    <div class="jarallax">
+        <img class="jarallax-img" src="/public/image/book-1822474.jpg" alt="">
+        <div class="demo-table">
+            <div class="demo-table-cell">
+                <div class="quote" style="font-family: 'Special Elite', cursive;">
+                    <blockquote>Success doesn’t come to you, you go to it.</blockquote>
+                    <cite>MARVA COLLINS, AMERICAN EDUCATOR</cite>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapperColored" style="background-color: #F2EEEB;">
+
+    <div class="container" style="padding-top: 50px;">
+        <h2>Popular</h2>
+          <div class="carosel">
+            <div>
+              <div class="card">
+                <img src="https://via.placeholder.com/400x400" class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                  </div>
+              </div>
+            </div> 
+             
+        </div>
+    </div>
+<div class="space" style="height: 1500px"></div>
+
+
+
+{{#section 'script'}}
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jarallax@2/dist/jarallax.min.js"></script>
+<!-- Optional video extension -->
+<script src="https://cdn.jsdelivr.net/npm/jarallax@2/dist/jarallax-video.min.js"></script>
+
+<script>
+
+    jarallax(document.querySelectorAll('.jarallax'));
+    jarallax(document.querySelectorAll('.jarallax-keep-img'), {
+        keepImg: true,
+    });
+
+</script>
+<script>
+    $('.carosel').slick({
+    dots: true,
+  infinite: true,
+  speed: 300,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  autoplay: true,
+  autoplaySpeed: 2000,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ]
+});
+</script>
+{{/section}}

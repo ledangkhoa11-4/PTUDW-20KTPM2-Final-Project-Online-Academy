@@ -2,6 +2,8 @@ import _ from './config/config.js'
 import express, { urlencoded } from 'express';
 import {engine} from 'express-handlebars'
 
+const app = express();
+
 app.use(urlencoded({
     extended: false,
 }))
@@ -14,8 +16,10 @@ app.set('views', './views');
 
 
 
-const app = express();
 
+app.use("/", (req,res)=>{
+    res.render("home")
+})
 
 
 app.listen(process.env.PORT, ()=>{

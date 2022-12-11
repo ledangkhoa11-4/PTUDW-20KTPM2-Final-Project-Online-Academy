@@ -1,8 +1,10 @@
-
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Special+Elite">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;1,400;1,600&display=swap" rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;1,400;1,600&display=swap"
+    rel="stylesheet">
+<link rel="stylesheet" href="/public/css/header.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
     integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -26,7 +28,35 @@
     </button>
 
 
-    <div class="collapse navbar-collapse bg-light" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse bg-light ml-4" id="navbarSupportedContent">
+        <div class="multilevel-dropdown">
+            <button type="button" class="btn btn-light ">
+                <b> Categories List</b>
+            </button>
+            <ul class="level-1">
+                <li>
+                    <a href="#">Web development</a>
+                    <i class="bi bi-caret-right"></i>
+                    <ul class="level-2">
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Web development</a> <i class="bi bi-caret-right"></i>
+                    <ul class="level-2">
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">6</a></li>
+                        <li><a href="#">7</a></li>
+                        <li><a href="#">8</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Web development</a> <i class="bi bi-caret-right"></i></li>
+                <li><a href="#">Web development</a> <i class="bi bi-caret-right"></i></li>
+            </ul>
+        </div>
         <form class="form-inline my-2 my-lg-0 ml-5 mr-5" style="flex: 1; align-items: center; justify-content: center;">
             <div class="p-1 bg-light rounded rounded-pill shadow-sm" style="flex-basis: 65%; border: 1px solid #ccc">
                 <div class="input-group" style="border-radius: 8px">
@@ -40,13 +70,8 @@
                 </div>
             </div>
         </form>
+
         <ul class="navbar-nav ml-auto" style="padding: 0 16px 0 16pxD;">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
             <li class="user-bar nav-item dropdown ml-4">
                 <a class="username nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     Admin
@@ -73,13 +98,15 @@
 </nav>
 <div style="margin-bottom: 56px"></div>
 <style>
-    .username{
+    .username {
         color: black !important;
         font-weight: bold;
     }
-    .dropdown-item{
+
+    .dropdown-item {
         min-width: 250px
     }
+
     nav {
         font-family: 'Source Sans Pro', sans-serif;
     }
@@ -110,4 +137,30 @@
     setTimeout(() => {
         document.querySelector(".logo-svg").classList.add("active")
     }, 50)
+</script>
+
+<script>
+    let level1 = document.querySelector('.multilevel-dropdown .level-1');
+    let level2 = document.querySelector('.multilevel-dropdown .level-2');
+    function resetLevel2() {
+        let level2 = document.querySelectorAll('.multilevel-dropdown .level-2');
+        Array.from(level2).forEach(tag => {
+            tag.style.display = "none";
+        })
+    }
+    let level1Items = level1.querySelectorAll('li');
+
+    Array.from(level1Items).forEach((liTag) => {
+        liTag.onmouseover = () => {
+            let height = level1.clientHeight;
+            
+            let liLevel2 = liTag.querySelector('.level-2');
+            resetLevel2();
+            if (liLevel2) {
+                
+                liLevel2.style.display = 'block';
+                liLevel2.style['min-height'] = height + 'px';
+            }
+        };
+    });
 </script>

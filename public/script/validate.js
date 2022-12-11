@@ -1,6 +1,3 @@
-const $ = document.querySelector.bind(document);
-const $$ = document.querySelectorAll.bind(document);
-
 function Validator(formObj) {
     let selectorRules = {};
     function Validate(inputElement, rule) {
@@ -15,7 +12,7 @@ function Validator(formObj) {
         }
         return true
     }
-    let form = $(formObj.form);
+    let form = document.querySelector(formObj.form);
     if (form) {
         formObj.rules.forEach((rule) => {
             if (Array.isArray(selectorRules[rule.selector])) {
@@ -23,7 +20,7 @@ function Validator(formObj) {
             } else {
                 selectorRules[rule.selector] = [rule.test];
             }
-            let selector = $(`${formObj.form} ${rule.selector}`);
+            let selector = document.querySelector(`${formObj.form} ${rule.selector}`);
 
             selector.onblur = (e) => {
                 Validate(selector, rule)
@@ -36,12 +33,12 @@ function Validator(formObj) {
             e.preventDefault();
             let flag = true;
             formObj.rules.forEach((rule) => {
-                let selector = $(`${formObj.form} ${rule.selector}`);
+                let selector = document.querySelector(`${formObj.form} ${rule.selector}`);
                 if (!Validate(selector, rule))
                     flag = false;
             })
             if (flag === true) {
-                let inputElement = $$('input[name]');
+                let inputElement = document.querySelectorAll('input[name]');
                 let formValue = Array.from(inputElement).reduce((previous, current) => {
                     return { ...previous, [current.name]: current.value };
                 }, {})

@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
     integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: white;">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #F8F9FA;">
     <a href="/">
         <div class="logo">
             <svg class="logo-svg" width="398.87799072265625" height="83.59400177001953" viewBox="0 0 398.878 83.594"
@@ -47,19 +47,25 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                    Dropdown
+            <li class="user-bar nav-item dropdown ml-4">
+                <a class="username nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Admin
                 </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#">
+                        <i class="fa-solid fa-book mr-2"></i>
+                        My Learning
+                    </a>
+                    <a class="dropdown-item" href="#">
+                        <i class="bi bi-bookmark-star mr-2"></i>
+                        My Watchlist
+                    </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="#">
+                        <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
+                        Logout
+                    </a>
                 </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
             </li>
         </ul>
 
@@ -67,6 +73,13 @@
 </nav>
 <div style="margin-bottom: 56px"></div>
 <style>
+    .username{
+        color: black !important;
+        font-weight: bold;
+    }
+    .dropdown-item{
+        min-width: 250px
+    }
     nav {
         font-family: 'Source Sans Pro', sans-serif;
     }

@@ -24,7 +24,7 @@
     right: 0;
     color: white !important;
     padding: 4px 8px;
-    background-color: #d3531b;;
+    background-color: #d31b1b;;
     border-radius: 4px;
     font-size: 13px;
     font-style: italic;
@@ -57,9 +57,23 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
+@media screen and (max-width: 650px) {
+    .tinyDesc{
+        -webkit-line-clamp: 2;
+    }
+}
+@media screen and (max-width: 425px) {
+    .popular-courses .old-price{
+        display: none;
+    }
+    .popular-courses .new-price{
+        float: none;
+    }
+}
 .typed-cursor {
     font-size: 30px;
     font-family: cursive;
+    font-style: italic;
     opacity: 1;
     -webkit-animation: blink 0.7s infinite;
     -moz-animation: blink 0.7s infinite;
@@ -79,4 +93,57 @@
     0% { opacity: 1; }
     50% { opacity: 0; }
     100% { opacity: 1; }
+}
+
+.banner .static,
+.banner .dynamic{
+    font-size: 35px; 
+    font-family: cursive;
+    font-style: italic;
+}
+
+@media screen and (max-width: 1200px) {
+    .banner .static,
+    .banner .dynamic{
+        font-size: 25px; 
+    }
+}
+@media screen and (max-width: 770px) {
+    .banner .static,
+    .banner .dynamic{
+        font-size: 18px; 
+    }
+}
+@media screen and (max-width: 588px) {
+    .banner .static,
+    .banner .dynamic{
+        font-size: 16px; 
+    }
+}
+@media screen and (max-width: 530px) {
+    .banner .static,
+    .banner .dynamic{
+        font-size: 13px; 
+    }
+}
+@media screen and (max-width: 460px) {
+    .banner .static,
+    .banner .dynamic{
+        font-size: 9px; 
+    }
+}
+.top-cat .btn{
+    min-width: 200px;
+    margin-top: 6px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    font-size: 15px;
+}
+.top-cat .row{
+    justify-content: center !important;
 }

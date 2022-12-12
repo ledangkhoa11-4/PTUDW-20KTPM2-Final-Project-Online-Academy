@@ -1,3 +1,32 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@QUanlE79 
+ledangkhoa11-4
+/
+PTUDW-20KTPM2-Final-Project-Online-Academy
+Private
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security
+Insights
+PTUDW-20KTPM2-Final-Project-Online-Academy/academy.sql
+@aduongdnai
+aduongdnai add 3 more courses
+Latest commit a49fd26 11 hours ago
+ History
+ 3 contributors
+@taotenphuoc@ledangkhoa11-4@aduongdnai
+375 lines (313 sloc)  17.7 KB
+
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
@@ -72,7 +101,49 @@ INSERT INTO `chapter` (`IDCourse`, `IDChapter`, `Name`) VALUES
 (3, 2, 'First Steps'),
 (3, 3, 'Your Portfolio Website'),
 (3, 4, 'Niching Down'),
-(3, 5, 'Services & Pricing');
+(3, 5, 'Services & Pricing'),
+--
+(9, 1, 'TỔNG QUAN VỀ PHOTOSHOP'),
+(9, 2, 'TÌM HIỂU THANH CÔNG CỤ'),
+(9, 3, 'CHỈNH SỬA HÌNH ẢNH VỚI PHOTOSHOP'),
+(9, 4, 'THIẾT KẾ HÌNH ẢNH CHUYÊN NGHIỆP'),
+(9, 5, 'TỔNG KẾT'),
+
+
+
+(10, 1, 'GIỚI THIỆU TỔNG QUAN VỀ ILLUSTRATOR'),
+(10, 2, 'LÀM QUEN VỚI PHẦN MỀM AI'),
+(10, 3, 'LÀM VIỆC VỚI LAYER'),
+(10, 4, 'LÀM CHỦ CÁC CÔNG CỤ VẼ CƠ BẢN'),
+(10, 5, 'CÁC THAO TÁC BIẾN ĐỔI ĐỐI TƯỢNG'),
+(10, 6, 'LÀM VIỆC VỚI MÀU TÔ VÀ ĐƯỜNG VIỀN'),
+(10, 7, 'LÀM VIỆC VỚI VĂN BẢN'),
+(10, 8, 'IN VÀ XUẤT BẢN TÀI LIỆU'),
+
+
+(11, 1, 'GIỚI THIỆU MÔI TRƯỜNG LÀM VIỆC CỦA ADOBE INDESIGN'),
+(11, 2, 'THỬ HỌC INDESIGN CẤP TỐC'),
+(11, 3, 'LÀM CHỦ GIAO DIỆN LÀM VIỆC VÀ CÁC CÔNG CỤ'),
+(11, 4, 'BẮT ĐẦU VỚI MỘT TÀI LIỆU MỚI'),
+(11, 5, 'QUẢN LÝ TRANG TÀI LIỆU'),
+(11, 6, 'XUẤT BẢN VÀ IN ẤN'),
+
+
+(12, 1, 'TỔNG QUAN VÈ KỸ XẢO CHO PHIM'),
+(12, 2, 'CÁC HIỆU ỨNG TRONG AFFTER EFFECTS'),
+(12, 3, 'CÁC CHỨC NĂNG NÂNG CAO TRONG AE'),
+(12, 4, 'THỰC HIỆN TVC'),
+(12, 5, 'THỰC HÀNH NÂNG CAO VÀ SỬ DỤNG TEMPLATE'),
+
+(13, 1, 'CÁC YẾU TỐ CƠ BẢN'),
+(13, 2, 'CÁC YẾU TỐ VỀ FRAME'),
+(13, 3, 'AUTOLAYOUT'),
+(13, 4, 'COMPONENT/INSTANCE/VARIANTS'),
+(13, 5, 'HỆ THỐNG HÓA'),
+(13, 6, 'PROTOTYPE');
+
+
+
 
 -- --------------------------------------------------------
 
@@ -149,7 +220,12 @@ INSERT INTO `circulativevideo` (`IDCourse`, `IDChapter`, `No`, `Name`, `URL`, `L
 (3, 4, 3, 'How To Choose A Niche', 'VFXKFmbjmpw', 0, 0),
 (3, 5, 1, 'Pricing Methods', 'h4XC-fMfm7Y', 0, 0),
 (3, 5, 2, 'Detemining Value-Based Pricing', '0nRKIqACHmo', 0, 0),
-(3, 5, 3, 'Website Packages', 'kjbTXfwZNSE', 0, 0);
+(3, 5, 3, 'Website Packages', 'kjbTXfwZNSE', 0, 0),
+
+(9, 1, 1, '', '', 0, 0),
+(9, 1, 1, '', '', 0, 0),
+(9, 1, 1, '', '', 0, 0),
+
 
 -- --------------------------------------------------------
 
@@ -186,6 +262,11 @@ INSERT INTO `courses` (`ID`, `Name`, `IDCategory`, `Topic`, `Image`, `TinyDesc`,
 (6, 'Unreal Engine 5 C++ The Ultimate Game Developer Co', 1, '2', '', 'Learn Unreal Engine 5 C++ Programming by Creating an Action-RPG Style Open World Game!', '<h2>What you\'ll learn</h2>\r\n<ul>\r\n    <li>How to code games in Unreal Engine 5</li>\r\n    <li>An RPG action game with a third-person character</li>\r\n    <li>Combat with swords and other melee weapons</li>\r\n    <li>Creation of enemies that attack the player</li>\r\n    <li>Health bars and player stats</li>\r\n    <li>Unreal Engine 5\'s Open World system</li>\r\n    <li>Level design and creation of realistic scenes with Quixel Megascans</li>\r\n    <li>Motion Warping, Unreal Engine 5\'s new system for customized root motion animations</li>\r\n    <li>Particle effects like blood splatter and weapon trails</li>\r\n    <li>Unreal Engine 5\'s new MetaSounds system and high-quality sounds in game</li>\r\n    <li>Best coding practices for coding games in Unreal Engine 5</li>\r\n    <li>Use of data structures and algorithms for games</li>\r\n    <li>Design patterns used in Unreal Engine</li>\r\n    <li>Creation of multiple types of enemies, from humanoids wielding weapons to monsters and other creatures</li>\r\n    <li>Importing entire dungeon levels into our Open World map with Packed Level Instances</li>\r\n</ul>\r\n', 1699900, 0, 0, 0, '2022-12-11', 0),
 (7, 'Java Swing (GUI) Programming: From Beginner to Exp', 1, '2', '', 'Learn how to create desktop and Internet GUI Java programs and take your Java programming to the next level.', '<ul>\r\n    <li> Learn how to write GUI (graphical user interface) applications in Java</li>\r\n    <li> Discover how to create database applications</li>\r\n    <li>Understand the Java Swing framework</li>\r\n\r\n</ul>', 499000, 0, 0, 0, '2022-12-11', 0),
 (8, 'The Complete 2020 Fullstack Web Developer Course', 1, '1', '', 'Learn HTML5, CSS3, JavaScript, Python, Wagtail CMS, PHP & MySQL from scratch!', '<ul>\r\n    <li>Updated for 2020</li>\r\n    <li>Learn HTML5, CSS3, Vanilla JS (ES6+), Python, Wagtail CMS, PHP and MySQL all from scratch</li>\r\n    <li>Learn Python from beginner to advanced</li>\r\n    <li>Learn JavaScript (ES6+)</li>\r\n    <li>Wagtail Pythons top Content Management System (Like WordPress, but better)</li>\r\n    <li>Get a free CSS3 eBook</li>\r\n    <li>Lots of projects, big and small!</li>\r\n    <li>Learn Git and Github</li>\r\n    <li>Create a portfolio page and launch it</li>\r\n    <li>Learn JavaScript from scratch</li>\r\n    <li>Learn PHP for server code execution</li>\r\n    <li>Learn MySQL for saving data (databases)</li>\r\n    <li>Build a Login/Registration/Members-only website, just like Facebook</li>\r\n    <li>How to get a job as a web developer</li>\r\n    <li>Learn the LAMP Stack: Linux, Apache, PHP and MySQL</li>\r\n</ul>', 2199000, 0, 0, 0, '2022-12-11', 0);
+(9, 'Adobe Photoshop', 2, '2', '', 'Xử lý ảnh trong photoshop', '<ul class=\"i8Z77e\"><li class=\"TrT0Xe\">Sáng tạo không giới hạn. ... </li><li class=\"TrT0Xe\">Bạn có thể sáng tạo theo cách của mình. ... </li><li class=\"TrT0Xe\">Bạn có thể phục chế lại <b>những</b> bức hình cũ kỹ ... </li><li class=\"TrT0Xe\">Biến đổi màu (blend, retouch màu) bức ảnh. ... </li><li class=\"TrT0Xe\">Sửa lỗi hình ảnh. ... </li><li class=\"TrT0Xe\">Sáng tạo tác phẩm nghệ thuật từ chữ ... </li><li class=\"TrT0Xe\">Thiết kế áo, đồ trang sức, lưu niệm để bán. ... </li><li class=\"TrT0Xe\">Thiết kế quảng cáo.</li></ul>', 0, 0, 0, 0, '2022-12-12', 0),
+(10, 'Adobe Illustrator', 2, '2', '', 'Tạo mẫu in ấn với Adobe Illustrator', '<ul>\r\n<li>Thiết kế logo, name card, bộ ấn phẩm văn phòng</li>\r\n<li>Thiết kế lịch thiệp</li>\r\n<li>Thiết kế catalogue, brochure, nhãn bìa CD</li>\r\n<li>Thiết kế Poster, standee</li>\r\n<li>Thiết kế bao bì, túi xách</li>\r\n<li>Thiết kế cho các quảng cáo thương mại điện tử…</li>\r\n<li>Hoàn tất file thiết kế…</li>\r\n</ul>', 0, 0, 0, 0, '2022-12-12', 0),
+(11, 'Adobe Indesign', 2, '2', '', 'Xuất bản – In ấn Adobe Indesign', '<ul>\r\n<li>Bạn có thể dàn trang sách báo. Bạn có thể làm sách báo, ấn phẩm điện tử.</li>\r\n<li>Bạn cũng có thể làm được những sản phẩm mà thường làm bằng illustrator. Ví dụ, poster, tờ gấp, baner, thực đơn, và sử dụng vẽ minh họa bình thường như illustrator.</li>\r\n<li>Sau khi học xong về Indesign bạn hoàn toàn có thể làm tại các xưởng in, tòa soạn báo, chế bản in…. Tất nhiên mức thu nhập nếu bạn làm tốt cũng không phải là nhỏ.</li>\r\n</ul>', 0, 0, 0, 0, '2022-12-12', 0),
+(12, 'Adobe After Effect', 2, '2', '', 'After Effect là gì? Đây là một phần mềm đồ hoạ được tạo ra với mục đích xử lý hiệu ứng video, và làm chuyển động số. After Effect còn được gọi là AE hay phần mềm đồ hoạ động.', '<ul>\r\n<li>Có thể khi nói đến dựng phim bạn sẽ nghĩ ngay đến camtasia, hay premiere. Bạn đọc những dòng trên thì bạn thấy AE cũng tương tự. Khoan đã AE không như bạn nghĩ, Cả After Effect và Premiere đều do Adobe nghiên cứu và phát triển. Không lý nào chúng lại giống nhau. Thật vậy AE làm được rất nhiều điều mà các phần mềm khác không thể làm được</li>\r\n<li>After Effect trên khả năng tạo hiệu ứng hình ảnh xuất sắc, nhanh và vô cùng mượt. Khả năng sử lý thành phần 3D, cho phép kiểm soát chiều sâu, bóng, phản xạ của nhiều đối tượng trong video. AE cho phép tạo Tạo đường viền chuẩn, Dò tia, ép text và khối. Khả năng tương thích và xử lý chuyển động cho đối tượng được tạo bởi Illustrator tuyệt vời.</li>\r\n</ul>', 0, 0, 0, 0, '2022-12-12', 0),
+(13, 'Figma', 2, '2', '', 'Khóa học Figma từ căn bản đến thực chiến', '<ul>\r\n<li>Thuần thục cách sử dụng công cụ; hiểu rõ ngôn ngữ thiết kế; thấu hiểu tư duy bài bản</li>\r\n<li>Tự tạo ra những thiết kế Website/App cực chất, sẵn sàng để trở thành một Designer ở các Agency chuyên xây dựng website.</li>\r\n<li>Tự tin thực hiện hoá ý tưởng của mình trên các thiết kế</li>\r\n<li>Tự tin thực hiện hoá ý tưởng của mình trên các thiết kế\r\n</li>\r\n<li>Đặc biệt, quà tặng Ebook Figma Design Notebook được gửi tặng ngay sau khóa học, được biên soạn với kiến thức bổ sung, được hệ thống lại và cập nhật từng đợt, đảm bảo chưa bao giờ bị lỗi nhịp với thời đạ</li>\r\n</ul>', 0, 0, 0, 0, '2022-12-12', 0);
 
 -- --------------------------------------------------------
 
@@ -373,3 +454,18 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+PTUDW-20KTPM2-Final-Project-Online-Academy/academy.sql at main · ledangkhoa11-4/PTUDW-20KTPM2-Final-Project-Online-Academy

@@ -5,6 +5,7 @@ import express_handlebars_sections from 'express-handlebars-sections'
 
 //Route
 import authRoute from './routes/authRoute.js'
+import searchRoute from './routes/searchRoute.js'
 const app = express();
 app.use('/public',express.static("public"))
 
@@ -27,7 +28,8 @@ app.set('views', './views');
 app.get("/", (req,res)=>{
     res.render("home")
 })
-app.use("/auth",authRoute)
+app.use("/auth",authRoute);
+app.use('/search',searchRoute);
 
 app.listen(process.env.PORT, ()=>{
     console.log(`Server running at http://127.0.0.1:${process.env.PORT}`);

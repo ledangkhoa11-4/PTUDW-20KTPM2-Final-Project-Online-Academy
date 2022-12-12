@@ -1,0 +1,82 @@
+.myaccordion {
+	max-width: 500px;
+	margin: 50px auto;
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.myaccordion .card,
+.myaccordion .card:last-child .card-header {
+	border: none;
+}
+
+.myaccordion .card-header {
+	border-bottom-color: #edeff0;
+	background: transparent;
+}
+
+.myaccordion .fa-stack {
+	font-size: 18px;
+}
+
+.myaccordion .btn {
+	width: 100%;
+	font-weight: bold;
+	color: #004987;
+	padding: 0;
+}
+
+.myaccordion .btn-link:hover,
+.myaccordion .btn-link:focus {
+	text-decoration: none;
+}
+
+.myaccordion li + li {
+	margin-top: 10px;
+}
+.my-sidebar{
+    scroll-behavior: smooth;
+    position: absolute;
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 300px !important;
+}
+@media screen and (max-width: 425px) {
+    .my-sidebar{
+        display: none
+    }
+}
+.dumb{
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 300px !important;
+}
+.result-count{
+    font-family: "Gentleman";
+    font-size: 22px;
+    font-weight: bold;
+}
+
+a{
+    text-decoration: none !important;
+    color: black;
+}
+a:hover{
+    text-decoration: none !important;
+    color: black;
+}
+.tinyDesc{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+@media screen and (max-width: 625px) {
+    .my-sidebar{
+        display: none
+    }
+}
+.outstanding-course{
+    font-family: "Gentleman";
+    font-size: 24px;
+}

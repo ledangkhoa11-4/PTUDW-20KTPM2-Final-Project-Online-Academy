@@ -220,11 +220,8 @@ INSERT INTO `circulativevideo` (`IDCourse`, `IDChapter`, `No`, `Name`, `URL`, `L
 (3, 4, 3, 'How To Choose A Niche', 'VFXKFmbjmpw', 0, 0),
 (3, 5, 1, 'Pricing Methods', 'h4XC-fMfm7Y', 0, 0),
 (3, 5, 2, 'Detemining Value-Based Pricing', '0nRKIqACHmo', 0, 0),
-(3, 5, 3, 'Website Packages', 'kjbTXfwZNSE', 0, 0),
+(3, 5, 3, 'Website Packages', 'kjbTXfwZNSE', 0, 0);
 
-(9, 1, 1, '', '', 0, 0),
-(9, 1, 1, '', '', 0, 0),
-(9, 1, 1, '', '', 0, 0),
 
 
 -- --------------------------------------------------------

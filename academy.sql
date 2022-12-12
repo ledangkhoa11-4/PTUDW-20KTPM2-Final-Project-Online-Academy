@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2022 at 02:45 PM
+-- Generation Time: Dec 12, 2022 at 03:43 AM
 -- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- PHP Version: 7.4.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `onlineacademy`
+-- Database: `academy`
 --
 
 -- --------------------------------------------------------
@@ -55,6 +55,25 @@ CREATE TABLE `chapter` (
   `Name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `chapter`
+--
+
+INSERT INTO `chapter` (`IDCourse`, `IDChapter`, `Name`) VALUES
+(1, 1, 'Introduction'),
+(1, 2, 'JavaScript Language Fundmentals'),
+(1, 3, 'DOM Manipulation & Events'),
+(1, 4, 'DOM Projects'),
+(2, 1, 'Introduction'),
+(2, 2, 'React Basics & JSX'),
+(2, 3, 'Components, Props & State'),
+(2, 4, 'Forms, Validation & Simple Animation'),
+(3, 1, 'Introduction'),
+(3, 2, 'First Steps'),
+(3, 3, 'Your Portfolio Website'),
+(3, 4, 'Niching Down'),
+(3, 5, 'Services & Pricing');
+
 -- --------------------------------------------------------
 
 --
@@ -71,6 +90,67 @@ CREATE TABLE `circulativevideo` (
   `IsPreview` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `circulativevideo`
+--
+
+INSERT INTO `circulativevideo` (`IDCourse`, `IDChapter`, `No`, `Name`, `URL`, `Length`, `IsPreview`) VALUES
+(1, 1, 1, 'Audit and other assurance engagements', 'fLHejDNA_CM', 0, 0),
+(1, 1, 2, 'Statutory audit and regulation', 'Ay3d_mNPEno', 0, 0),
+(1, 1, 3, 'Corporate governance', '6Kc5X_JhbxQ', 0, 0),
+(1, 1, 4, 'Ethics', '95zXiCITbNM', 0, 0),
+(1, 1, 5, 'Internal audit', 'xQSXZqbBcG4', 0, 0),
+(1, 1, 6, 'Risk assessment', 'fQTlI_Q3DQE', 0, 0),
+(1, 1, 7, 'Audit planning and documentation', 'ivgUOJ1cOEw', 0, 0),
+(1, 1, 8, 'Introduction to audit evidence', 'fRCrUXteg0o', 0, 0),
+(1, 1, 9, 'Internal control', 'XbR1oUj7fPo', 0, 0),
+(1, 1, 10, 'Tests of control', '5UorbFfW9pc', 0, 0),
+(1, 1, 11, 'Audit procedures and sampling', 'Rdmd10IYyOI', 0, 0),
+(1, 1, 12, 'Non-current assets', 'VFXKFmbjmpw', 0, 0),
+(1, 1, 13, 'Inventory', 'h4XC-fMfm7Y', 0, 0),
+(1, 1, 14, 'Receivables', '0nRKIqACHmo', 0, 0),
+(1, 1, 15, 'Cash and bank', 'kjbTXfwZNSE', 0, 0),
+(1, 2, 1, 'Type Conversion', '_mIpJ9H2ODk', 0, 1),
+(1, 2, 2, 'Numbers & The Math Object', '2U9xVnA_9mc', 0, 1),
+(1, 2, 3, 'String Methods & Concatenation', 'qyyZlGKBFCo', 0, 1),
+(1, 2, 4, 'Template Literals', '95zXiCITbNM', 0, 0),
+(1, 2, 5, 'Arrays & Array Methods', 'xQSXZqbBcG4', 0, 0),
+(1, 3, 1, 'DOM Selectors For Multiple Elements', 'fQTlI_Q3DQE', 0, 0),
+(1, 3, 2, 'Traversing The DOM', 'ivgUOJ1cOEw', 0, 0),
+(1, 3, 3, 'Creating Elements', 'fRCrUXteg0o', 0, 0),
+(1, 3, 4, 'Removing & Replacing Elements', 'XbR1oUj7fPo', 0, 0),
+(1, 3, 5, 'Event Listeners & The Event Object', '5UorbFfW9pc', 0, 0),
+(1, 4, 1, 'Task List [Part 1] - UI & Add Task Items', 'Rdmd10IYyOI', 0, 0),
+(1, 4, 2, 'Task List [Part 2] - Delete & Filter Tasks', 'VFXKFmbjmpw', 0, 0),
+(1, 4, 3, 'Task List [Part 3] - Persist To Local Storage', 'h4XC-fMfm7Y', 0, 0),
+(2, 1, 1, 'Environment Setup', 'fLHejDNA_CM', 0, 0),
+(2, 1, 2, 'Code Repos', 'Ay3d_mNPEno', 0, 0),
+(2, 1, 3, 'Links & Resources', '6Kc5X_JhbxQ', 0, 0),
+(2, 2, 1, 'Initializing React', '95zXiCITbNM', 0, 0),
+(2, 2, 2, 'Intro To JSX', 'xQSXZqbBcG4', 0, 0),
+(2, 2, 3, 'Dynamic Values & LIsts in JSX', 'fQTlI_Q3DQE', 0, 0),
+(2, 3, 1, 'Creating Your First Component & Props', 'ivgUOJ1cOEw', 0, 0),
+(2, 3, 2, 'Adding Styles To A Component', 'fRCrUXteg0o', 0, 0),
+(2, 3, 3, 'State & useState Hook', 'XbR1oUj7fPo', 0, 0),
+(2, 4, 1, 'Form Input & State', '5UorbFfW9pc', 0, 0),
+(2, 4, 2, 'Custom Button Component', 'Rdmd10IYyOI', 0, 0),
+(2, 4, 3, 'Real-Time Validation', 'VFXKFmbjmpw', 0, 0),
+(3, 1, 1, 'Welcome To The Course', 'fLHejDNA_CM', 0, 1),
+(3, 1, 2, 'Meet Your Hosts - Brad', 'Ay3d_mNPEno', 0, 1),
+(3, 1, 3, 'Meet Your Hosts - Kyle', '6Kc5X_JhbxQ', 0, 1),
+(3, 2, 1, 'Services That You Can Offer', '95zXiCITbNM', 0, 1),
+(3, 2, 2, 'Business Checklist', 'xQSXZqbBcG4', 0, 1),
+(3, 2, 3, 'Business Structures', 'fQTlI_Q3DQE', 0, 0),
+(3, 3, 1, 'The Purpose Of A Portfolio Website', 'ivgUOJ1cOEw', 0, 0),
+(3, 3, 2, '4 Keys To A Successful Website', 'fRCrUXteg0o', 0, 0),
+(3, 3, 3, 'Call To Action', 'XbR1oUj7fPo', 0, 0),
+(3, 4, 1, 'Reasons To Niche Down', '5UorbFfW9pc', 0, 0),
+(3, 4, 2, 'Examples Of Niching Down', 'Rdmd10IYyOI', 0, 0),
+(3, 4, 3, 'How To Choose A Niche', 'VFXKFmbjmpw', 0, 0),
+(3, 5, 1, 'Pricing Methods', 'h4XC-fMfm7Y', 0, 0),
+(3, 5, 2, 'Detemining Value-Based Pricing', '0nRKIqACHmo', 0, 0),
+(3, 5, 3, 'Website Packages', 'kjbTXfwZNSE', 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -80,7 +160,7 @@ CREATE TABLE `circulativevideo` (
 CREATE TABLE `courses` (
   `ID` int(11) NOT NULL,
   `Name` varchar(50) NOT NULL,
-  `IDChapter` int(11) NOT NULL,
+  `IDCategory` int(11) NOT NULL,
   `Topic` varchar(50) NOT NULL,
   `Image` text NOT NULL,
   `TinyDesc` text NOT NULL,
@@ -97,7 +177,7 @@ CREATE TABLE `courses` (
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`ID`, `Name`, `IDChapter`, `Topic`, `Image`, `TinyDesc`, `FullDesc`, `CourseFee`, `IDDiscount`, `IDInstructor`, `IsCompleted`, `CreatedTime`, `Viewer`) VALUES
+INSERT INTO `courses` (`ID`, `Name`, `IDCategory`, `Topic`, `Image`, `TinyDesc`, `FullDesc`, `CourseFee`, `IDDiscount`, `IDInstructor`, `IsCompleted`, `CreatedTime`, `Viewer`) VALUES
 (1, 'HTML CSS from Zero to Hero', 1, '1', '', 'Learn modern HTML5, CSS3 and web design by building a stunning website for your portfolio! Includes flexbox and CSS Grid', '<ul>\r\n    <li>Become a modern and confident HTML and CSS developer, no prior knowledge needed!</li>\r\n    <li>Design and build a stunning real-world project for your portfolio from scratch</li>\r\n    <li>Modern, semantic and accessible HTML5</li>\r\n    <li>Modern CSS (previous CSS3), including flexbox and CSS Grid for layout</li>\r\n    <li>Important CSS concepts such as the box model, positioning schemes, inheritance, solving selector conflicts, etc.</li>\r\n    <li>A web design framework with easy-to-use rules and guidelines to design eye-catching websites</li>\r\n    <li>How to plan, sketch, design, build, test, and optimize a professional website</li>\r\n    <li>How to make websites work on every possible mobile device (responsive design)</li>\r\n    <li>How to use common components and layout patterns for professional website design and development</li>\r\n    <li>Developer skills such as reading documentation, debugging, and using professional tools</li>\r\n    <li>How to find and use free design assets such as images, fonts, and icons</li>\r\n    <li>Practice your skills with 10+ challenges (solutions included)</li>\r\n</ul>', 500000, 0, 0, 0, '2022-12-10', 0),
 (2, 'React Native - The Practical Guide [2023]', 1, '1', '', 'Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux', '<ul>\r\n    <li>Learn how to use ReactJS to build real native mobile apps for iOS and Android</li>\r\n    <li>Develop cross-platform (iOS and Android) mobile apps without knowing Swift, ObjectiveC or Java/ Android</li>\r\n    <li>Explore React Native basics and advanced features!</li>\r\n    <li>Learn how to use key mobile app features like Google maps or the device camera</li>\r\n    <li>Create real-world native apps using React Native</li>\r\n    <li>Make truly reusable components that look great</li>\r\n    <li>Understand the terminology and concepts of Redux</li>\r\n    <li>Prototype and deploy your own applications to the Apple and Google Play Stores</li>\r\n    <li>Get up to speed with React design principles and methodologies</li>\r\n    <li>Discover mobile design patterns used by experienced engineers</li>\r\n</ul>', 500000, 0, 0, 0, '2022-12-10', 0),
 (3, 'Complete C# Unity Game Developer 2D', 1, '2', '', 'Learn Unity in C# & Code Your First Five 2D Video Games for Web, Mac & PC. The Tutorials Cover Tilemap', '<ul>\r\n    <li>Learn C#, a powerful modern language, from scratch. No prior programming experience is necessary.</li>\r\n    <li>Become excellent at using the Unity game engine.</li>\r\n    <li>Build a solid foundation for game design and game development that will help you build your own games.</li>\r\n    <li>Learn how object oriented programming works in practice.</li>\r\n    <li>Create playable game projects - good for your portfolio, or just for your own sense of achievement.</li>\r\n    <li>Transfer your knowledge from this course to .NET, other languages, and more.</li>\r\n    <li>Develop highly transferable coding problem solving skills.</li>\r\n    <li>Be part of an amazing and supportive community of people similar to you.</li> \r\n</ul>', 1280000, 0, 0, 0, '2022-12-10', 0),

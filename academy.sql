@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 12, 2022 at 03:43 AM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 7.4.30
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th12 12, 2022 lúc 03:58 AM
+-- Phiên bản máy phục vụ: 10.4.25-MariaDB
+-- Phiên bản PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `academy`
+-- Cơ sở dữ liệu: `academy`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Cấu trúc bảng cho bảng `category`
 --
 
 CREATE TABLE `category` (
@@ -33,7 +33,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `category`
+-- Đang đổ dữ liệu cho bảng `category`
 --
 
 INSERT INTO `category` (`IDCate`, `Name`) VALUES
@@ -46,7 +46,7 @@ INSERT INTO `category` (`IDCate`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chapter`
+-- Cấu trúc bảng cho bảng `chapter`
 --
 
 CREATE TABLE `chapter` (
@@ -56,7 +56,7 @@ CREATE TABLE `chapter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `chapter`
+-- Đang đổ dữ liệu cho bảng `chapter`
 --
 
 INSERT INTO `chapter` (`IDCourse`, `IDChapter`, `Name`) VALUES
@@ -77,7 +77,7 @@ INSERT INTO `chapter` (`IDCourse`, `IDChapter`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `circulativevideo`
+-- Cấu trúc bảng cho bảng `circulativevideo`
 --
 
 CREATE TABLE `circulativevideo` (
@@ -91,7 +91,7 @@ CREATE TABLE `circulativevideo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `circulativevideo`
+-- Đang đổ dữ liệu cho bảng `circulativevideo`
 --
 
 INSERT INTO `circulativevideo` (`IDCourse`, `IDChapter`, `No`, `Name`, `URL`, `Length`, `IsPreview`) VALUES
@@ -154,7 +154,7 @@ INSERT INTO `circulativevideo` (`IDCourse`, `IDChapter`, `No`, `Name`, `URL`, `L
 -- --------------------------------------------------------
 
 --
--- Table structure for table `courses`
+-- Cấu trúc bảng cho bảng `courses`
 --
 
 CREATE TABLE `courses` (
@@ -174,7 +174,7 @@ CREATE TABLE `courses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `courses`
+-- Đang đổ dữ liệu cho bảng `courses`
 --
 
 INSERT INTO `courses` (`ID`, `Name`, `IDCategory`, `Topic`, `Image`, `TinyDesc`, `FullDesc`, `CourseFee`, `IDDiscount`, `IDInstructor`, `IsCompleted`, `CreatedTime`, `Viewer`) VALUES
@@ -182,12 +182,15 @@ INSERT INTO `courses` (`ID`, `Name`, `IDCategory`, `Topic`, `Image`, `TinyDesc`,
 (2, 'React Native - The Practical Guide [2023]', 1, '1', '', 'Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux', '<ul>\r\n    <li>Learn how to use ReactJS to build real native mobile apps for iOS and Android</li>\r\n    <li>Develop cross-platform (iOS and Android) mobile apps without knowing Swift, ObjectiveC or Java/ Android</li>\r\n    <li>Explore React Native basics and advanced features!</li>\r\n    <li>Learn how to use key mobile app features like Google maps or the device camera</li>\r\n    <li>Create real-world native apps using React Native</li>\r\n    <li>Make truly reusable components that look great</li>\r\n    <li>Understand the terminology and concepts of Redux</li>\r\n    <li>Prototype and deploy your own applications to the Apple and Google Play Stores</li>\r\n    <li>Get up to speed with React design principles and methodologies</li>\r\n    <li>Discover mobile design patterns used by experienced engineers</li>\r\n</ul>', 500000, 0, 0, 0, '2022-12-10', 0),
 (3, 'Complete C# Unity Game Developer 2D', 1, '2', '', 'Learn Unity in C# & Code Your First Five 2D Video Games for Web, Mac & PC. The Tutorials Cover Tilemap', '<ul>\r\n    <li>Learn C#, a powerful modern language, from scratch. No prior programming experience is necessary.</li>\r\n    <li>Become excellent at using the Unity game engine.</li>\r\n    <li>Build a solid foundation for game design and game development that will help you build your own games.</li>\r\n    <li>Learn how object oriented programming works in practice.</li>\r\n    <li>Create playable game projects - good for your portfolio, or just for your own sense of achievement.</li>\r\n    <li>Transfer your knowledge from this course to .NET, other languages, and more.</li>\r\n    <li>Develop highly transferable coding problem solving skills.</li>\r\n    <li>Be part of an amazing and supportive community of people similar to you.</li> \r\n</ul>', 1280000, 0, 0, 0, '2022-12-10', 0),
 (4, 'Visual Effects for Games in Unity - Beginner To In', 1, '2', '', 'By the end of this course you will have started your own portfolio as a Triple-A Visual Effects artist for Games.', '<ul>\r\n    <li>Learn how to create effects for games with Unity.</li>\r\n    <li>Fundamental concepts about Visual Effects.</li>\r\n    <li>Creating Textures, Meshes and Shaders for Game VFX.</li>\r\n    <li>How to structure AAA Visual Effects.</li>\r\n</ul>', 800000, 0, 0, 0, '2022-12-10', 0),
-(5, 'Master Microsoft Word Beginner to Advanced', 3, '1', '', 'Master the most popular Word Processing tool, Microsoft Word. Microsoft Word 2010, Word 2013, Word 2016, Word 2019', '<ul>\r\n    <li>You will learn how to take full advantage of Microsoft Word</li>\r\n    <li>Begin with the basics of creating Microsoft Word documents</li>\r\n    <li>Various techniques to create dynamic layouts</li>\r\n    <li>Preparing documents for printing and exporting</li>\r\n    <li>Format documents effectively using Microsoft Word Styles</li>\r\n    <li>Control page formatting and flow with sections and page breaks</li>\r\n    <li>Create and Manage Table Layouts</li>\r\n    <li>Work with Tab Stops to Align Content Properly</li>\r\n    <li>Perform Mail Merges to create Mailing Labels and Form Letters</li>\r\n    <li>Build and Deliver Word Forms</li>\r\n    <li>Manage Templates</li>\r\n    <li>Track and Accept/Reject Changes to a Document</li>\r\n</ul>', 0, 0, 0, 0, '2022-12-10', 0);
+(5, 'Master Microsoft Word Beginner to Advanced', 3, '1', '', 'Master the most popular Word Processing tool, Microsoft Word. Microsoft Word 2010, Word 2013, Word 2016, Word 2019', '<ul>\r\n    <li>You will learn how to take full advantage of Microsoft Word</li>\r\n    <li>Begin with the basics of creating Microsoft Word documents</li>\r\n    <li>Various techniques to create dynamic layouts</li>\r\n    <li>Preparing documents for printing and exporting</li>\r\n    <li>Format documents effectively using Microsoft Word Styles</li>\r\n    <li>Control page formatting and flow with sections and page breaks</li>\r\n    <li>Create and Manage Table Layouts</li>\r\n    <li>Work with Tab Stops to Align Content Properly</li>\r\n    <li>Perform Mail Merges to create Mailing Labels and Form Letters</li>\r\n    <li>Build and Deliver Word Forms</li>\r\n    <li>Manage Templates</li>\r\n    <li>Track and Accept/Reject Changes to a Document</li>\r\n</ul>', 0, 0, 0, 0, '2022-12-10', 0),
+(6, 'Unreal Engine 5 C++ The Ultimate Game Developer Co', 1, '2', '', 'Learn Unreal Engine 5 C++ Programming by Creating an Action-RPG Style Open World Game!', '<h2>What you\'ll learn</h2>\r\n<ul>\r\n    <li>How to code games in Unreal Engine 5</li>\r\n    <li>An RPG action game with a third-person character</li>\r\n    <li>Combat with swords and other melee weapons</li>\r\n    <li>Creation of enemies that attack the player</li>\r\n    <li>Health bars and player stats</li>\r\n    <li>Unreal Engine 5\'s Open World system</li>\r\n    <li>Level design and creation of realistic scenes with Quixel Megascans</li>\r\n    <li>Motion Warping, Unreal Engine 5\'s new system for customized root motion animations</li>\r\n    <li>Particle effects like blood splatter and weapon trails</li>\r\n    <li>Unreal Engine 5\'s new MetaSounds system and high-quality sounds in game</li>\r\n    <li>Best coding practices for coding games in Unreal Engine 5</li>\r\n    <li>Use of data structures and algorithms for games</li>\r\n    <li>Design patterns used in Unreal Engine</li>\r\n    <li>Creation of multiple types of enemies, from humanoids wielding weapons to monsters and other creatures</li>\r\n    <li>Importing entire dungeon levels into our Open World map with Packed Level Instances</li>\r\n</ul>\r\n', 1699900, 0, 0, 0, '2022-12-11', 0),
+(7, 'Java Swing (GUI) Programming: From Beginner to Exp', 1, '2', '', 'Learn how to create desktop and Internet GUI Java programs and take your Java programming to the next level.', '<ul>\r\n    <li> Learn how to write GUI (graphical user interface) applications in Java</li>\r\n    <li> Discover how to create database applications</li>\r\n    <li>Understand the Java Swing framework</li>\r\n\r\n</ul>', 499000, 0, 0, 0, '2022-12-11', 0),
+(8, 'The Complete 2020 Fullstack Web Developer Course', 1, '1', '', 'Learn HTML5, CSS3, JavaScript, Python, Wagtail CMS, PHP & MySQL from scratch!', '<ul>\r\n    <li>Updated for 2020</li>\r\n    <li>Learn HTML5, CSS3, Vanilla JS (ES6+), Python, Wagtail CMS, PHP and MySQL all from scratch</li>\r\n    <li>Learn Python from beginner to advanced</li>\r\n    <li>Learn JavaScript (ES6+)</li>\r\n    <li>Wagtail Pythons top Content Management System (Like WordPress, but better)</li>\r\n    <li>Get a free CSS3 eBook</li>\r\n    <li>Lots of projects, big and small!</li>\r\n    <li>Learn Git and Github</li>\r\n    <li>Create a portfolio page and launch it</li>\r\n    <li>Learn JavaScript from scratch</li>\r\n    <li>Learn PHP for server code execution</li>\r\n    <li>Learn MySQL for saving data (databases)</li>\r\n    <li>Build a Login/Registration/Members-only website, just like Facebook</li>\r\n    <li>How to get a job as a web developer</li>\r\n    <li>Learn the LAMP Stack: Linux, Apache, PHP and MySQL</li>\r\n</ul>', 2199000, 0, 0, 0, '2022-12-11', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `discount`
+-- Cấu trúc bảng cho bảng `discount`
 --
 
 CREATE TABLE `discount` (
@@ -196,7 +199,7 @@ CREATE TABLE `discount` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `discount`
+-- Đang đổ dữ liệu cho bảng `discount`
 --
 
 INSERT INTO `discount` (`ID`, `PercentDiscount`) VALUES
@@ -205,7 +208,7 @@ INSERT INTO `discount` (`ID`, `PercentDiscount`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `participate`
+-- Cấu trúc bảng cho bảng `participate`
 --
 
 CREATE TABLE `participate` (
@@ -218,7 +221,7 @@ CREATE TABLE `participate` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `topic`
+-- Cấu trúc bảng cho bảng `topic`
 --
 
 CREATE TABLE `topic` (
@@ -228,7 +231,7 @@ CREATE TABLE `topic` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `topic`
+-- Đang đổ dữ liệu cho bảng `topic`
 --
 
 INSERT INTO `topic` (`IDCate`, `IDTopic`, `Name`) VALUES
@@ -244,7 +247,7 @@ INSERT INTO `topic` (`IDCate`, `IDTopic`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Cấu trúc bảng cho bảng `user`
 --
 
 CREATE TABLE `user` (
@@ -259,7 +262,7 @@ CREATE TABLE `user` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `watched`
+-- Cấu trúc bảng cho bảng `watched`
 --
 
 CREATE TABLE `watched` (
@@ -272,7 +275,7 @@ CREATE TABLE `watched` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `watchhistory`
+-- Cấu trúc bảng cho bảng `watchhistory`
 --
 
 CREATE TABLE `watchhistory` (
@@ -281,87 +284,87 @@ CREATE TABLE `watchhistory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `category`
+-- Chỉ mục cho bảng `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`IDCate`);
 
 --
--- Indexes for table `chapter`
+-- Chỉ mục cho bảng `chapter`
 --
 ALTER TABLE `chapter`
   ADD PRIMARY KEY (`IDCourse`,`IDChapter`);
 
 --
--- Indexes for table `circulativevideo`
+-- Chỉ mục cho bảng `circulativevideo`
 --
 ALTER TABLE `circulativevideo`
   ADD PRIMARY KEY (`IDCourse`,`IDChapter`,`No`);
 
 --
--- Indexes for table `courses`
+-- Chỉ mục cho bảng `courses`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `discount`
+-- Chỉ mục cho bảng `discount`
 --
 ALTER TABLE `discount`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `participate`
+-- Chỉ mục cho bảng `participate`
 --
 ALTER TABLE `participate`
   ADD PRIMARY KEY (`IDCourse`,`IDStudent`);
 
 --
--- Indexes for table `topic`
+-- Chỉ mục cho bảng `topic`
 --
 ALTER TABLE `topic`
   ADD PRIMARY KEY (`IDCate`,`IDTopic`);
 
 --
--- Indexes for table `user`
+-- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`IDUser`);
 
 --
--- Indexes for table `watched`
+-- Chỉ mục cho bảng `watched`
 --
 ALTER TABLE `watched`
   ADD PRIMARY KEY (`IDStudent`,`IDCourse`,`IDChapter`,`No`);
 
 --
--- Indexes for table `watchhistory`
+-- Chỉ mục cho bảng `watchhistory`
 --
 ALTER TABLE `watchhistory`
   ADD PRIMARY KEY (`IDStudent`,`IDCourse`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
   MODIFY `IDCate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `courses`
+-- AUTO_INCREMENT cho bảng `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
   MODIFY `IDUser` int(11) NOT NULL AUTO_INCREMENT;

@@ -32,7 +32,7 @@ Latest commit a49fd26 11 hours ago
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 12, 2022 lúc 03:58 AM
+-- Thời gian đã tạo: Th12 14, 2022 lúc 11:24 AM
 -- Phiên bản máy phục vụ: 10.4.25-MariaDB
 -- Phiên bản PHP: 8.1.10
 
@@ -102,15 +102,34 @@ INSERT INTO `chapter` (`IDCourse`, `IDChapter`, `Name`) VALUES
 (3, 3, 'Your Portfolio Website'),
 (3, 4, 'Niching Down'),
 (3, 5, 'Services & Pricing'),
---
+(6, 1, 'Getting Started'),
+(6, 2, 'Realistic Landscapes'),
+(6, 3, 'Vectors, Rotators, and Trigonometry'),
+(6, 4, 'C++ in Unreal Engine'),
+(6, 5, 'The Actor Class'),
+(6, 6, 'Moving Objects with Code'),
+(6, 7, 'The Pawn Class'),
+(6, 8, 'The Character Class'),
+(6, 9, 'The Animation Blueprint'),
+(6, 10, 'Collision and Overlaps'),
+(7, 1, 'Desktop Applications'),
+(7, 2, 'Applets and Animation'),
+(7, 3, 'Appendix'),
+(8, 1, 'Before We Begin'),
+(8, 2, 'The Ultimate HTML Developer: Introduction'),
+(8, 3, 'The Ultimate HTML Developer: Getting Started'),
+(8, 4, 'The Ultimate HTML Developer: Advanced HTML'),
+(8, 5, 'The Ultimate HTML Developer: Your Project'),
+(8, 6, 'CSS & CSS3 Masterclass: Introduction'),
+(8, 7, 'CSS & CSS3 Masterclass: Getting Started'),
+(8, 8, 'CSS & CSS3 Masterclass: Text Formatting'),
+(8, 9, 'CSS & CSS3 Masterclass: Fonts and Font Styling'),
+(8, 10, 'CSS & CSS3 Masterclass: Links and their \"states\"'),
 (9, 1, 'TỔNG QUAN VỀ PHOTOSHOP'),
 (9, 2, 'TÌM HIỂU THANH CÔNG CỤ'),
 (9, 3, 'CHỈNH SỬA HÌNH ẢNH VỚI PHOTOSHOP'),
 (9, 4, 'THIẾT KẾ HÌNH ẢNH CHUYÊN NGHIỆP'),
 (9, 5, 'TỔNG KẾT'),
-
-
-
 (10, 1, 'GIỚI THIỆU TỔNG QUAN VỀ ILLUSTRATOR'),
 (10, 2, 'LÀM QUEN VỚI PHẦN MỀM AI'),
 (10, 3, 'LÀM VIỆC VỚI LAYER'),
@@ -119,31 +138,32 @@ INSERT INTO `chapter` (`IDCourse`, `IDChapter`, `Name`) VALUES
 (10, 6, 'LÀM VIỆC VỚI MÀU TÔ VÀ ĐƯỜNG VIỀN'),
 (10, 7, 'LÀM VIỆC VỚI VĂN BẢN'),
 (10, 8, 'IN VÀ XUẤT BẢN TÀI LIỆU'),
-
-
 (11, 1, 'GIỚI THIỆU MÔI TRƯỜNG LÀM VIỆC CỦA ADOBE INDESIGN'),
 (11, 2, 'THỬ HỌC INDESIGN CẤP TỐC'),
 (11, 3, 'LÀM CHỦ GIAO DIỆN LÀM VIỆC VÀ CÁC CÔNG CỤ'),
 (11, 4, 'BẮT ĐẦU VỚI MỘT TÀI LIỆU MỚI'),
 (11, 5, 'QUẢN LÝ TRANG TÀI LIỆU'),
 (11, 6, 'XUẤT BẢN VÀ IN ẤN'),
-
-
 (12, 1, 'TỔNG QUAN VÈ KỸ XẢO CHO PHIM'),
 (12, 2, 'CÁC HIỆU ỨNG TRONG AFFTER EFFECTS'),
 (12, 3, 'CÁC CHỨC NĂNG NÂNG CAO TRONG AE'),
 (12, 4, 'THỰC HIỆN TVC'),
 (12, 5, 'THỰC HÀNH NÂNG CAO VÀ SỬ DỤNG TEMPLATE'),
-
 (13, 1, 'CÁC YẾU TỐ CƠ BẢN'),
 (13, 2, 'CÁC YẾU TỐ VỀ FRAME'),
 (13, 3, 'AUTOLAYOUT'),
 (13, 4, 'COMPONENT/INSTANCE/VARIANTS'),
 (13, 5, 'HỆ THỐNG HÓA'),
-(13, 6, 'PROTOTYPE');
-
-
-
+(13, 6, 'PROTOTYPE'),
+(14, 1, 'Introduction to Call Options and Put Options, Buye'),
+(14, 2, 'Introduction to Time Decay, Implied Volatility and'),
+(14, 3, 'Buying / Selling Call and Put Options - Options be'),
+(14, 4, 'Options Market Structure, Strategy Box and Case St'),
+(14, 5, 'Adjustments for Single Options'),
+(14, 6, 'Using Stock and Options combo strategies for Stock'),
+(15, 1, 'Introduction and Course Orientation'),
+(15, 2, 'Cryptocurrency Fundamentals.'),
+(15, 3, 'Review and Valuable Resources');
 
 -- --------------------------------------------------------
 
@@ -222,8 +242,6 @@ INSERT INTO `circulativevideo` (`IDCourse`, `IDChapter`, `No`, `Name`, `URL`, `L
 (3, 5, 2, 'Detemining Value-Based Pricing', '0nRKIqACHmo', 0, 0),
 (3, 5, 3, 'Website Packages', 'kjbTXfwZNSE', 0, 0);
 
-
-
 -- --------------------------------------------------------
 
 --
@@ -258,12 +276,14 @@ INSERT INTO `courses` (`ID`, `Name`, `IDCategory`, `Topic`, `Image`, `TinyDesc`,
 (5, 'Master Microsoft Word Beginner to Advanced', 3, '1', '', 'Master the most popular Word Processing tool, Microsoft Word. Microsoft Word 2010, Word 2013, Word 2016, Word 2019', '<ul>\r\n    <li>You will learn how to take full advantage of Microsoft Word</li>\r\n    <li>Begin with the basics of creating Microsoft Word documents</li>\r\n    <li>Various techniques to create dynamic layouts</li>\r\n    <li>Preparing documents for printing and exporting</li>\r\n    <li>Format documents effectively using Microsoft Word Styles</li>\r\n    <li>Control page formatting and flow with sections and page breaks</li>\r\n    <li>Create and Manage Table Layouts</li>\r\n    <li>Work with Tab Stops to Align Content Properly</li>\r\n    <li>Perform Mail Merges to create Mailing Labels and Form Letters</li>\r\n    <li>Build and Deliver Word Forms</li>\r\n    <li>Manage Templates</li>\r\n    <li>Track and Accept/Reject Changes to a Document</li>\r\n</ul>', 0, 0, 0, 0, '2022-12-10', 0),
 (6, 'Unreal Engine 5 C++ The Ultimate Game Developer Co', 1, '2', '', 'Learn Unreal Engine 5 C++ Programming by Creating an Action-RPG Style Open World Game!', '<h2>What you\'ll learn</h2>\r\n<ul>\r\n    <li>How to code games in Unreal Engine 5</li>\r\n    <li>An RPG action game with a third-person character</li>\r\n    <li>Combat with swords and other melee weapons</li>\r\n    <li>Creation of enemies that attack the player</li>\r\n    <li>Health bars and player stats</li>\r\n    <li>Unreal Engine 5\'s Open World system</li>\r\n    <li>Level design and creation of realistic scenes with Quixel Megascans</li>\r\n    <li>Motion Warping, Unreal Engine 5\'s new system for customized root motion animations</li>\r\n    <li>Particle effects like blood splatter and weapon trails</li>\r\n    <li>Unreal Engine 5\'s new MetaSounds system and high-quality sounds in game</li>\r\n    <li>Best coding practices for coding games in Unreal Engine 5</li>\r\n    <li>Use of data structures and algorithms for games</li>\r\n    <li>Design patterns used in Unreal Engine</li>\r\n    <li>Creation of multiple types of enemies, from humanoids wielding weapons to monsters and other creatures</li>\r\n    <li>Importing entire dungeon levels into our Open World map with Packed Level Instances</li>\r\n</ul>\r\n', 1699900, 0, 0, 0, '2022-12-11', 0),
 (7, 'Java Swing (GUI) Programming: From Beginner to Exp', 1, '2', '', 'Learn how to create desktop and Internet GUI Java programs and take your Java programming to the next level.', '<ul>\r\n    <li> Learn how to write GUI (graphical user interface) applications in Java</li>\r\n    <li> Discover how to create database applications</li>\r\n    <li>Understand the Java Swing framework</li>\r\n\r\n</ul>', 499000, 0, 0, 0, '2022-12-11', 0),
-(8, 'The Complete 2020 Fullstack Web Developer Course', 1, '1', '', 'Learn HTML5, CSS3, JavaScript, Python, Wagtail CMS, PHP & MySQL from scratch!', '<ul>\r\n    <li>Updated for 2020</li>\r\n    <li>Learn HTML5, CSS3, Vanilla JS (ES6+), Python, Wagtail CMS, PHP and MySQL all from scratch</li>\r\n    <li>Learn Python from beginner to advanced</li>\r\n    <li>Learn JavaScript (ES6+)</li>\r\n    <li>Wagtail Pythons top Content Management System (Like WordPress, but better)</li>\r\n    <li>Get a free CSS3 eBook</li>\r\n    <li>Lots of projects, big and small!</li>\r\n    <li>Learn Git and Github</li>\r\n    <li>Create a portfolio page and launch it</li>\r\n    <li>Learn JavaScript from scratch</li>\r\n    <li>Learn PHP for server code execution</li>\r\n    <li>Learn MySQL for saving data (databases)</li>\r\n    <li>Build a Login/Registration/Members-only website, just like Facebook</li>\r\n    <li>How to get a job as a web developer</li>\r\n    <li>Learn the LAMP Stack: Linux, Apache, PHP and MySQL</li>\r\n</ul>', 2199000, 0, 0, 0, '2022-12-11', 0);
+(8, 'The Complete 2020 Fullstack Web Developer Course', 1, '1', '', 'Learn HTML5, CSS3, JavaScript, Python, Wagtail CMS, PHP & MySQL from scratch!', '<ul>\r\n    <li>Updated for 2020</li>\r\n    <li>Learn HTML5, CSS3, Vanilla JS (ES6+), Python, Wagtail CMS, PHP and MySQL all from scratch</li>\r\n    <li>Learn Python from beginner to advanced</li>\r\n    <li>Learn JavaScript (ES6+)</li>\r\n    <li>Wagtail Pythons top Content Management System (Like WordPress, but better)</li>\r\n    <li>Get a free CSS3 eBook</li>\r\n    <li>Lots of projects, big and small!</li>\r\n    <li>Learn Git and Github</li>\r\n    <li>Create a portfolio page and launch it</li>\r\n    <li>Learn JavaScript from scratch</li>\r\n    <li>Learn PHP for server code execution</li>\r\n    <li>Learn MySQL for saving data (databases)</li>\r\n    <li>Build a Login/Registration/Members-only website, just like Facebook</li>\r\n    <li>How to get a job as a web developer</li>\r\n    <li>Learn the LAMP Stack: Linux, Apache, PHP and MySQL</li>\r\n</ul>', 2199000, 0, 0, 0, '2022-12-11', 0),
 (9, 'Adobe Photoshop', 2, '2', '', 'Xử lý ảnh trong photoshop', '<ul class=\"i8Z77e\"><li class=\"TrT0Xe\">Sáng tạo không giới hạn. ... </li><li class=\"TrT0Xe\">Bạn có thể sáng tạo theo cách của mình. ... </li><li class=\"TrT0Xe\">Bạn có thể phục chế lại <b>những</b> bức hình cũ kỹ ... </li><li class=\"TrT0Xe\">Biến đổi màu (blend, retouch màu) bức ảnh. ... </li><li class=\"TrT0Xe\">Sửa lỗi hình ảnh. ... </li><li class=\"TrT0Xe\">Sáng tạo tác phẩm nghệ thuật từ chữ ... </li><li class=\"TrT0Xe\">Thiết kế áo, đồ trang sức, lưu niệm để bán. ... </li><li class=\"TrT0Xe\">Thiết kế quảng cáo.</li></ul>', 0, 0, 0, 0, '2022-12-12', 0),
 (10, 'Adobe Illustrator', 2, '2', '', 'Tạo mẫu in ấn với Adobe Illustrator', '<ul>\r\n<li>Thiết kế logo, name card, bộ ấn phẩm văn phòng</li>\r\n<li>Thiết kế lịch thiệp</li>\r\n<li>Thiết kế catalogue, brochure, nhãn bìa CD</li>\r\n<li>Thiết kế Poster, standee</li>\r\n<li>Thiết kế bao bì, túi xách</li>\r\n<li>Thiết kế cho các quảng cáo thương mại điện tử…</li>\r\n<li>Hoàn tất file thiết kế…</li>\r\n</ul>', 0, 0, 0, 0, '2022-12-12', 0),
 (11, 'Adobe Indesign', 2, '2', '', 'Xuất bản – In ấn Adobe Indesign', '<ul>\r\n<li>Bạn có thể dàn trang sách báo. Bạn có thể làm sách báo, ấn phẩm điện tử.</li>\r\n<li>Bạn cũng có thể làm được những sản phẩm mà thường làm bằng illustrator. Ví dụ, poster, tờ gấp, baner, thực đơn, và sử dụng vẽ minh họa bình thường như illustrator.</li>\r\n<li>Sau khi học xong về Indesign bạn hoàn toàn có thể làm tại các xưởng in, tòa soạn báo, chế bản in…. Tất nhiên mức thu nhập nếu bạn làm tốt cũng không phải là nhỏ.</li>\r\n</ul>', 0, 0, 0, 0, '2022-12-12', 0),
 (12, 'Adobe After Effect', 2, '2', '', 'After Effect là gì? Đây là một phần mềm đồ hoạ được tạo ra với mục đích xử lý hiệu ứng video, và làm chuyển động số. After Effect còn được gọi là AE hay phần mềm đồ hoạ động.', '<ul>\r\n<li>Có thể khi nói đến dựng phim bạn sẽ nghĩ ngay đến camtasia, hay premiere. Bạn đọc những dòng trên thì bạn thấy AE cũng tương tự. Khoan đã AE không như bạn nghĩ, Cả After Effect và Premiere đều do Adobe nghiên cứu và phát triển. Không lý nào chúng lại giống nhau. Thật vậy AE làm được rất nhiều điều mà các phần mềm khác không thể làm được</li>\r\n<li>After Effect trên khả năng tạo hiệu ứng hình ảnh xuất sắc, nhanh và vô cùng mượt. Khả năng sử lý thành phần 3D, cho phép kiểm soát chiều sâu, bóng, phản xạ của nhiều đối tượng trong video. AE cho phép tạo Tạo đường viền chuẩn, Dò tia, ép text và khối. Khả năng tương thích và xử lý chuyển động cho đối tượng được tạo bởi Illustrator tuyệt vời.</li>\r\n</ul>', 0, 0, 0, 0, '2022-12-12', 0),
-(13, 'Figma', 2, '2', '', 'Khóa học Figma từ căn bản đến thực chiến', '<ul>\r\n<li>Thuần thục cách sử dụng công cụ; hiểu rõ ngôn ngữ thiết kế; thấu hiểu tư duy bài bản</li>\r\n<li>Tự tạo ra những thiết kế Website/App cực chất, sẵn sàng để trở thành một Designer ở các Agency chuyên xây dựng website.</li>\r\n<li>Tự tin thực hiện hoá ý tưởng của mình trên các thiết kế</li>\r\n<li>Tự tin thực hiện hoá ý tưởng của mình trên các thiết kế\r\n</li>\r\n<li>Đặc biệt, quà tặng Ebook Figma Design Notebook được gửi tặng ngay sau khóa học, được biên soạn với kiến thức bổ sung, được hệ thống lại và cập nhật từng đợt, đảm bảo chưa bao giờ bị lỗi nhịp với thời đạ</li>\r\n</ul>', 0, 0, 0, 0, '2022-12-12', 0);
+(13, 'Figma', 2, '2', '', 'Khóa học Figma từ căn bản đến thực chiến', '<ul>\r\n<li>Thuần thục cách sử dụng công cụ; hiểu rõ ngôn ngữ thiết kế; thấu hiểu tư duy bài bản</li>\r\n<li>Tự tạo ra những thiết kế Website/App cực chất, sẵn sàng để trở thành một Designer ở các Agency chuyên xây dựng website.</li>\r\n<li>Tự tin thực hiện hoá ý tưởng của mình trên các thiết kế</li>\r\n<li>Tự tin thực hiện hoá ý tưởng của mình trên các thiết kế\r\n</li>\r\n<li>Đặc biệt, quà tặng Ebook Figma Design Notebook được gửi tặng ngay sau khóa học, được biên soạn với kiến thức bổ sung, được hệ thống lại và cập nhật từng đợt, đảm bảo chưa bao giờ bị lỗi nhịp với thời đạ</li>\r\n</ul>', 0, 0, 0, 0, '2022-12-12', 0),
+(14, 'Options Trading Basics (3-Course Bundle)', 4, '1', '', 'A bundle combines 1) Intro to Call and Put Options 2) Time decay, Implied Volatility, Greeks 3) Call and Puts Live trades', '<ul>\r\n<li>Master the basic nuts and bolts of Options trading</li>\r\n<li>Understand the theory and mathematics behind Options</li>\r\n<li>What are the factors that affect Options pricing</li>\r\n<li>How are Options different than Stocks</li>\r\n<li>How you can use Options even if you invest in Stocks and create superior Combo strategies</li>\r\n<li>Anyone interested in learning about Options trading</li>\r\n<li>Live trades using Thinkorswim platform</li>\r\n<li>Art of adjusting Single Options strategies</li>\r\n</ul>', 999000, 0, 0, 0, '2022-12-14', 0),
+(15, 'Cryptocurrency Fundamentals: Buy, Sell, Trade Cryp', 4, '2', '', 'Quickly learn how to use, buy, sell and trade Cryptocurrency in this top rated video course and accompanying PDF Guide.', '<ul>\r\n<li> Have a strong understanding of what cryptocurrency is and how different types of cryptocurrency work.\r\n</li>\r\n<li>\r\nHave a solid, working knowledge in order to discuss and use cryptocurrency safely and effectively in everyday situations.\r\n</li>\r\n</ul>', 899000, 0, 0, 0, '2022-12-14', 0);
 
 -- --------------------------------------------------------
 
@@ -439,7 +459,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT cho bảng `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT cho bảng `user`

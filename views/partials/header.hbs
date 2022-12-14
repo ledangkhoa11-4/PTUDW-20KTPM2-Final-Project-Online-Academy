@@ -35,76 +35,23 @@
                 <b> Categories List</b>
             </button>
             <ul class="level-1">
+                {{#each cateTree as |cateTree|}}
                 <li>
-                    <a href="#">Web development</a>
+                    <a href="/categories?id={{cateTree.IDCate}}">{{cateTree.Name}}</a>
                     <i class="bi bi-caret-right"></i>
-                    <ul class="level-2">
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
+                    {{#unless (isEmpty cateTree.topic)}}
+                        <ul class="level-2">
+                        {{#each cateTree.topic as |topic|}}
+                        <li>
+                            <a href="/categories?id={{cateTree.IDCate}}/topic?id={{topic.IDTopic}}">{{topic.Name}}</a>
+                            <i class="bi bi-caret-right"></i>
+                        </li>
+                        {{/each}}
                     </ul>
+                    {{/unless}}
                 </li>
-                <li>
-                    <a href="#">Web development</a>
-                    <i class="bi bi-caret-right"></i>
-                    <ul class="level-2">
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Web development</a>
-                    <i class="bi bi-caret-right"></i>
-                    <ul class="level-2">
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Web development</a>
-                    <i class="bi bi-caret-right"></i>
-                    <ul class="level-2">
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Web development</a>
-                    <i class="bi bi-caret-right"></i>
-                    <ul class="level-2">
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Web development</a>
-                    <i class="bi bi-caret-right"></i>
-                    <ul class="level-2">
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Web development</a>
-                    <i class="bi bi-caret-right"></i>
-                    <ul class="level-2">
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                        <li><a href="#">Web development</a></li>
-                    </ul>
-                </li>
+                {{/each}}
+                
             </ul>
         </div>
         <form action="/search" class="form-inline my-2 my-lg-0 ml-5 mr-5" style="flex: 1; align-items: center; justify-content: center;">

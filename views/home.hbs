@@ -22,7 +22,7 @@
   <h2 class="slider-title mb-3">Popular Course</h2>
   <div class="card-deck slick-4">
     <div class="card product-item">
-      <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
+      <img src="/public/images/courses/1.jpg" width="250" height="150"
         class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="card product-item">
-      <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
+      <img src="https://via.placeholder.com/400x400" width="250" height="150"
         class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title product-title">Mastering TypeScript - 2022 Edition</h5>
@@ -55,7 +55,7 @@
       </div>
     </div>
     <div class="card product-item">
-      <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
+      <img src="/public/images/courses/2.jpg" width="250" height="150"
         class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
@@ -72,7 +72,7 @@
       </div>
     </div>
     <div class="card product-item">
-      <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
+      <img src="https://via.placeholder.com/400x400" width="250" height="150"
         class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
@@ -89,7 +89,7 @@
       </div>
     </div>
     <div class="card product-item">
-      <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
+      <img src="https://via.placeholder.com/400x400" width="250" height="150"
         class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
@@ -105,7 +105,7 @@
       </div>
     </div>
     <div class="card product-item">
-      <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
+      <img src="https://via.placeholder.com/400x400" width="250" height="150"
         class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
@@ -123,7 +123,7 @@
   </div>
 </div>
 
-<div class="container-fluid mb-4" style="background-color: #FBAB7E;
+<div class="container-fluid mb-4 mt-4" style="background-color: #FBAB7E;
 background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
   <div class="row justify-content-center align-items-center" style="flex-direction: column;min-height:100px" >
     <p class=" mt-2 mb-2" style="font-style: italic;
@@ -138,90 +138,38 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
   <h2 class="slider-title mb-3">Most student are viewing</h2>
   <div class="container-sm ml-5 mr-5">
     <div class="card-deck2 slick-single ">
+      {{#each topViewer as |course|}}
       <div class="card mb-3 ">
         <div class="row no-gutters">
-          <div class="col-md-3" style="max-height: 300px">
-            <img src="https://via.placeholder.com/400x400" style="object-fit: cover; width: 100%; height: 100%"
+          <div class="col-md-4" style="max-height: 300px">
+            <img src="/public/images/courses/{{course.ID}}.jpg" style="width: 100%; height: 100%"
               alt="...">
           </div>
-          <div class="col-md-9" style="max-height: 300px">
+          <div class="col-md-8" style="max-height: 300px">
             <div class="card-body">
               <p> </p>
-              <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
-              <span class="text-muted product-category">Web development</span>
-              <small class="text-muted">By: Brad Traversy</small>
+              <h5 class="card-title product-title" style="font-size: 20px;">{{course.Name}}</h5>
+              <span class="text-muted product-category">{{course.TopicName}}</span>
+              <small class="text-muted">By: {{course.Instructor}}</small>
               <p> </p>
-              <small class="text-muted">14 total hour . 137 lectures</small>
-              <p class="tinyDesc" style="margin-top: 16px;">SEO Training From An SEO Agency Owner: Step By Step Process
-                To Rank #1 on Google. Keyword Research, Technical SEO & More</p>
-              <div class="rating mt-1" rating_score="1" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì
+              <small class="text-muted">{{convertMinuteToHour course.TotalLength}} total hour . {{course.TotalLecture}} lectures</small>
+              <p class="tinyDesc" style="margin-top: 16px;">{{course.TinyDesc}}</p>
+              <div class="rating mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{CountRating}}> {{!-- chỉ cần thêm attribute như thế này thì
                 script
                 sẽ tự render rating --}}
               </div>
               <div class="product-price-wrapper mt-3">
-                <span class="old-price ">6.000.000đ</span>
-                <span class="new-price float-right" style="font-size: 22px;">4.000.000đ</span>
+                <span class="old-price ">{{formatCurrency (calculateOldPrice course.PercentDiscount course.CourseFee)}}</span>
+                <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency course.CourseFee}}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="card mb-3 ">
-        <div class="row no-gutters">
-          <div class="col-md-3" style="max-height: 300px">
-            <img src="https://via.placeholder.com/400x400" style="object-fit: cover; width: 100%; height: 100%"
-              alt="...">
-          </div>
-          <div class="col-md-9" style="max-height: 300px">
-            <div class="card-body">
-              <br>
-              <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
-              <span class="text-muted product-category">Web development</span>
-              <small class="text-muted">By: Brad Traversy</small>
-              <br>
-              <small class="text-muted">14 total hour . 137 lectures</small>
-              <p class="tinyDesc" style="margin-top: 16px;">SEO Training From An SEO Agency Owner: Step By Step Process
-                To Rank #1 on Google. Keyword Research, Technical SEO & More</p>
-              <div class="rating mt-1" rating_score="1" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì
-                script
-                sẽ tự render rating --}}
-              </div>
-              <div class="product-price-wrapper mt-3">
-                <span class="old-price ">6.000.000đ</span>
-                <span class="new-price float-right" style="font-size: 22px;">4.000.000đ</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card mb-3 ">
-        <div class="row no-gutters">
-          <div class="col-md-3" style="max-height: 300px">
-            <img src="https://via.placeholder.com/400x400" style="object-fit: cover; width: 100%; height: 100%"
-              alt="...">
-          </div>
-          <div class="col-md-9" style="max-height: 300px">
-            <div class="card-body">
-              <br>
-              <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
-              <span class="text-muted product-category">Web development</span>
-              <small class="text-muted">By: Brad Traversy</small>
-              <br>
-              <small class="text-muted">14 total hour . 137 lectures</small>
-              <p class="tinyDesc" style="margin-top: 16px;">SEO Training From An SEO Agency Owner: Step By Step Process
-                To Rank #1 on Google. Keyword Research, Technical SEO & More</p>
-              <div class="rating mt-1" rating_score="1" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì
-                script
-                sẽ tự render rating --}}
-              </div>
-              <div class="product-price-wrapper mt-3">
-                <span class="old-price ">6.000.000đ</span>
-                <span class="new-price float-right" style="font-size: 22px;">4.000.000đ</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {{/each}}
+      
+
+
     </div>
   </div>
 </div>

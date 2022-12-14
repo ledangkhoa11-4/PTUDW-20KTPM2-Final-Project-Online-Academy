@@ -2,11 +2,13 @@ import _ from './config/config.js'
 import express, { urlencoded } from 'express';
 import {engine} from 'express-handlebars'
 import express_handlebars_sections from 'express-handlebars-sections'
+import numeral from 'numeral';
 
-import db from './utils/db.js'
+import courseService from "./services/courses-service.js"
 //Route
 import authRoute from './routes/authRoute.js'
 import searchRoute from './routes/searchRoute.js'
+import homeRoute from './routes/homeRoute.js'
 const app = express();
 app.use('/public',express.static("public"))
 
@@ -17,18 +19,51 @@ app.use(urlencoded({
 app.engine('hbs', engine({
     extname: 'hbs',
     helpers:{
-        section: express_handlebars_sections()
+        section: express_handlebars_sections(),
+        convertMinuteToHour(minute){
+            return  (minute/60).toPrecision(4) + "";
+        },
+        ratingConvert(ratingScore){
+            if(ratingScore)
+                return ratingScore;
+            return 0
+        },
+        formatCurrency(currency){
+            if(currency === "")
+                return ""
+            if(currency <= 0)
+            return "Free"
+            return numeral(currency).format('0,0') + "đ";
+        },
+        calculateOldPrice(percent, price){
+            if(!percent)
+                return "";
+            return ((price*percent)/100).toPrecision(4) + "";
+        },
+        isEmpty(array){
+            return array.length === 0;
+        }
     }
     
 }));
 app.set('view engine', 'hbs');
 app.set('views', './views');
 
-
-
-app.get("/", (req,res)=>{
-    res.render("home")
+//res.local
+app.use(async (req,res,next)=>{
+    const cateList = await courseService.getAllCat();
+    let cateTree = [];
+    for(let i = 0; i< cateList.length; i++){
+        const topic = await courseService.getTopicByCat(cateList[i].IDCate);
+        const item = {...cateList[i], topic}
+        cateTree.push(item);
+    }
+    console.log(cateTree);
+    res.locals.cateTree = cateTree;
+    next();
 })
+
+app.use("/", homeRoute)
 app.use("/auth",authRoute);
 app.use('/search',searchRoute);
 

@@ -1,41 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Codespaces
-Marketplace
-Explore
- 
-@QUanlE79 
-ledangkhoa11-4
-/
-PTUDW-20KTPM2-Final-Project-Online-Academy
-Private
-Code
-Issues
-Pull requests
-Actions
-Projects
-Security
-Insights
-PTUDW-20KTPM2-Final-Project-Online-Academy/academy.sql
-@aduongdnai
-aduongdnai add 3 more courses
-Latest commit a49fd26 11 hours ago
- History
- 3 contributors
-@taotenphuoc@ledangkhoa11-4@aduongdnai
-375 lines (313 sloc)  17.7 KB
-
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 14, 2022 lúc 11:24 AM
--- Phiên bản máy phục vụ: 10.4.25-MariaDB
--- Phiên bản PHP: 8.1.10
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -467,22 +429,3 @@ ALTER TABLE `courses`
 ALTER TABLE `user`
   MODIFY `IDUser` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-PTUDW-20KTPM2-Final-Project-Online-Academy/academy.sql at main · ledangkhoa11-4/PTUDW-20KTPM2-Final-Project-Online-Academy

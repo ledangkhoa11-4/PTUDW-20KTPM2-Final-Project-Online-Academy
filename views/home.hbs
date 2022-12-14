@@ -177,107 +177,31 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
 <div class="container-sm popular-courses ml-4 mr-4" data-aos="zoom-in" style="padding-top: 50px;">
   <h2 class="slider-title mb-3">Newest Course</h2>
   <div class="container-sm ml-5 mr-5">
-  <div class="card-deck slick-5">
-    <div class="card product-item">
-      <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
-        class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
-        <span class="text-muted product-category">Web development</span>
-        <small class="text-muted">Brad Traversy</small>
-        <div class="rating mt-1" rating_score="1" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì script
-          sẽ tự render rating --}}
-        </div>
-        <div class="product-price-wrapper mt-3">
-          <span class="old-price">6.000.000đ</span>
-          <span class="new-price float-right">4.000.000đ</span>
-        </div>
-      </div>
-    </div>
-    <div class="card product-item">
-      <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
-        class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title product-title">Mastering TypeScript - 2022 Edition</h5>
-        <span class="text-muted product-category">Web development</span>
-        <small class="text-muted">Brad Traversy</small>
-        <div class="rating mt-1" rating_score="1.5" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì
-          script
-          sẽ tự render rating --}}
-        </div>
-        <div class="product-price-wrapper mt-3">
-          <span class="old-price">6.000.000đ</span>
-          <span class="new-price float-right">4.000.000đ</span>
+    <div class="card-deck slick-5">
+
+      {{#each listNewest as |course|}}
+      <div class="card product-item popover-{{course.ID}}">
+        <img src="/public/images/courses/{{course.ID}}.jpg" width="250" height="170"
+          class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title product-title">{{course.Name}}</h5>
+          <span class="text-muted product-category">{{course.TopicName}}</span>
+          <small class="text-muted">{{#if course.Instructor}}{{course.Instructor}}{{else}}Undefined{{/if}}</small>
+          <div class="rating mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{CountRating}}> {{!-- chỉ cần thêm attribute như thế này thì script
+            sẽ tự render rating --}}
+          </div>
+          <div class="product-price-wrapper mt-3">
+            <span class="old-price">{{formatCurrency (calculateOldPrice course.PercentDiscount course.CourseFee)}}</span>
+            <span class="new-price float-right">{{formatCurrency course.CourseFee}}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="card product-item">
-      <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
-        class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
-        <span class="text-muted product-category">Web development</span>
-        <small class="text-muted">Brad Traversy</small>
-        <div class="rating mt-1" rating_score="3.7" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì
-          script
-          sẽ tự render rating --}}
-        </div>
-        <div class="product-price-wrapper mt-3">
-          <span class="old-price">6.000.000đ</span>
-          <span class="new-price float-right">4.000.000đ</span>
-        </div>
-      </div>
-    </div>
-    <div class="card product-item">
-      <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
-        class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
-        <span class="text-muted product-category">Web development</span>
-        <small class="text-muted">Brad Traversy</small>
-        <div class="rating mt-1" rating_score="1.2" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì
-          script
-          sẽ tự render rating --}}
-        </div>
-        <div class="product-price-wrapper mt-3">
-          <span class="old-price">6.000.000đ</span>
-          <span class="new-price float-right">4.000.000đ</span>
-        </div>
-      </div>
-    </div>
-    <div class="card product-item">
-      <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
-        class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
-        <span class="text-muted product-category">Web development</span>
-        <small class="text-muted">Brad Traversy</small>
-        <div class="rating mt-1" rating_score="1" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì script
-          sẽ tự render rating --}}
-        </div>
-        <div class="product-price-wrapper mt-3">
-          <span class="old-price">6.000.000đ</span>
-          <span class="new-price float-right">4.000.000đ</span>
-        </div>
-      </div>
-    </div>
-    <div class="card product-item">
-      <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
-        class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
-        <span class="text-muted product-category">Web development</span>
-        <small class="text-muted">Brad Traversy</small>
-        <div class="rating mt-1" rating_score="1" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì script
-          sẽ tự render rating --}}
-        </div>
-        <div class="product-price-wrapper mt-3">
-          <span class="old-price">6.000.000đ</span>
-          <span class="new-price float-right">4.000.000đ</span>
-        </div>
-      </div>
-    </div>
-  </div>    
+      {{/each}}
+      
+      
+
+
+    </div>    
   </div>
 </div>
 
@@ -468,23 +392,40 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
     });
   });
 </script>
+<style>
+  .popover{
+    max-width: 60%; /* Max Width of the popover (depending on the container!) */
+    max-height: 300px;
+    overflow: hidden;
+
+}
+
+.popover li{
+  list-style-type: disc;
+
+}
+.popover *{
+  font-size: 16px
+
+}
+</style>
 <script>
-  $('.product-item').popover({
-    trigger: 'hover',
-    html: true,
-    title: "<i>The Linux Command Line Bootcamp: Beginner To Power User</i>",
-    content: `
-      <small class="total-hour float-right">20.5 total hour to learn</small>
-      <br>
-      <h6>About course: </h6>
-      <ul>
-        <li>The ins and outs of ALL of TypeScript's syntax</li>
-        <li>Integrate TypeScript with Webpack</li>
-        <li>TypeScript Interfaces, Generics, Classes, Modules, and more</li>
-        <li>Use TypeScript with ReactJS</li>
-      </ul>
-    `
+  {{#each listNewest as |course|}}
+    $(".popover-{{course.ID}}").popover({
+      trigger: 'hover',
+      container: 'body',
+      html: true,
+      title: "<i>{{course.Name}}</i>",
+      content: `
+        <small class="total-hour float-right">{{convertMinuteToHour course.TotalLength}} total hour to learn</small>
+        <br>
+        <h6>About course: </h6>
+        {{{course.FullDesc}}}
+      `
   })
+    
+  {{/each}}
+  
 </script>
 <script>
   AOS.init({

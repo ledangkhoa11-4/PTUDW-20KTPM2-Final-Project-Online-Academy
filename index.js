@@ -42,7 +42,7 @@ app.engine('hbs', engine({
         },
         isEmpty(array){
             return array.length === 0;
-        }
+        },
     }
     
 }));

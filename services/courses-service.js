@@ -19,6 +19,12 @@ export default {
             return list[0];
         return null;
     },
+    getTopNewest : async (limit)=>{
+        const list = await db.raw(`SELECT c.ID from courses c ORDER BY c.CreatedTime DESC LIMIT ${limit} OFFSET 0`)
+        if (list)
+            return list[0];
+        return null;
+    },
     /**
      * info: ID, Name, TinyDesc, FullDes, CourseFee,  CatName, TopicName,  Instructor, AvgRating, CountRating, TotalLecture, TotalLength
      */

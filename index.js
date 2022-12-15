@@ -3,7 +3,7 @@ import express, { urlencoded } from 'express';
 import {engine} from 'express-handlebars'
 import express_handlebars_sections from 'express-handlebars-sections'
 import numeral from 'numeral';
-import categoryServices from './services/category.services.js';
+import categoryServices from './services/category.services.js'
 import courseService from "./services/courses-service.js"
 //Route
 import authRoute from './routes/authRoute.js'

@@ -1,6 +1,6 @@
 import express from 'express'
 import fn from '../services/courses-service.js'
-import categoryServices from '../services/category.services.js';
+
 const Router = express.Router();
 Router.get('/',async (req,res, next)=>{
     const listTopView = await fn.getTopView(10);

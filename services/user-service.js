@@ -19,5 +19,23 @@ export default{
         return db('user').insert(
            user
         )
-    }
+    },
+    getUserByEmail: async(email)=>{
+        const user = await db.raw(`Select * From user u Where u.Email Like '${email}'`);
+        if(user)
+            return user[0]
+        return user;
+    },
+    isVerified: async(email)=>{
+        const user = await db.raw(`Select u.OTP From user u Where u.Email Like '${email}'`);
+        if(user)
+            return user[0][0].OTP == 0;
+        return false;
+    },
+    verified: async(email, OTP)=>{
+        const rowEffected = await db.raw(`Update user u Set u.OTP = 0 Where u.Email = '${email}' and u.OTP = ${OTP}`);
+        if(rowEffected)
+            return rowEffected[0];
+        return 0;
+    },
 }

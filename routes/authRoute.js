@@ -2,7 +2,7 @@ import express from 'express'
 import userService from '../services/user-service.js'
 import bcrypt from 'bcrypt'
 import nodemailer from 'nodemailer';
-
+import passport from 'passport';
 
 
 var transporter = nodemailer.createTransport({
@@ -22,8 +22,43 @@ Router.get('/register',async (req,res, next)=>{
     
 })
 Router.get('/login',(req,res, next)=>{
-    res.render('vwAuth/login');
+    let isAlert = req.query.error;
+    res.render('vwAuth/login',{
+      isAlert
+    });
 })
+Router.get('/logout',(req,res, next)=>{
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
+})
+
+Router.post("/login",async (req, res, next)=>{
+  const user = req.body;
+
+  let userCheck = await userService.getUserByEmail(user.email);
+  if (userCheck.length == 0)
+      return res.redirect("/auth/login?error=1")
+  const hashedPassword = userCheck[0].Password;
+  const checkPsw = await bcrypt.compare(user.password, hashedPassword);
+  if(!checkPsw)
+    return res.redirect("/auth/login?error=1")
+  if(user.otp){
+    const otp = user.otp[0] + user.otp[1] + user.otp[2] + user.otp[3];
+    await userService.verified(user.email, otp);
+  }
+  const verified = await userService.isVerified(user.email);
+  if(verified)
+    return next();
+  res.locals.temp = user;
+  res.render('vwAuth/inputOtp',{
+    email: user.email,
+    password: user.password
+  })
+}, passport.authenticate('local',{ successRedirect: '/', failureRedirect: '/auth/login?error=1'}));
+
+
 Router.post('/register',async (req,res, next)=>{
     const user = req.body;
     let isEmailExists = await userService.isEmailExists(user.email); 
@@ -53,30 +88,27 @@ Router.post('/register',async (req,res, next)=>{
       subject: 'Shh, don\'t share this OTP with anyone' ,
       html: `
       <div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
-  <div style="margin:50px auto;width:70%;padding:20px 0">
+    <div style="margin:50px auto;width:70%;padding:20px 0">
     <div style="border-bottom:1px solid #eee">
       <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">AcadeMall</a>
     </div>
     <p style="font-size:1.1em">Hi, ${user.name}</p>
-    <p>Thank you for choosing AcadeMall. Use the following OTP to complete your Sign Up procedures.</p>
+    <p>Thank you for choosing AcadeMall. Use the following OTP to complete your Sign Up procedures. If you cannot see mail in your inbox, please check junk box, it may be in here. Sorry for the inconvenience</p>
     <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${OTP}</h2>
-    <p style="font-size:0.9em;">Regards,<br />Your Brand</p>
+    <p style="font-size:0.9em;">Regards,<br />AcadeMall</p>
     <hr style="border:none;border-top:1px solid #eee" />
     <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-      <p>Your Brand Inc</p>
-      <p>1600 Amphitheatre Parkway</p>
-      <p>California</p>
+      <p>AcadeMall Inc</p>
+      <p>227 Nguyen Van Cu Ho Chi Minh City</p>
+      <p>Viet Nam</p>
     </div>
   </div>
 </div>
       `
     };
-    
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
         console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response);
       }
     });
 
@@ -86,4 +118,14 @@ Router.post('/register',async (req,res, next)=>{
         title: 'Check your email to validation'
     });
 })
+
+Router.get('/facebook', passport.authenticate('facebook',{scope:'email'}));
+
+Router.get('/facebook/callback',
+  passport.authenticate('facebook', { successRedirect : '/', failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
+
 export default Router;

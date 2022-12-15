@@ -3,7 +3,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="/public/css/auth.css">
 
-<form action="#" id="form_table" class="form-1" novalidate>
+<form action="" method="POST" id="form_table" class="form-1" novalidate>
     <h1 class="form__header">CREATE ACCOUNT</h1>
     <span class="form__description mb-2">With</span>
     <nav>
@@ -54,6 +54,7 @@
     <input type="submit" value="Register">
 </form>
 <script src="/public/script/validate.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     Validator(
         {
@@ -72,8 +73,18 @@
                 }),
             ],
             onSubmit: function (data) {
-                console.log(data)
+                document.querySelector(".form-1").submit();
             }
         })
 
 </script>
+{{#if isAlert}}
+    <script>
+        Swal.fire({
+  icon: '{{icon}}',
+  title: '{{title}}',
+  showConfirmButton: false,
+  timer: 1500
+})
+    </script>
+{{/if}}

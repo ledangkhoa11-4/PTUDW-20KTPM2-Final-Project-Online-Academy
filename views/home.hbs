@@ -159,8 +159,10 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
                 sẽ tự render rating --}}
               </div>
               <div class="product-price-wrapper mt-3">
-                <span class="old-price ">{{formatCurrency (calculateOldPrice course.PercentDiscount course.CourseFee)}}</span>
-                <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency course.CourseFee}}</span>
+                {{#if course.PercentDiscount}}
+                  <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
+                {{/if}}
+                <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</span>
               </div>
             </div>
           </div>
@@ -184,15 +186,17 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
         <img src="/public/images/courses/{{course.ID}}.jpg" width="250" height="170"
           class="card-img-top" alt="...">
         <div class="card-body">
-          <h5 class="card-title product-title">{{course.Name}}</h5>
+          <h5 class="card-title product-title" style="min-height:38px">{{course.Name}}</h5>
           <span class="text-muted product-category">{{course.TopicName}}</span>
           <small class="text-muted">{{#if course.Instructor}}{{course.Instructor}}{{else}}Undefined{{/if}}</small>
           <div class="rating mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{CountRating}}> {{!-- chỉ cần thêm attribute như thế này thì script
             sẽ tự render rating --}}
           </div>
           <div class="product-price-wrapper mt-3">
-            <span class="old-price">{{formatCurrency (calculateOldPrice course.PercentDiscount course.CourseFee)}}</span>
-            <span class="new-price float-right">{{formatCurrency course.CourseFee}}</span>
+            {{#if course.PercentDiscount}}
+                  <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
+            {{/if}}
+            <span class="new-price float-right">{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</span>
           </div>
         </div>
       </div>
@@ -226,7 +230,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
       <div class="col">
         <a href="">
           <div class="row align-items-center categories-item-wrapper">
-              <img class="categories-item" src="/public/images/categories/1/1.png" alt="">
+              <img class="categories-item" src="/public/images/categories/1/1.jpg" alt="">
               <p class="categories-title  mb-0">Web development</p>
           </div>
         </a>
@@ -234,7 +238,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
       <div class="col">
         <a href="">
           <div class="row align-items-center categories-item-wrapper">
-              <img class="categories-item" src="/public/images/categories/1/2.png" alt="">
+              <img class="categories-item" src="/public/images/categories/1/2.jpg" alt="">
               <p class="categories-title  mb-0">Game development</p>
           </div>
         </a>
@@ -242,7 +246,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
       <div class="col">
         <a href="">
           <div class="row align-items-center categories-item-wrapper">
-              <img class="categories-item" src="/public/images/categories/1/1.png" alt="">
+              <img class="categories-item" src="/public/images/categories/1/1.jpg" alt="">
               <p class="categories-title  mb-0">Web development</p>
           </div>
         </a>
@@ -250,7 +254,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
       <div class="col">
         <a href="">
           <div class="row align-items-center categories-item-wrapper">
-              <img class="categories-item" src="/public/images/categories/1/1.png" alt="">
+              <img class="categories-item" src="/public/images/categories/1/1.jpg" alt="">
               <p class="categories-title  mb-0">Web development</p>
           </div>
         </a>
@@ -258,7 +262,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
       <div class="col">
         <a href="">
           <div class="row align-items-center categories-item-wrapper">
-              <img class="categories-item" src="/public/images/categories/1/1.png" alt="">
+              <img class="categories-item" src="/public/images/categories/1/1.jpg" alt="">
               <p class="categories-title  mb-0">Web development</p>
           </div>
         </a>

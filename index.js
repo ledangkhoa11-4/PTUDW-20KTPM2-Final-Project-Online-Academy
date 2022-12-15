@@ -13,9 +13,11 @@ import categoriesRoute from './routes/categoriesRoute.js'
 const app = express();
 app.use('/public',express.static("public"))
 
-app.use(urlencoded({
-    extended: false,
-}))
+app.use(
+	express.urlencoded({
+		extended: true,
+	})
+);
 
 app.engine('hbs', engine({
     extname: 'hbs',
@@ -36,10 +38,10 @@ app.engine('hbs', engine({
             return "Free"
             return numeral(currency).format('0,0') + "đ";
         },
-        calculateOldPrice(percent, price){
+        calculateNewPrice(percent, price){
             if(!percent)
-                return "";
-            return ((price*percent)/100).toPrecision(4) + "";
+                percent = 0;
+            return (price - (price*percent)/100 ).toPrecision(4) + "";
         },
         isEmpty(array){
             return array.length === 0;

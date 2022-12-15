@@ -3,6 +3,7 @@ import fn from '../services/courses-service.js'
 
 const Router = express.Router();
 Router.get('/',async (req,res, next)=>{
+
     const listTopView = await fn.getTopView(10);
     let topViewer = [];
     for(let i = 0; i< listTopView.length; i++){

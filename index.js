@@ -3,12 +3,13 @@ import express, { urlencoded } from 'express';
 import {engine} from 'express-handlebars'
 import express_handlebars_sections from 'express-handlebars-sections'
 import numeral from 'numeral';
-
+import categoryServices from './services/category.services.js';
 import courseService from "./services/courses-service.js"
 //Route
 import authRoute from './routes/authRoute.js'
 import searchRoute from './routes/searchRoute.js'
 import homeRoute from './routes/homeRoute.js'
+import categoriesRoute from './routes/categoriesRoute.js'
 const app = express();
 app.use('/public',express.static("public"))
 
@@ -51,14 +52,13 @@ app.set('views', './views');
 
 //res.local
 app.use(async (req,res,next)=>{
-    const cateList = await courseService.getAllCat();
+    const cateList = await categoryServices.getAllCat();
     let cateTree = [];
     for(let i = 0; i< cateList.length; i++){
-        const topic = await courseService.getTopicByCat(cateList[i].IDCate);
+        const topic = await categoryServices.getTopicByCat(cateList[i].IDCate);
         const item = {...cateList[i], topic}
         cateTree.push(item);
     }
-    console.log(cateTree);
     res.locals.cateTree = cateTree;
     next();
 })
@@ -66,7 +66,7 @@ app.use(async (req,res,next)=>{
 app.use("/", homeRoute)
 app.use("/auth",authRoute);
 app.use('/search',searchRoute);
-
+app.use('/admin',categoriesRoute);
 app.listen(process.env.PORT, ()=>{
     console.log(`Server running at http://127.0.0.1:${process.env.PORT}`);
 })

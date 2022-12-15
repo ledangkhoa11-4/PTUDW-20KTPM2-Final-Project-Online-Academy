@@ -1,0 +1,61 @@
+<link rel='stylesheet' href='/public/css/home.css' />
+<link rel='stylesheet' href='/public/css/search.css' />
+<link rel='stylesheet' href='/public/css/badge.css' />
+<link rel="stylesheet" href="/public/css/pagination.css">
+  
+<div class="card" style="margin-top: 100px;">
+  <div class="card-header">
+    Categories
+  </div>
+  <div class="card-body">
+    {{#if this.isEmpty}}
+      <p>No Data</p>
+    {{else}}
+      <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Category</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each this.catList}}
+      <tr >
+      <td>{{IDCate}}</td>
+      <td>
+        <a name="" id="" class="btn" href="/admin/categories/{{IDCate}}" role="button">{{Name}}</a>
+        </td>
+      <td><a name="" id="" class="btn-sm btn-outline-primary float-right" href="#" role="button">
+       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+      </a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+    {{/if}}
+    
+    
+  </div>
+  <div class="card-footer text-muted">
+    <a name="" id="" class="btn btn-outline-primary" href="/admin/categories/add" role="button">
+    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+    Add Categories</a>
+  </div>
+</div>
+
+<script src='/public/script/rating.js'></script>
+<script src="/public/script/pagination.js">
+
+</script>
+<script>
+    const valuePage = {
+        totalPages: 100,
+        curPage: 96,
+        truncate: true,
+       numLinksTwoSide: 1,
+       url: "/search?k=a"
+       
+     };
+     pagination(valuePage);
+</script>

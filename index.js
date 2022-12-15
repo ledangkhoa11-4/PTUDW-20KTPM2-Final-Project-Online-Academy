@@ -6,7 +6,8 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import numeral from 'numeral';
 import categoryServices from './services/category.services.js';
-import courseService from "./services/courses-service.js"
+import passport from 'passport';
+import settingStrategy from './config/passport-Strategy.js'
 //Route
 import authRoute from './routes/authRoute.js'
 import searchRoute from './routes/searchRoute.js'

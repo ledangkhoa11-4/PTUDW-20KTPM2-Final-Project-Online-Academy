@@ -1,7 +1,7 @@
 import express from 'express'
-
+import searchEngine from '../services/fullTextSearch-service.js'
 const Router = express.Router();
-Router.get('/',(req,res, next)=>{
+Router.get('/',async (req,res, next)=>{
     let key = req.query.k;
     let url = req.originalUrl;
     let findByName = req.query.byName ;
@@ -28,6 +28,15 @@ Router.get('/',(req,res, next)=>{
     let isFilter = true;
     if(!findByName && !findByCat && !priceOption && !ratingOption)
         isFilter = false;
+
+    let listID;
+    if(findByName && !findByCat)
+        listID = await searchEngine.searchByName(key);
+    if(!findByName && findByCat)
+        listID = await searchEngine.searchByCat(key);
+    if(findByName && findByCat)
+        listID = await searchEngine.searchBothNameAndCat(key);
+    console.log(listID);
     res.render('vwSearch/index',{
         key,
         url,

@@ -342,7 +342,7 @@
     });
   });
   const feedback = document.querySelector('.feedback__slider');
-const feedback_offset = 200;
+const feedback_offset = 150;
 
 function feedbackUpdateHeight(height) {
   if (!height) return false;
@@ -374,19 +374,15 @@ if (feedback) {
 </script>
 <style>
   .popover{
-    max-width: 60%; /* Max Width of the popover (depending on the container!) */
+    max-width: 60%; 
     max-height: 300px;
     overflow: hidden;
-
 }
-
 .popover li{
   list-style-type: disc;
-
 }
 .popover *{
   font-size: 16px
-
 }
 </style>
 <script>
@@ -407,7 +403,6 @@ if (feedback) {
         {{{course.FullDesc}}}
       `
   })
-    
   {{/each}}
   
 </script>

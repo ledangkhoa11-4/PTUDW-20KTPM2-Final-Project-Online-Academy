@@ -24,7 +24,10 @@ Router.get('/categories/edit', async (req,res)=>{
     if (category === null) {
         return res.redirect('/admin/categories');
       }
-    res.render('vwCategory/editCategory',{layout:'admin',category});
+    let isAlert = false;
+    if(req.query.alert)
+      isAlert = true;
+    res.render('vwCategory/editCategory',{layout:'admin',category, isAlert});
 })
 Router.post('/categories/patch', async (req,res)=>{
     const ret=await categoryServices.patch(req.body);
@@ -35,7 +38,7 @@ Router.post('/categories/del', async (req,res)=>{
     var  isAlert=await categoryServices.isCatexistCourses(catId);
     console.log(isAlert);
     if (isAlert){
-        res.redirect(`/admin/categories/edit?id=${catId}`);
+        res.redirect(`/admin/categories/edit?id=${catId}&alert=1`);
     }
     else{
         const ret=await categoryServices.del(catId);

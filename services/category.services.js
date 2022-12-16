@@ -2,6 +2,9 @@ import database from '../utils/db.js';
 import db from '../utils/db.js';
 
 export default{
+    getPopularTopic: async()=>{
+
+    },
     getAllCat: async()=>{
         const list = await db.raw("Select * From category");
         if(list)

@@ -25,6 +25,25 @@ export default {
             return list[0];
         return null;
     },
+    getCourseIDByCat:async (catID)=>{
+        const list = await db.raw(`SELECT c.ID from courses c Where c.IDCategory = ${catID}`)
+        if (list)
+            return list[0];
+        return null;
+    },
+    countCourseIDByCat:async (catID)=>{
+        const list = await db('courses').where('IDCategory',catID).count('ID');
+        if (list)
+            return list;
+        return null;
+    },
+    getCourseIDByCatPage:async (catID,limit,offset)=>{
+        const list = await db.select('ID').from('courses').where('IDCategory',catID).limit(limit).offset(offset);
+        // console.log(list);
+        if (list)
+            return list;
+        return null;
+    },
     /**
      * info: ID, Name, TinyDesc, FullDes, CourseFee,  CatName, TopicName,  Instructor, AvgRating, CountRating, TotalLecture, TotalLength
      */
@@ -45,7 +64,6 @@ export default {
         }  
         return null;
     }
-
 }
 
 

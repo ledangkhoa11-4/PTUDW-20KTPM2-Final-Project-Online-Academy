@@ -10,6 +10,7 @@ import authRoute from './routes/authRoute.js'
 import searchRoute from './routes/searchRoute.js'
 import homeRoute from './routes/homeRoute.js'
 import categoriesRoute from './routes/categoriesRoute.js'
+import userCategoriesRoute from './routes/userCategoriesRoute.js'
 const app = express();
 app.use('/public',express.static("public"))
 
@@ -67,6 +68,7 @@ app.use("/", homeRoute)
 app.use("/auth",authRoute);
 app.use('/search',searchRoute);
 app.use('/admin',categoriesRoute);
+app.use('/categories',userCategoriesRoute);
 app.listen(process.env.PORT, ()=>{
     console.log(`Server running at http://127.0.0.1:${process.env.PORT}`);
 })

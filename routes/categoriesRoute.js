@@ -27,7 +27,9 @@ Router.get('/categories/edit', async (req,res)=>{
     let isAlert = false;
     if(req.query.alert)
       isAlert = true;
-    res.render('vwCategory/editCategory',{layout:'admin',category, isAlert});
+    res.render('vwCategory/editCategory',{layout:'admin',category, isAlert,
+    title:'This category cannot be deleted',
+    icon:'error'});
 })
 Router.post('/categories/patch', async (req,res)=>{
     const ret=await categoryServices.patch(req.body);
@@ -36,7 +38,6 @@ Router.post('/categories/patch', async (req,res)=>{
 Router.post('/categories/del', async (req,res)=>{
     const catId=req.body.IDCate;
     var  isAlert=await categoryServices.isCatexistCourses(catId);
-    console.log(isAlert);
     if (isAlert){
         res.redirect(`/admin/categories/edit?id=${catId}&alert=1`);
     }
@@ -47,9 +48,8 @@ Router.post('/categories/del', async (req,res)=>{
    
     
 })
-Router.get('/categories/:id',async (req,res, next)=>{
-    const catId=req.params.id||0;
-    const isAlert=categoryServices.isCatexistCourses(catId);
+Router.get('/categories/topic',async (req,res, next)=>{
+    const catId=req.query.id||0;
     const topicList= await categoryServices.getTopicByCat(catId);
     if(topicList===null){
         res.redirect('/admin/categories');
@@ -57,9 +57,6 @@ Router.get('/categories/:id',async (req,res, next)=>{
     else{
         res.render('vwCategory/topics',
         {layout:'admin',
-        isAlert,
-        icon:'danger',
-        title:'Cannot Delete this category!!',
         topicList,
         catId,
         isEmpty: topicList.length===0
@@ -76,18 +73,25 @@ Router.get('/categories/topic/add', async (req,res)=>{
 Router.post('/categories/topic/add', async (req,res)=>{
     const catID=req.body.IDCate;
     const ret=await categoryServices.addtopic(req.body);
-    res.redirect(`/admin/categories/${catID}`);
+    res.redirect(`/admin/categories/topic?id=${catID}`);
 })
 Router.get('/categories/topic/edit', async(req,res)=>{
     const catId= req.query.catid||0;
     const topicId=req.query.id||0;
     const topic = await categoryServices.findTopic(topicId,catId);
+    let isAlert=false;
+    if(req.query.alert){
+        isAlert=true;
+    }
     if(topic===null){
-        res.redirect(`/admin/categories/${catID}`);
+        res.redirect(`/admin/categories/topic?id=${catID}`);
     }
     res.render('vwCategory/editTopic',
     {layout: 'admin',
      topic:topic,
+     isAlert,
+     title:'This topic cannot be deleted',
+     icon:'error'
     })
 })
 Router.post('/categories/topic/patch', async(req,res)=>{
@@ -100,12 +104,12 @@ Router.post('/categories/topic/del', async(req,res)=>{
     const topicId=req.body.IDTopic||0;
     const isAlert=await categoryServices.isTopicexistCourses(catId,topicId);
     if(isAlert){
-        res.redirect(`/admin/categories/${catId}`);
+        res.redirect(`/admin/categories/topic/edit?id=${topicId}&catid=${catId}&alert=1`);
     }
     else
     {
     const ret=await categoryServices.delTopic(catId,topicId);
-    res.redirect(`/admin/categories/${catId}`);
+    res.redirect(`/admin/categories/topic?id=${catId}`);
     }
 })
 

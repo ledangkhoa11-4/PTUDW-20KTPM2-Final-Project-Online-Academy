@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="card-footer text-muted">
-      <a name="" id="" class="btn btn-outline-primary" href="/admin/categories/{{this.topic.IDCate}}" role="button">
+      <a name="" id="" class="btn btn-outline-primary" href="/admin/categories/topic?id={{this.topic.IDCate}}" role="button">
       <i class="fa fa-sign-out" aria-hidden="true"></i>
       Back</a>
       <button type="submit" name="" id="" class="btn btn-primary" formaction="/admin/categories/topic/patch"> 
@@ -31,4 +31,17 @@
     </div>
   </form>
 </div>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{{#if this.isAlert}}
+  <script>
+     Swal.fire({
+  icon: '{{this.icon}}',
+  title: '{{this.title}}',
+  text: 'Something went wrong!',
+  footer: '<a href="">Why do I have this issue?</a>',
+  timer: 2500
+})
+  </script>
+{{/if}}
 

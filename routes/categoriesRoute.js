@@ -20,9 +20,7 @@ Router.post('/categories/add', async (req,res)=>{
 })
 Router.get('/categories/edit', async (req,res)=>{
     const catId=req.query.id||0;
-
     const category= await categoryServices.findById(catId);
-  
     if (category === null) {
         return res.redirect('/admin/categories');
       }
@@ -34,18 +32,37 @@ Router.post('/categories/patch', async (req,res)=>{
 })
 Router.post('/categories/del', async (req,res)=>{
     const catId=req.body.IDCate;
-    const ret=await categoryServices.del(catId);
-    res.redirect('/admin/categories');
+    var  isAlert=await categoryServices.isCatexistCourses(catId);
+    console.log(isAlert);
+    if (isAlert){
+        res.redirect(`/admin/categories/edit?id=${catId}`);
+    }
+    else{
+        const ret=await categoryServices.del(catId);
+        res.redirect('/admin/categories');
+    }
+   
+    
 })
 Router.get('/categories/:id',async (req,res, next)=>{
     const catId=req.params.id||0;
+    const isAlert=categoryServices.isCatexistCourses(catId);
     const topicList= await categoryServices.getTopicByCat(catId);
-    res.render('vwCategory/topics',
-    {layout:'admin',
-    topicList,
-    catId: topicList[0].IDCate,
-    isEmpty: topicList.length===0
-   });
+    if(topicList===null){
+        res.redirect('/admin/categories');
+    }
+    else{
+        res.render('vwCategory/topics',
+        {layout:'admin',
+        isAlert,
+        icon:'danger',
+        title:'Cannot Delete this category!!',
+        topicList,
+        catId,
+        isEmpty: topicList.length===0
+       });
+    }
+   
 })
 
 Router.get('/categories/topic/add', async (req,res)=>{
@@ -54,20 +71,40 @@ Router.get('/categories/topic/add', async (req,res)=>{
     res.render('vwCategory/addTopic',{layout:'admin',catId});
 })
 Router.post('/categories/topic/add', async (req,res)=>{
-    console.log(req.body);
+    const catID=req.body.IDCate;
     const ret=await categoryServices.addtopic(req.body);
-    res.redirect('/admin/categories');
+    res.redirect(`/admin/categories/${catID}`);
 })
-Router.get('/categories/topic/edit', async (req,res)=>{
-    const catId=req.query.catid||0;
+Router.get('/categories/topic/edit', async(req,res)=>{
+    const catId= req.query.catid||0;
     const topicId=req.query.id||0;
-    const topic= await categoryServices.findTopic(topicId,catId);
-  
-    
-    res.render('vwCategory/editTopic',{layout:'admin',topic});
+    const topic = await categoryServices.findTopic(topicId,catId);
+    if(topic===null){
+        res.redirect(`/admin/categories/${catID}`);
+    }
+    res.render('vwCategory/editTopic',
+    {layout: 'admin',
+     topic:topic,
+    })
 })
-
-
+Router.post('/categories/topic/patch', async(req,res)=>{
+    const catID=req.body.IDCate;
+    const ret = await categoryServices.patchTopic(req.body);
+    res.redirect(`/admin/categories/${catID}`);
+})
+Router.post('/categories/topic/del', async(req,res)=>{
+    const catId=req.body.IDCate||0;
+    const topicId=req.body.IDTopic||0;
+    const isAlert=await categoryServices.isTopicexistCourses(catId,topicId);
+    if(isAlert){
+        res.redirect(`/admin/categories/${catId}`);
+    }
+    else
+    {
+    const ret=await categoryServices.delTopic(catId,topicId);
+    res.redirect(`/admin/categories/${catId}`);
+    }
+})
 
 
 export default Router;

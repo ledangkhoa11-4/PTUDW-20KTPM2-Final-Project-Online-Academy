@@ -52,6 +52,9 @@ app.engine('hbs', engine({
             return "Free"
             return numeral(currency).format('0,0') + "đ";
         },
+        calculateOldPrice(){
+            return null;
+        },
         calculateNewPrice(percent, price){
             if(!percent)
                 percent = 0;

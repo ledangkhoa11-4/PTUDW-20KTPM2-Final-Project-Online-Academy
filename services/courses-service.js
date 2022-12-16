@@ -1,6 +1,56 @@
 import db from '../utils/db.js';
 
 export default {
+<<<<<<< HEAD
+    getAllCat: async()=>{
+        const list = await db.raw("Select * From category");
+        if(list)
+            return list[0]
+        return list;
+    },
+    getTopicByCat: async(IDCate)=>{
+        const list = await db.raw(`Select * From topic t Where t.IDCate = ${IDCate}`);
+        if(list)
+            return list[0]
+        return list;
+    },
+    getTopView : async (limit)=>{
+        const list = await db.raw(`SELECT c.ID from courses c ORDER BY c.Viewer DESC LIMIT ${limit} OFFSET 0`)
+        if (list)
+            return list[0];
+        return null;
+    },
+    getTopNewest : async (limit)=>{
+        const list = await db.raw(`SELECT c.ID from courses c ORDER BY c.CreatedTime DESC LIMIT ${limit} OFFSET 0`)
+        if (list)
+            return list[0];
+        return null;
+    },
+    getCourseIDByCat:async (catID)=>{
+        const list = await db.raw(`SELECT c.ID from courses c Where c.IDCategory = ${catID}`)
+        if (list)
+            return list[0];
+        return null;
+    },
+    countCourseIDByCat:async (catID)=>{
+        const list = await db('courses').where('IDCategory',catID).count('ID');
+        if (list)
+            return list;
+        return null;
+    },
+    getCourseIDByCatPage:async (catID,limit,offset)=>{
+        const list = await db.select('ID').from('courses').where('IDCategory',catID).limit(limit).offset(offset);
+        // console.log(list);
+        if (list)
+            return list;
+        return null;
+    },
+    /**
+     * info: ID, Name, TinyDesc, FullDes, CourseFee,  CatName, TopicName,  Instructor, AvgRating, CountRating, TotalLecture, TotalLength
+     */
+    getInfoCourse: async(IDCourse)=>{ 
+        let info1 = await db.raw(`Select c.ID, cat.IDCate as IDCate, t.IDTopic as IDTopic , c.Name as Name, c.TinyDesc, c.FullDesc, c.CourseFee, d.PercentDiscount,  cat.Name as CatName, t.Name as TopicName, u.FullName as Instructor, AVG(p.Rating) as AvgRating, COUNT(p.Rating) as CountRating
+=======
 	getPopular: async (limit) => {
 		const list = await db.raw(
 			`Select c.ID, COUNT(c.ID), AVG(p.Rating) 
@@ -32,6 +82,7 @@ export default {
 	getInfoCourse: async (IDCourse) => {
 		let info1 =
 			await db.raw(`Select c.ID, cat.IDCate as IDCate, t.IDTopic as IDTopic , c.Name as Name, c.TinyDesc, c.FullDesc, c.CourseFee, d.PercentDiscount,  cat.Name as CatName, t.Name as TopicName, u.FullName as Instructor, AVG(p.Rating) as AvgRating, COUNT(p.Rating) as CountRating
+>>>>>>> 9937e58aadab47a16a3aa3b8a854b95d52df8c80
         From courses c LEFT JOIN category cat on c.IDCategory = cat.IDCate LEFT JOIN topic t ON t.IDTopic = c.Topic and t.IDCate = cat.IDCate LEFT JOIN participate p ON c.ID = p.IDCourse LEFT JOIN user u ON c.IDInstructor = u.IDUser Left Join discount d on d.ID = c.IDDiscount
         WHERE c.ID = ${IDCourse}
         GROUP by c.ID, c.Name, cat.Name, c.TinyDesc, c.FullDesc, t.Name, u.FullName`);
@@ -39,6 +90,20 @@ export default {
 		let info2 =
 			await db.raw(`Select count(video.No) as TotalLecture, sum(video.Length) as TotalLength 
         From courses c LEFT JOIN circulativevideo video on c.ID = video.IDCourse
+<<<<<<< HEAD
+        WHERE c.ID = ${IDCourse}`
+        )
+        if(info2 && info1){
+            info1 = info1[0][0];
+            info2 = info2[0][0];
+            return {...info1, ...info2}
+        }  
+        return null;
+    }
+}
+
+
+=======
         WHERE c.ID = ${IDCourse}`);
 		if (info2 && info1) {
 			info1 = info1[0][0];
@@ -48,3 +113,4 @@ export default {
 		return null;
 	},
 };
+>>>>>>> 9937e58aadab47a16a3aa3b8a854b95d52df8c80

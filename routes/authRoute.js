@@ -28,6 +28,7 @@ Router.get('/login',(req,res, next)=>{
     });
 })
 Router.get('/logout',(req,res, next)=>{
+  res.clearCookie("user");
   req.logout(function(err) {
     if (err) { return next(err); }
     res.redirect('/');

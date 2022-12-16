@@ -4,14 +4,43 @@
 <link rel="stylesheet" href="/public/css/pagination.css">
 <div class='container-lg ml-4 mr-4 mb-5' style='margin-top: 100px;'>
     <div class='row'>
-        <div class='col-3 result-count dumb'>7,471 results for “css”</div>
+        <div class='col-3 result-count dumb'>7,471 results for “{{key}}”</div>
         <div class='col-3 my-sidebar'>
             <div id='accordion' class='myaccordion'>
-                <div class="current-filter">
-                    <a type="button" class=" btn-light">
-                        Ratings Ascending
-                        <i class="bi bi-x"></i>
-                    </a>
+                <div class='card'>
+                    <div class='card-header' id='headingOne'>
+                        <h2 class='mb-0'>
+                            <button class='d-flex align-items-center justify-content-between btn btn-link'
+                                data-toggle='collapse' data-target='#collapseOne' aria-expanded='true'
+                                aria-controls='collapseOne'>
+                                <i class="bi bi-search"></i>
+                                Find by
+                                <span class='fa-stack fa-sm'>
+                                    <i class='fas fa-circle fa-stack-2x'></i>
+                                    <i class='fas fa-minus fa-stack-1x fa-inverse'></i>
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+                    
+                    <div id='collapseOne' class='collapse show' aria-labelledby='headingOne' data-parent='#accordion'>
+                        <div class='card-body'>
+                            <ul>
+                                <li>
+                                    <div class="wrapper d-flex justify-content-center align-items-center">
+                                        <input type="checkbox" name="filter_name" id=""  disabled {{#if findByName}}checked{{/if}}>  
+                                        <a {{#unless findByName}}href="{{url}}&byName=1"{{/unless}} type="button" class="btn">Course Name</a>  
+                                    </div>                                    
+                                </li>
+                                <li>
+                                    <div class="wrapper d-flex justify-content-center align-items-center">
+                                        <input type="checkbox" name="filter_name" id="" disabled  {{#if findByCat}}checked{{/if}}>  
+                                        <a {{#unless findByCat}}href="{{url}}&byCat=1"{{/unless}} type="button" class="btn">Category</a> 
+                                    </div>                                    
+                                </li>                                                              
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class='card'>
                     <div class='card-header' id='headingOne'>
@@ -19,6 +48,7 @@
                             <button class='d-flex align-items-center justify-content-between btn btn-link'
                                 data-toggle='collapse' data-target='#collapseOne' aria-expanded='true'
                                 aria-controls='collapseOne'>
+                                <i class="bi bi-star-fill"></i>
                                 Ratings
                                 <span class='fa-stack fa-sm'>
                                     <i class='fas fa-circle fa-stack-2x'></i>
@@ -30,8 +60,49 @@
                     <div id='collapseOne' class='collapse show' aria-labelledby='headingOne' data-parent='#accordion'>
                         <div class='card-body'>
                             <ul>
-                                <li>Ascending</li>
-                                <li>Decending</li>
+                                {{#if (isAsc ratingOption)}}
+                                <li>
+                                    <div class="wrapper d-flex justify-content-center align-items-center">
+                                        <input type="radio" name="filter_price_asc" id="1" disabled checked>  
+                                        <a type="button" class="btn">Ascending</a>  
+                                    </div>                                    
+                                </li>                                
+                                <li>
+                                    <div class="wrapper d-flex justify-content-center align-items-center">
+                                        <input type="radio" name="filter_price_des" id="1" disabled>  
+                                        <a href="{{url}}&ratingOption=des" type="button" class="btn">Descending</a>  
+                                    </div>                                    
+                                </li>
+                                {{else}}
+                                    {{#if (isDes ratingOption)}}
+                                        <li>
+                                            <div class="wrapper d-flex justify-content-center align-items-center">
+                                                <input type="radio" name="filter_price_asc" id="1" disabled>  
+                                                <a href="{{url}}&ratingOption=asc" type="button" class="btn">Ascending</a>  
+                                            </div>                                    
+                                        </li>                                
+                                        <li>
+                                            <div class="wrapper d-flex justify-content-center align-items-center">
+                                                <input type="radio" name="filter_price_des" id="1" disabled checked>  
+                                                <a type="button" class="btn">Descending</a>  
+                                            </div>                                    
+                                        </li>
+                                    {{else}}
+                                        <li>
+                                            <div class="wrapper d-flex justify-content-center align-items-center">
+                                                <input type="radio" name="filter_price_asc" id="1" disabled>  
+                                                <a href="{{url}}&ratingOption=asc" type="button" class="btn">Ascending</a>  
+                                            </div>                                    
+                                        </li>                                
+                                        <li>
+                                            <div class="wrapper d-flex justify-content-center align-items-center">
+                                                <input type="radio" name="filter_price_des" id="1" disabled >  
+                                                <a href="{{url}}&ratingOption=des"  type="button" class="btn">Descending</a>  
+                                            </div>                                    
+                                        </li>
+                                    {{/if}}
+                                {{/if}}
+                                
                             </ul>
                         </div>
                     </div>
@@ -42,6 +113,7 @@
                             <button class='d-flex align-items-center justify-content-between btn btn-link collapsed'
                                 data-toggle='collapse' data-target='#collapseTwo' aria-expanded='false'
                                 aria-controls='collapseTwo'>
+                                <i class="bi bi-tag-fill"></i>
                                 Price
                                 <span class='fa-stack fa-2x'>
                                     <i class='fas fa-circle fa-stack-2x'></i>
@@ -53,41 +125,73 @@
                     <div id='collapseTwo' class='collapse' aria-labelledby='headingTwo' data-parent='#accordion'>
                         <div class='card-body'>
                             <ul>
-                                <li>Informatics</li>
-                                <li>Mathematics</li>
-                                <li>Greek</li>
-                                <li>Biostatistics</li>
-                                <li>English</li>
-                                <li>Nursing</li>
+                                {{#if (isAsc priceOption)}}
+                                <li>
+                                    <div class="wrapper d-flex justify-content-center align-items-center">
+                                        <input type="radio" name="filter_price_asc" id="1" disabled checked>  
+                                        <a type="button" class="btn">Ascending</a>  
+                                    </div>                                    
+                                </li>                                
+                                <li>
+                                    <div class="wrapper d-flex justify-content-center align-items-center">
+                                        <input type="radio" name="filter_price_des" id="1" disabled>  
+                                        <a href="{{url}}&priceOption=des" type="button" class="btn">Descending</a>  
+                                    </div>                                    
+                                </li>
+                                {{else}}
+                                    {{#if (isDes priceOption)}}
+                                        <li>
+                                            <div class="wrapper d-flex justify-content-center align-items-center">
+                                                <input type="radio" name="filter_price_asc" id="1" disabled>  
+                                                <a href="{{url}}&priceOption=asc" type="button" class="btn">Ascending</a>  
+                                            </div>                                    
+                                        </li>                                
+                                        <li>
+                                            <div class="wrapper d-flex justify-content-center align-items-center">
+                                                <input type="radio" name="filter_price_des" id="1" disabled checked>  
+                                                <a type="button" class="btn">Descending</a>  
+                                            </div>                                    
+                                        </li>
+                                    {{else}}
+                                        <li>
+                                            <div class="wrapper d-flex justify-content-center align-items-center">
+                                                <input type="radio" name="filter_price_asc" id="1" disabled>  
+                                                <a href="{{url}}&priceOption=asc" type="button" class="btn">Ascending</a>  
+                                            </div>                                    
+                                        </li>                                
+                                        <li>
+                                            <div class="wrapper d-flex justify-content-center align-items-center">
+                                                <input type="radio" name="filter_price_des" id="1" disabled >  
+                                                <a href="{{url}}&priceOption=des"  type="button" class="btn">Descending</a>  
+                                            </div>                                    
+                                        </li>
+                                    {{/if}}
+                                {{/if}}
+                                
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class='card'>
-                    <div class='card-header' id='headingThree'>
-                        <h2 class='mb-0'>
-                            <button class='d-flex align-items-center justify-content-between btn btn-link collapsed'
-                                data-toggle='collapse' data-target='#collapseThree' aria-expanded='false'
-                                aria-controls='collapseThree'>
-                                Research
-                                <span class='fa-stack fa-2x'>
-                                    <i class='fas fa-circle fa-stack-2x'></i>
-                                    <i class='fas fa-plus fa-stack-1x fa-inverse'></i>
-                                </span>
-                            </button>
-                        </h2>
-                    </div>
-                    <div id='collapseThree' class='collapse' aria-labelledby='headingThree' data-parent='#accordion'>
-                        <div class='card-body'>
-                            <ul>
-                                <li>Astrophysics</li>
-                                <li>Informatics</li>
-                                <li>Criminology</li>
-                                <li>Economics</li>
-                            </ul>
+                {{#if isFilter}}
+                    <div class='card'>
+                    <a href="/search?k={{key}}">
+                        <div class='card-header' id='headingThree'>
+                            <h2 class='mb-0'>
+                                <button class='d-flex align-items-center justify-content-between btn btn-link collapsed'
+                                    data-toggle='collapse' data-target='#collapseThree' aria-expanded='false'
+                                    aria-controls='collapseThree'>
+                                    <i class="bi bi-eraser-fill"></i>
+                                    Remove Filter
+                                    <span class='fa-stack fa-2x' style="">
+                                        <i class='fas fa-plus fa-stack-1x fa-inverse'></i>
+                                    </span>
+                                </button>
+                            </h2>
                         </div>
-                    </div>
+                    </a>
                 </div>
+                {{/if}}
+                
             </div>
         </div>
         <div class='col ml-5'>
@@ -313,78 +417,10 @@
                         </div>
                     </div>                    
                 </div>
-                <div class="col-auto mt-3">
-                    <div class="card product-item" style="max-width: 300px" >
-                        <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
-                            class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
-                            <span class="text-muted product-category">Web development</span>
-                            <small class="text-muted">Brad Traversy</small>
-                            <div class="rating mt-1" rating_score="1" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì script
-                            sẽ tự render rating --}}
-                            </div>
-                            <div class="product-price-wrapper mt-3">
-                            <span class="old-price">6.000.000đ</span>
-                            <span class="new-price float-right">4.000.000đ</span>
-                            </div>
-                        </div>
-                    </div>                    
-                </div>
-                <div class="col-auto mt-3">
-                    <div class="card product-item" style="max-width: 300px" >
-                        <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
-                            class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
-                            <span class="text-muted product-category">Web development</span>
-                            <small class="text-muted">Brad Traversy</small>
-                            <div class="rating mt-1" rating_score="1" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì script
-                            sẽ tự render rating --}}
-                            </div>
-                            <div class="product-price-wrapper mt-3">
-                            <span class="old-price">6.000.000đ</span>
-                            <span class="new-price float-right">4.000.000đ</span>
-                            </div>
-                        </div>
-                    </div>                    
-                </div>
-                <div class="col-auto mt-3">
-                    <div class="card product-item" style="max-width: 300px" >
-                        <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
-                            class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
-                            <span class="text-muted product-category">Web development</span>
-                            <small class="text-muted">Brad Traversy</small>
-                            <div class="rating mt-1" rating_score="1" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì script
-                            sẽ tự render rating --}}
-                            </div>
-                            <div class="product-price-wrapper mt-3">
-                            <span class="old-price">6.000.000đ</span>
-                            <span class="new-price float-right">4.000.000đ</span>
-                            </div>
-                        </div>
-                    </div>                    
-                </div>
-                <div class="col-auto mt-3">
-                    <div class="card product-item" style="max-width: 300px" >
-                        <img src="https://via.placeholder.com/400x400" width="250" height="150" style="object-fit: cover;"
-                            class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title product-title">The Linux Command Line Bootcamp: Beginner To Power User</h5>
-                            <span class="text-muted product-category">Web development</span>
-                            <small class="text-muted">Brad Traversy</small>
-                            <div class="rating mt-1" rating_score="1" rating_count="97"> {{!-- chỉ cần thêm attribute như thế này thì script
-                            sẽ tự render rating --}}
-                            </div>
-                            <div class="product-price-wrapper mt-3">
-                            <span class="old-price">6.000.000đ</span>
-                            <span class="new-price float-right">4.000.000đ</span>
-                            </div>
-                        </div>
-                    </div>                    
-                </div>
+
+
+
+                
             </div>  
             <div class="page-container">
                 <button class="first-page">
@@ -427,13 +463,16 @@
 {{/section}}
 
 <script src='/public/script/rating.js'></script>
+<script>
+      renderRating('.rating')
+</script>
 <script src="/public/script/pagination.js">
 
 </script>
 <script>
     const valuePage = {
         totalPages: 100,
-        curPage: 3,
+        curPage: 1,
         truncate: true,
        numLinksTwoSide: 1,
        url: "/search?k=a"

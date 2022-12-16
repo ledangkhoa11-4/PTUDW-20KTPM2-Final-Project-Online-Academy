@@ -60,6 +60,12 @@ app.engine('hbs', engine({
         isEmpty(array){
             return array.length === 0;
         },
+        isAsc(text){
+            return text === "asc"
+        },
+        isDes(text){
+            return text === "des"
+        }
     }
     
 }));
@@ -79,10 +85,16 @@ app.use(async (req,res,next)=>{
     }
     res.locals.cateTree = cateTree;
 
+    if(req.cookies.user){
+        res.locals.isLogged = true;
+        res.locals.auth = req.cookies.user
+    }
+    
 
     if(req.session.passport){
         res.locals.isLogged = true;
         res.locals.auth = req.session.passport.user;
+        res.cookie("user",req.session.passport.user);
     }
     
     next();

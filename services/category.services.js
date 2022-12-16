@@ -2,8 +2,16 @@ import database from '../utils/db.js';
 import db from '../utils/db.js';
 
 export default{
-    getPopularTopic: async()=>{
-
+    getMostTopicLearned: async(limit)=>{
+        const list = await db.raw(`SELECT cat.IDCate, cat.Name as CatName, t.IDTopic, t.Name as TopicName
+                                    FROM topic t LEFT JOIN courses c on c.Topic = t.IDTopic and c.IDCategory = t.IDCate LEFT JOIN category cat on cat.IDCate = t.IDCate LEFT JOIN 
+                                    (Select p.IDCourse as ID, COUNT(p.IDCourse) as learnerCount FROM participate p GROUP BY p.IDCourse) as k on k.ID = c.ID
+                                    Group by cat.IDCate, t.IDTopic
+                                    ORDER BY sum(learnerCount) desc
+                                    LIMIT ${limit} OFFSET 0`);
+        if(list)
+            return list[0];
+        return list;
     },
     getAllCat: async()=>{
         const list = await db.raw("Select * From category");

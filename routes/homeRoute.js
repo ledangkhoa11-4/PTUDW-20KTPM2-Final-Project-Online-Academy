@@ -1,6 +1,6 @@
 import express from 'express'
 import fn from '../services/courses-service.js'
-
+import categoryServices from '../services/category.services.js';
 const Router = express.Router();
 Router.get('/',async (req,res, next)=>{
     const listPopular = await fn.getPopular(4);
@@ -23,8 +23,10 @@ Router.get('/',async (req,res, next)=>{
         const info = await fn.getInfoCourse(idListNewest[i].ID);
         listNewest.push(info);
     }
+
+    const topCateList = await categoryServices.getMostTopicLearned(4);
     res.render('home',{
-        popular,topViewer,listNewest
+        popular,topViewer,listNewest,topCateList
     });
 
 })

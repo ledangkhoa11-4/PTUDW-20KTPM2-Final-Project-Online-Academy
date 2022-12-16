@@ -3,11 +3,11 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="/public/css/auth.css">
 
-<form action="#" id="form_table" class="form-1" novalidate>
+<form method="POST" id="form_table" class="form-1" novalidate>
     <h1 class="form__header">SIGN UP</h1>
     <span class="form__description mb-2">With</span>
     <nav>
-        <a href="#" class="menu-item">
+        <a href="/auth/facebook" class="menu-item">
             <!-- svg from fontawesome -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path
@@ -33,7 +33,7 @@
     </div>
     <div class="form__group ">
         <label for="password">Password</label>
-        <input type="password" name="password" class="password">
+        <input type="password" name="password" class="password" autocomplete="true">
         <i class="fa-solid fa-triangle-exclamation error-icon"></i>
         <span class="form__group-message password-message"></span>
     </div>
@@ -42,6 +42,7 @@
     <input type="submit" value="Login">
 </form>
 <script src="/public/script/validate.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     Validator(
         {
@@ -55,8 +56,18 @@
                 Validator.minLength(".password", 8),
             ],
             onSubmit: function (data) {
-                console.log(data)
+                 document.querySelector(".form-1").submit();
             }
         })
 
 </script>
+{{#if isAlert}}
+    <script>
+    Swal.fire({
+  icon: 'error',
+  title: 'Your email or password incorrect!',
+  showConfirmButton: false,
+  timer: 2500
+})
+    </script>
+{{/if}}

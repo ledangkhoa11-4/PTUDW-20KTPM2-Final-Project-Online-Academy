@@ -1,11 +1,6 @@
-<link rel='stylesheet' href='/public/css/home.css' />
-<link rel='stylesheet' href='/public/css/search.css' />
-<link rel='stylesheet' href='/public/css/badge.css' />
-<link rel="stylesheet" href="/public/css/pagination.css">
-  
 <div class="card">
   <div class="card-header">
-    Categories
+   Topic
   </div>
   <div class="card-body">
     {{#if this.isEmpty}}
@@ -15,7 +10,7 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Category</th>
+      <th scope="col">Topics</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -24,7 +19,7 @@
       <tr >
       <td>{{IDTopic}}</td>
       <td> {{Name}} </td>
-      <td><a name="" id="" class="btn-sm btn-outline-primary float-right" href="#" role="button">
+      <td><a name="" id="" class="btn-sm btn-outline-primary float-right" href="/admin/categories/topic/edit?id={{IDTopic}}&catid={{IDCate}}" role="button">
        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
       </a></td>
     </tr>
@@ -32,28 +27,13 @@
   </tbody>
 </table>
     {{/if}}
-    
-    
   </div>
   <div class="card-footer text-muted">
-    <a name="" id="" class="btn btn-outline-primary" href="/admin/categories/add" role="button">
+    <a name="" id="" class="btn btn-primary" href="/admin/categories" role="button">
+      <i class="fa fa-sign-out" aria-hidden="true"></i>
+      Back</a>
+    <a name="" id="" class="btn btn-outline-primary" href="/admin/categories/topic/add?catid={{this.catId}}" role="button"> 
     <i class="fa fa-plus-circle" aria-hidden="true"></i>
-    Add Categories</a>
+    Add Topics</a>
   </div>
 </div>
-
-<script src='/public/script/rating.js'></script>
-<script src="/public/script/pagination.js">
-
-</script>
-<script>
-    const valuePage = {
-        totalPages: 100,
-        curPage: 96,
-        truncate: true,
-       numLinksTwoSide: 1,
-       url: "/search?k=a"
-       
-     };
-     pagination(valuePage);
-</script>

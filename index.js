@@ -13,12 +13,8 @@ import authRoute from './routes/authRoute.js'
 import searchRoute from './routes/searchRoute.js'
 import homeRoute from './routes/homeRoute.js'
 import categoriesRoute from './routes/categoriesRoute.js'
-<<<<<<< HEAD
 import userCategoriesRoute from './routes/userCategoriesRoute.js'
-const app = express();
-app.use('/public',express.static("public"))
-=======
->>>>>>> 9937e58aadab47a16a3aa3b8a854b95d52df8c80
+
 
 const app = express();
 

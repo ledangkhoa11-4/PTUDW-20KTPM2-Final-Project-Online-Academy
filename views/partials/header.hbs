@@ -43,7 +43,7 @@
                         <ul class="level-2">
                         {{#each cateTree.topic as |topic|}}
                         <li>
-                            <a href="/categories?id={{cateTree.IDCate}}/topic?id={{topic.IDTopic}}">{{topic.Name}}</a>
+                            <a href="/categories/{{cateTree.IDCate}}?topic={{topic.IDTopic}}">{{topic.Name}}</a>
                             <i class="bi bi-caret-right"></i>
                         </li>
                         {{/each}}
@@ -54,12 +54,14 @@
                 
             </ul>
         </div>
+        
         <form action="/search" class="form-inline my-2 my-lg-0 ml-5 mr-5" style="flex: 1; align-items: center; justify-content: center;">
             <div class="p-1 bg-light rounded rounded-pill shadow-sm" style="flex-basis: 65%; border: 1px solid #ccc">
                 <div class="input-group" style="border-radius: 8px">
-                    <input name="k" type="search" placeholder="What're you searching for?" aria-describedby="button-addon1"
+                    <input name="k" type="search" placeholder="What're you searching for?" {{#if keySearch}}value="{{keySearch}}"{{/if}} aria-describedby="button-addon1 "
                         class="form-control border-0"
                         style="background-color: transparent !important;border-radius: 23px;">
+                        <input type="text" name="byName" value="1" style="display: none;">
                     <div class="input-group-append">
                         <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i
                         class="fa fa-search"></i></button>

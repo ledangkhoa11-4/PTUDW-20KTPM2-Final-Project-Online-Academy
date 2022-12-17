@@ -70,7 +70,6 @@ app.engine('hbs', engine({
             return text === "des"
         }
     }
-    
 }));
 app.set('view engine', 'hbs');
 app.set('views', './views');

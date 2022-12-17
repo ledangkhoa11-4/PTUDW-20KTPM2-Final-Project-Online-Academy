@@ -2,8 +2,13 @@ import express from 'express'
 import coursesService from '../services/courses-service.js';
 
 const Router = express.Router();
+Router.get('/:id/topic',async(req,res, next)=>{
+    console.log(req.params.id, req.query.id);
+})
+
 Router.get('/',async(req,res, next)=>{
     const id = req.query.id;
+    console.log(id);
     const page = req.query.p || 1;
     const nextPage = parseInt(page) + 1;
     const prevPage = parseInt(page) - 1;

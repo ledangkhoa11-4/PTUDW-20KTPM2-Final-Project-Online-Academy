@@ -32,6 +32,12 @@ export default {
             return list[0];
         return null;
     },
+    getCourseIDByTopic:async (catID,topicID)=>{
+        const list = await db.raw(`SELECT c.ID from courses c Where c.IDCategory = ${catID} And c.Topic = ${topicID}`)
+        if (list)
+            return list[0];
+        return null;
+    },
     countCourseIDByCat:async (catID)=>{
         const list = await db('courses').where('IDCategory',catID).count('ID');
         if (list)
@@ -40,6 +46,13 @@ export default {
     },
     getCourseIDByCatPage:async (catID,limit,offset)=>{
         const list = await db.select('ID').from('courses').where('IDCategory',catID).limit(limit).offset(offset);
+        // console.log(list);
+        if (list)
+            return list;
+        return null;
+    },
+    getCourseIDByTopicPage:async (catID,topicID,limit,offset)=>{
+        const list = await db.select('ID').from('courses').where('IDCategory',catID).andWhere('Topic',topicID).limit(limit).offset(offset);
         // console.log(list);
         if (list)
             return list;

@@ -37,13 +37,13 @@
             <ul class="level-1">
                 {{#each cateTree as |cateTree|}}
                 <li>
-                    <a href="/categories?id={{cateTree.IDCate}}">{{cateTree.Name}}</a>
+                    <a href="/categories?catID={{cateTree.IDCate}}">{{cateTree.Name}}</a>
                     <i class="bi bi-caret-right"></i>
                     {{#unless (isEmpty cateTree.topic)}}
                         <ul class="level-2">
                         {{#each cateTree.topic as |topic|}}
                         <li>
-                            <a href="/categories?id={{cateTree.IDCate}}/topic?id={{topic.IDTopic}}">{{topic.Name}}</a>
+                            <a href="/categories/{{cateTree.IDCate}}?topicID={{topic.IDTopic}}">{{topic.Name}}</a>
                             <i class="bi bi-caret-right"></i>
                         </li>
                         {{/each}}

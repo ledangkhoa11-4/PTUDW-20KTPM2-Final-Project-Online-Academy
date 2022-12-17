@@ -26,12 +26,35 @@ export default {
     if (list) return list[0];
     return null;
   },
+  getCourseIDByCat: async (catID) => {
+    const list = await db.raw(
+      `SELECT c.ID from courses c Where c.IDCategory = ${catID}`
+    );
+    if (list) return list[0];
+    return null;
+  },
+  countCourseIDByCat: async (catID) => {
+    const list = await db("courses").where("IDCategory", catID).count("ID");
+    if (list) return list;
+    return null;
+  },
+  getCourseIDByCatPage: async (catID, limit, offset) => {
+    const list = await db
+      .select("ID")
+      .from("courses")
+      .where("IDCategory", catID)
+      .limit(limit)
+      .offset(offset);
+    // console.log(list);
+    if (list) return list;
+    return null;
+  },
   /**
-   * info: ID, Name, TinyDesc, FullDes, CourseFee,  CatName, TopicName,  Instructor, AvgRating, CountRating, TotalLecture, TotalLength
+   * info: ID, Name, TinyDesc, FullDes, CourseFee,  CatName, TopicName,  Instructor, AvgRating, CountRating, TotalLecture, TotalLength, CreatedTime
    */
   getInfoCourse: async (IDCourse) => {
     let info1 =
-      await db.raw(`Select c.ID, cat.IDCate as IDCate, t.IDTopic as IDTopic , c.Name as Name, c.TinyDesc, c.FullDesc, c.CourseFee, d.PercentDiscount,  cat.Name as CatName, t.Name as TopicName, u.FullName as Instructor, AVG(p.Rating) as AvgRating, COUNT(p.Rating) as CountRating
+      await db.raw(`Select c.ID, cat.IDCate as IDCate, t.IDTopic as IDTopic , c.Name as Name, c.TinyDesc, c.FullDesc, c.CourseFee, d.PercentDiscount,  cat.Name as CatName, t.Name as TopicName, u.FullName as Instructor, AVG(p.Rating) as AvgRating, COUNT(p.Rating) as CountRating, c.CreatedTime
         From courses c LEFT JOIN category cat on c.IDCategory = cat.IDCate LEFT JOIN topic t ON t.IDTopic = c.Topic and t.IDCate = cat.IDCate LEFT JOIN participate p ON c.ID = p.IDCourse LEFT JOIN user u ON c.IDInstructor = u.IDUser Left Join discount d on d.ID = c.IDDiscount
         WHERE c.ID = ${IDCourse}
         GROUP by c.ID, c.Name, cat.Name, c.TinyDesc, c.FullDesc, t.Name, u.FullName`);

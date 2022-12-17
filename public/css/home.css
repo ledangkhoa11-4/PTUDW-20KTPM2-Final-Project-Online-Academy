@@ -163,14 +163,16 @@
     justify-content: center !important;
 }
 
-.categories-list a{
+a{
     text-decoration: none !important;
 }
-.categories-list a:hover{
+a:hover{
     text-decoration: none !important;
 }
 .categories-item{
+    margin-bottom: 16px;
     width: 30%;
+    height: 84px;
 }
 
 .categories-title{

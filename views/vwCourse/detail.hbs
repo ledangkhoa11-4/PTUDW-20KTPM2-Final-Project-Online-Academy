@@ -72,20 +72,21 @@
         } .lecture { clear: both; color: #666; display: none; padding-left:
         1.5em; }
       </style>
-      <div class="chapter">
-        <div class="chapter_content">
-          <span class="icon_drop">+</span>How do I select an item using class or
-          ID?
+      {{#each this.chapters}}
+        <div class="chapter">
+          <div class="chapter_content">
+            <span class="icon_drop">+</span>{{Name}}
+          </div>
+          <div class="lecture">
+            <p>
+              This code selects an element with an ID of "myDivId". Since IDs
+              are unique, this expression always selects either zero or one
+              elements depending upon whether or not an element with the
+              specified ID exists.
+            </p>
+          </div>
         </div>
-        <div class="lecture">
-          <p>
-            This code selects an element with an ID of "myDivId". Since IDs are
-            unique, this expression always selects either zero or one elements
-            depending upon whether or not an element with the specified ID
-            exists.
-          </p>
-        </div>
-      </div>
+      {{/each}}
     </div>
   {{/if}}
 </div>

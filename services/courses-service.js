@@ -1,4 +1,5 @@
 import db from "../utils/db.js";
+import knex from "knex";
 
 export default {
   getPopular: async (limit) => {
@@ -68,6 +69,11 @@ export default {
       info2 = info2[0][0];
       return { ...info1, ...info2 };
     }
+    return null;
+  },
+  getAllChapters: async (IDCourse) => {
+    let list = await db.select("*").from("chapter").where("IDCourse", IDCourse);
+    if (list) return JSON.parse(JSON.stringify(list));
     return null;
   },
 };

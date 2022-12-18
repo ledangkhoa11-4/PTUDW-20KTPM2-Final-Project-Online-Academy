@@ -61,32 +61,45 @@
 
       <style>
         .chapter { border-bottom: 1px dotted #ccc; padding: 1em 0; } .icon_drop
-        { line-height: 1em; color: #aaa; font-family: sans-serif; float: left;
-        font-weight: 700; padding-right: 0.3em; -webkit-transition: all 200ms;
-        -moz-transition: all 200ms; transition: all 200ms; } .effect_icon_drop {
-        transform: rotate(-45deg); transform-origin: 50% 50%; -ms-transform:
-        rotate(-45deg); -ms-transform-origin: 50% 50%; -webkit-transform:
-        rotate(-45deg); -webkit-transform-origin: 50% 50%; -webkit-transition:
-        all 200ms; -moz-transition: all 200ms; transition: all 200ms; }
-        .chapter_content { cursor: pointer; font-size: 1.5em; font-weight: 100;
-        } .lecture { clear: both; color: #666; display: none; padding-left:
-        1.5em; }
+        { font-size:xx-large;line-height: 1em; color: #aaa; font-family:
+        sans-serif; float: left; font-weight: 700; padding-right: 0.3em;
+        -webkit-transition: all 200ms; -moz-transition: all 200ms; transition:
+        all 200ms; } .effect_icon_drop { transform: rotate(-45deg);
+        transform-origin: 50% 50%; -ms-transform: rotate(-45deg);
+        -ms-transform-origin: 50% 50%; -webkit-transform: rotate(-45deg);
+        -webkit-transform-origin: 50% 50%; -webkit-transition: all 200ms;
+        -moz-transition: all 200ms; transition: all 200ms; } .chapter_content {
+        cursor: pointer; font-size: 1.5em; font-weight: 100; } .lecture { clear:
+        both; color: #666; display: none; padding-left: 1.5em; }
       </style>
-      {{#each this.chapters}}
+      {{#each this.chapters as |chapter|}}
         <div class="chapter">
           <div class="chapter_content">
-            <span class="icon_drop">+</span>{{Name}}
+            <span class="icon_drop">+</span>{{chapter.Name}}
           </div>
-          <div class="lecture">
-            <p>
-              This code selects an element with an ID of "myDivId". Since IDs
-              are unique, this expression always selects either zero or one
-              elements depending upon whether or not an element with the
-              specified ID exists.
-            </p>
+          <div class="lecture" id="lecture" chapter="{{chapter.IDChapter}}">
+
           </div>
         </div>
       {{/each}}
+      <script>
+        let lecture = document.querySelector(".lecture");
+        Array.from(lecture).forEach(div=>{ let asd =
+        div.getAttribute(`chapter`); div.innerHTML = `{{#each
+          this.videos
+          as |videos|
+        }}
+          {{#if (matchChapter videos.IDChapter "${asd}")}}
+            <a href="https:/youtube.com/watch?v={{videos.URL}}">
+            {{videos.No}}
+            &nbsp;
+            {{videos.Name}}
+            </a>
+          {{/if}}
+        {{/each}}`; })
+
+      </script>
+
     </div>
   {{/if}}
 </div>

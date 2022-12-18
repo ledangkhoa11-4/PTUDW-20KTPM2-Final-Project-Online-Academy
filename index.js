@@ -37,49 +37,49 @@ settingStrategy(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.engine('hbs', engine({
-    extname: 'hbs',
-    helpers:{
-        section: express_handlebars_sections(),
-        convertMinuteToHour(minute){
-            return  (minute/60).toPrecision(4) + "";
-        },
-        ratingConvert(ratingScore){
-            if(ratingScore)
-                return ratingScore;
-            return 0
-        },
-        formatCurrency(currency){
-            if(currency === "")
-                return ""
-            if(currency <= 0)
-            return "Free"
-            return numeral(currency).format('0,0') + "đ";
-        },
-        calculateOldPrice(){
-            return null;
-        },
-        calculateNewPrice(percent, price){
-            if(!percent)
-                percent = 0;
-            return (price - (price*percent)/100 ).toPrecision(4) + "";
-        },
-        isEmpty(array){
-            return array.length === 0;
-        },
-        isAsc(text){
-            return text === "asc"
-        },
-        isDes(text){
-            return text === "des"
-        }
-    }
-    
-}));
-app.set('view engine', 'hbs');
-app.set('views', './views');
-
-
+app.engine(
+  "hbs",
+  engine({
+    extname: "hbs",
+    helpers: {
+      section: express_handlebars_sections(),
+      matchChapter(str1, str2) {
+        console.log(str1, str2);
+        return str1 == str2;
+      },
+      convertMinuteToHour(minute) {
+        return (minute / 60).toPrecision(4) + "";
+      },
+      ratingConvert(ratingScore) {
+        if (ratingScore) return ratingScore;
+        return 0;
+      },
+      formatCurrency(currency) {
+        if (currency === "") return "";
+        if (currency <= 0) return "Free";
+        return numeral(currency).format("0,0") + "đ";
+      },
+      calculateOldPrice() {
+        return null;
+      },
+      calculateNewPrice(percent, price) {
+        if (!percent) percent = 0;
+        return (price - (price * percent) / 100).toPrecision(4) + "";
+      },
+      isEmpty(array) {
+        return array.length === 0;
+      },
+      isAsc(text) {
+        return text === "asc";
+      },
+      isDes(text) {
+        return text === "des";
+      },
+    },
+  })
+);
+app.set("view engine", "hbs");
+app.set("views", "./views");
 
 //res.local
 app.use(async (req, res, next) => {

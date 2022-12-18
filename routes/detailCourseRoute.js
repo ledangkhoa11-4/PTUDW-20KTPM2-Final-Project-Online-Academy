@@ -10,7 +10,10 @@ Router.get("/", async (req, res) => {
     return res.redirect("/home");
   }
   const chapters = await coursesService.getAllChapters(`${IDcourse}`);
-  //console.log(chapters);
-  res.render("vwCourse/detail", { layout: "main", course, chapters });
+  console.log(chapters);
+  const videos = await coursesService.getAllVideos(`${IDcourse}`);
+  console.log("----");
+  console.log(videos);
+  res.render("vwCourse/detail", { layout: "main", course, chapters, videos });
 });
 export default Router;

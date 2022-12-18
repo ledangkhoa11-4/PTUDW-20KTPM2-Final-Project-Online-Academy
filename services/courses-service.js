@@ -76,4 +76,12 @@ export default {
     if (list) return JSON.parse(JSON.stringify(list));
     return null;
   },
+  getAllVideos: async (IDCourse) => {
+    let list = await db
+      .select("*")
+      .from("circulativevideo")
+      .where("IDCourse", IDCourse);
+    if (list) return JSON.parse(JSON.stringify(list));
+    return null;
+  },
 };

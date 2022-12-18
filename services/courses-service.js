@@ -84,4 +84,11 @@ export default {
     if (list) return JSON.parse(JSON.stringify(list));
     return null;
   },
+  getAllVideosByChapter: async (IDCourse, IDChapter) => {
+    let list = await db.raw(
+      `Select * From circulativevideo Where IDCourse = ${IDCourse} and IDChapter = ${IDChapter}`
+    );
+    if (list) return JSON.parse(JSON.stringify(list[0]));
+    return null;
+  },
 };

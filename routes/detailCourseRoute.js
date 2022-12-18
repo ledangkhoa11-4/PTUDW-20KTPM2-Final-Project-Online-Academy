@@ -10,10 +10,18 @@ Router.get("/", async (req, res) => {
     return res.redirect("/home");
   }
   const chapters = await coursesService.getAllChapters(`${IDcourse}`);
-  console.log(chapters);
-  const videos = await coursesService.getAllVideos(`${IDcourse}`);
-  console.log("----");
-  console.log(videos);
+  //console.log(chapters);
+  //console.log("----");
+  //console.log(videos);
+  const videos = [];
+
+  for (let i = 0; i < chapters.length; i++) {
+    let videoOfChapter = await coursesService.getAllVideosByChapter(
+      chapters[i].IDCourse,
+      chapters[i].IDChapter
+    );
+    videos.push(videoOfChapter);
+  }
   res.render("vwCourse/detail", { layout: "main", course, chapters, videos });
 });
 export default Router;

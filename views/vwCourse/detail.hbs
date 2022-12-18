@@ -77,29 +77,15 @@
           <div class="chapter_content">
             <span class="icon_drop">+</span>{{chapter.Name}}
           </div>
-          <div class="lecture" id="lecture" chapter="{{chapter.IDChapter}}">
-
+          <div class="lecture" id="lecture">
+              {{#each (lookup ../videos @index) as |video|}}
+                  <a href="#">{{video.No}} {{video.Name}}</a>
+                  <br>
+                  <br>
+              {{/each}}
           </div>
         </div>
       {{/each}}
-      <script>
-        let lecture = document.querySelector(".lecture");
-        Array.from(lecture).forEach(div=>{ let asd =
-        div.getAttribute(`chapter`); div.innerHTML = `{{#each
-          this.videos
-          as |videos|
-        }}
-          {{#if (matchChapter videos.IDChapter "${asd}")}}
-            <a href="https:/youtube.com/watch?v={{videos.URL}}">
-            {{videos.No}}
-            &nbsp;
-            {{videos.Name}}
-            </a>
-          {{/if}}
-        {{/each}}`; })
-
-      </script>
-
     </div>
   {{/if}}
 </div>

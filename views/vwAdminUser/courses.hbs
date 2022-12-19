@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-header">
+    All Courses
+  </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Created Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#if this.isEmpty}}
+            <tr>
+              <td colspan="3"><h4>Student has not purchased any courese</h4></td>
+            </tr>
+            
+          {{else}}
+            {{#each this.list}}
+            <tr>
+              <th scope="col">{{ID}}</th>
+              <td scope="col">{{Name}}</td>
+              <td>{{formatDate CreatedTime}}</td>
+            </tr>
+          {{/each}}
+          {{/if}}
+        </tbody>
+      </table>
+</div>
+  <div class="card-footer text-muted">
+    <a name="" id="" class="btn btn-outline-success" href="/admin/user?role=2" role="button">
+      <i class="fa fa-sign-out" aria-hidden="true"></i>
+      Back</a>
+</div>
+

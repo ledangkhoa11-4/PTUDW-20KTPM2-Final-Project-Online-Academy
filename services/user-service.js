@@ -50,7 +50,13 @@ export default{
             return rowEffected[0];
         return 0;
     },
-    del:async (userId)=>{
+    del: (userId)=>{
        return db('user').where('IDUser',userId).del();
+    },
+    isExist:async(userId)=>{
+        const list =await db('user').where('IDUser',userId);
+        if(list[0])
+            return true;
+        return false
     }
 }

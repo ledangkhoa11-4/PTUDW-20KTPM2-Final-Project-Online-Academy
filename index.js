@@ -17,7 +17,7 @@ import userCategoriesRoute from './routes/userCategoriesRoute.js'
 import detailCourseRoute from "./routes/detailCourseRoute.js";
 import moment from 'moment/moment.js';
 import admin_userRoute from './routes/admin-userRoute.js';
-
+import instructorRoute from './routes/instructorRoute.js'
 const app = express();
 
 app.use("/public", express.static("public"));
@@ -125,6 +125,7 @@ app.use('/admin',categoriesRoute);
 app.use('/admin',admin_userRoute);
 app.use('/categories',userCategoriesRoute);
 app.use("/course", detailCourseRoute);
+app.use("/instructor", instructorRoute);
 app.listen(process.env.PORT, ()=>{
     console.log(`Server running at http://127.0.0.1:${process.env.PORT}`);
 })

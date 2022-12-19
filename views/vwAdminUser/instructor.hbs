@@ -1,0 +1,73 @@
+<div class="card">
+  <div class="card-header">
+    Instructor
+  </div>
+  <div class="card-body">
+    <h5>Profile</h5>
+     <div class="form-group row">
+        <label for="fullname" class="col-4 col-form-label ">Full Name: </label> 
+        <div class="col-8">
+          <p>{{this.instructor.FullName}}</p>
+        </div>
+      </div>
+      <div class="form-group row">
+          <label for="email" class="col-4 col-form-label ">Email:</label> 
+          <div class="col-8">
+            <p>{{this.instructor.Email}}</p>
+          </div>
+      </div>
+      <div class="form-group row">
+          <label for="bio" class="col-4 col-form-label "> Biograpphy:</label> 
+          <div class="col-8">
+            {{{this.instructor.Bio}}}
+          </div>
+      </div>
+  <table class="table table-bordered">
+    <h5>Couses uploaded by {{this.instructor.FullName}}</h5>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Created Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each this.courses}}
+      <tr>
+        <th scope="row">{{ID}}</th>
+        <td scope="col">{{Name}}</td>
+        <td>{{formatDate CreatedTime}}</td>
+      </tr>
+    {{/each}}
+    
+  </tbody>
+</table>
+  </div>
+  <div class="card-footer text-muted">
+    <a name="" id="" class="btn btn-outline-success" href="/admin/user?role=1" role="button">
+      <i class="fa fa-sign-out" aria-hidden="true"></i>
+      Back</a>
+    <a name="" id="" class="btn btn-danger" href="#" role="button">
+      <i class="fa fa-trash-o" aria-hidden="true"></i>
+      Delete</a>
+  </div>
+</div>
+<table>
+    <h5>History</h5>
+  <thead>
+    <tr>
+      <th scope="col">Alert</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each this.courses}}
+      <tr ng-repeat="x in msg.payload">
+        <td scope="col">{{x.payload}}</td>
+        <td></td>
+      </tr>
+    {{/each}}
+    
+  </tbody>
+</table>
+

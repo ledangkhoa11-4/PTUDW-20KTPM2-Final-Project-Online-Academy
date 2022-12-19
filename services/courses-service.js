@@ -66,6 +66,12 @@ export default {
             return {...info1, ...info2}
         }  
         return null;
+    },
+    findByIDInstructor: async(id)=>{
+        const list=await db('courses').where('IDInstructor',id);
+        if(list)
+            return list;
+        return list
     }
 }
 

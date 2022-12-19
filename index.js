@@ -12,8 +12,10 @@ import settingStrategy from './config/passport-Strategy.js'
 import authRoute from './routes/authRoute.js'
 import searchRoute from './routes/searchRoute.js'
 import homeRoute from './routes/homeRoute.js'
-import categoriesRoute from './routes/categoriesRoute.js'
+import categoriesRoute from './routes/categoriesRoute.js';
+import admin_userRoute from './routes/admin-userRoute.js';
 import userCategoriesRoute from './routes/userCategoriesRoute.js'
+import moment from 'moment/moment.js';
 
 
 const app = express();
@@ -34,13 +36,15 @@ app.use(session({
 settingStrategy(passport);
 app.use(passport.initialize());
 app.use(passport.session())
-
 app.engine('hbs', engine({
     extname: 'hbs',
     helpers:{
         section: express_handlebars_sections(),
         convertMinuteToHour(minute){
             return  (minute/60).toPrecision(4) + "";
+        },
+        formatDate(date){
+            return moment(date).format('LLLL');
         },
         ratingConvert(ratingScore){
             if(ratingScore)
@@ -70,6 +74,12 @@ app.engine('hbs', engine({
         },
         isDes(text){
             return text === "des"
+        },
+        ifeq: function(a, b, options){
+            if (a === b) {
+              return options.fn(this);
+              }
+            return options.inverse(this);
         }
     }
     
@@ -109,7 +119,9 @@ app.use("/", homeRoute)
 app.use("/auth",authRoute);
 app.use('/search',searchRoute);
 app.use('/admin',categoriesRoute);
+app.use('/admin',admin_userRoute);
 app.use('/categories',userCategoriesRoute);
+
 app.listen(process.env.PORT, ()=>{
     console.log(`Server running at http://127.0.0.1:${process.env.PORT}`);
 })

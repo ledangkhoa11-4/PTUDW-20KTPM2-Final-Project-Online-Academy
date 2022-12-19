@@ -117,5 +117,20 @@ export default {
     if(list)
         return list;
     return list
+  },
+  findByIDStudent: async(id)=>{
+    const list= await db.raw(`SELECT c.* FROM participate p, courses c WHERE p.IDStudent=${id} AND p.IDCourse=c.ID;`);
+    // console.log(list[0]);
+    if(list[0]==[]){
+      return 0;
+      
+    }
+    return list[0];
+  },
+  getAllCourses:async()=>{
+    const list = await db('courses')
+    if(list)
+      return list;
+    return list;
   }
 };

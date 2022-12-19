@@ -1,6 +1,7 @@
 import express from 'express'
 import coursesService from '../services/courses-service.js';
 import categoryServices from '../services/category.services.js';
+import multer from 'multer';
 const Router = express.Router();
 
 Router.get('/categories',async (req,res, next)=>{
@@ -70,10 +71,31 @@ Router.get('/categories/topic/add', async (req,res)=>{
     
     res.render('vwCategory/addTopic',{layout:'admin',catId});
 })
-Router.post('/categories/topic/add', async (req,res)=>{
-    const catID=req.body.IDCate;
-    const ret=await categoryServices.addtopic(req.body);
-    res.redirect(`/admin/categories/topic?id=${catID}`);
+Router.post('/categories/topic/add',  (req,res)=>{
+    const storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+          cb(null, `./public/images/categories/${req.body.IDCate}`);
+        },
+        filename: function (req, file, cb) {
+          cb(null, req.body.IDTopic+'.jpg');
+        }
+      });
+    
+      const upload = multer({ storage: storage });
+      upload.array('fuMain', 5)(req, res, async function (err) {
+        console.log(req.body);
+        const catID=req.body.IDCate;
+        const ret=await categoryServices.addtopic(req.body);
+        res.redirect(`/admin/categories/topic?id=${catID}`);
+        if (err) {
+          console.error(err);
+        } else {
+          res.render('vwCategory/addTopic');
+        }
+    
+        // Everything went fine.
+      })
+    
 })
 Router.get('/categories/topic/edit', async(req,res)=>{
     const catId= req.query.catid||0;

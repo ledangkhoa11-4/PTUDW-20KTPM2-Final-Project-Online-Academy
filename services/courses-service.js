@@ -71,9 +71,7 @@ export default {
             return {...info1, ...info2}
         }  
         return null;
-    }
-    return null;
-  },
+    },
   getAllChapters: async (IDCourse) => {
     let list = await db.select("*").from("chapter").where("IDCourse", IDCourse);
     if (list) return JSON.parse(JSON.stringify(list));

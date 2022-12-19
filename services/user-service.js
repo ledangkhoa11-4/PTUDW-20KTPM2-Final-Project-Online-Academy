@@ -1,6 +1,18 @@
 import db from '../utils/db.js';
 
 export default{
+    findUserById:async(userId)=>{
+        const list =await db('user').where('IDUser',userId);
+        if(list)
+            return list[0];
+        return null;
+    },
+    getAllUserByRole:async(role)=>{
+        const list= await db('user').where('Role',role);
+        if(list)
+            return list;
+        return null;
+    },
     isEmailExists: async(email)=>{
         const list = await db.raw(`Select * From user where user.Email LiKE '${email}'`);
         if(list){
@@ -38,4 +50,7 @@ export default{
             return rowEffected[0];
         return 0;
     },
+    del:async (userId)=>{
+       return db('user').where('IDUser',userId).del();
+    }
 }

@@ -1,8 +1,8 @@
 const pg = document.getElementById("pagination");
-const btnNextPg = document.querySelector("button.next-page");
-const btnPrevPg = document.querySelector("button.prev-page");
-const btnFirstPg = document.querySelector("button.first-page");
-const btnLastPg = document.querySelector("button.last-page");
+const btnNextPg = document.querySelector(".next-page");
+const btnPrevPg = document.querySelector(".prev-page");
+const btnFirstPg = document.querySelector(".first-page");
+const btnLastPg = document.querySelector(".last-page");
 
 
 //RUN PAGINATION
@@ -23,8 +23,9 @@ function pagination(valuePage) {
     const curPage = valuePage.curPage;
     const truncate = valuePage.truncate;
     const delta = valuePage.numLinksTwoSide;
-    const url = valuePage.url;
-
+    let url = valuePage.url;
+    url = url.replaceAll('&#x3D;',"=")
+    url = url.replaceAll('&amp;',"&")
   const range = delta + 4; // use for handle visible number of links left side
 
   let render = "";
@@ -74,13 +75,17 @@ function pagination(valuePage) {
   } else {
     pg.innerHTML = render;
   }
-
+ 
   if(curPage == totalPages){
+  
     btnNextPg.classList.add("disabled");
     btnLastPg.classList.add("disabled");
   }else{
     btnNextPg.classList.remove("disabled");
+    btnNextPg.href = `${url}&p=${curPage+1}`
+
     btnLastPg.classList.remove("disabled");
+    btnLastPg.href = `${url}&p=${totalPages}`
   }
 
   if(curPage == 1){
@@ -88,7 +93,9 @@ function pagination(valuePage) {
     btnFirstPg.classList.add("disabled");
   }else{
     btnPrevPg.classList.remove("disabled");
+    btnPrevPg.href = `${url}&p=${curPage-1}`
     btnFirstPg.classList.remove("disabled");
+    btnFirstPg.href = `${url}&p=1`
   }
 }
 function renderPage(index, active = "", url) {

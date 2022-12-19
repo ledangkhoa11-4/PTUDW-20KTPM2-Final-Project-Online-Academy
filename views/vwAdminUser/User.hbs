@@ -1,0 +1,56 @@
+<div class="card">
+  <div class="card-header">
+    {{#ifeq this.role "1" }}
+      Instructor
+    {{else}}
+      Student
+    {{/ifeq}}
+    
+  </div>
+  <div class="card-body">
+    {{#if this.isEmpty}}
+      <p>No Data</p>
+    {{else}}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Full Name</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.list}}
+            <tr >
+            <td>{{IDUser}}</td>
+            <td scope="col">
+                  <a name="" id="" class="btn" href="/admin/{{#ifeq Role 1 }}instructor{{else}}student{{/ifeq}}?id={{IDUser}}&role={{Role}}" role="button">{{#if FullName}}
+                    {{FullName}}
+                    {{else}}
+                    New Instructor
+                  {{/if}}</a>
+                </td>
+                <td>
+                  <a name="" id="" class="btn btn-outline-primary float-right" href="/admin/{{#ifeq Role 1 }}instructor{{else}}student{{/ifeq}}?id={{IDUser}}&role={{Role}}" role="button" >
+                  <i class="fa fa-eye" aria-hidden="true"></i>
+                  Details
+                  </a>
+                </td>
+            
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
+    
+    
+  </div>
+  <div class="card-footer text-muted">
+    {{#ifeq this.role "1" }}
+      <a name="" id="" class="btn btn-primary" href="/admin/instructor/add?role={{this.role}}" role="button">
+      <i class="fa fa-plus-square" aria-hidden="true"></i>
+      Add Instructor</a>
+    {{/ifeq}}
+  </div>
+</div>
+

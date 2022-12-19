@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="/public/css/auth.css">
+<div class="card">
+  <div class="card-header">
+    Add Instructor
+  </div>
+  <form action="/admin/instructor/add?role=1" method="POST" class="form-1"  novalidate>
+    <div class="card-body">
+      
+          <div class="form-group row">
+            <label for="username" class="col-4 col-form-label">User Name*</label> 
+            <div class="col-8">
+              <input id="username" name="username" placeholder="Username@instructor.academall.com" 
+                class=" form-control here"type="text">
+                <i class="fa-solid fa-triangle-exclamation error-icon"></i>
+                <span class="form__group-message email-message"></span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="password" class="col-4 col-form-label"> Password*</label> 
+            <div class="col-8">
+              <input id="password" name="password"  class="password form-control here" required="required" type="password">
+              <i class="fa-solid fa-triangle-exclamation error-icon"></i>
+              <span class="form__group-message password-message"></span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-4 col-8">
+              <button  type="submit" class="btn btn-success" >
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Confirm</button>
+            </div>
+          </div>
+        
+    </div>
+    <div class="card-footer text-muted">
+      <a name="" id="" class="btn btn-outline-success" href="/admin/user?role=1" role="button">
+        <i class="fa fa-sign-out" aria-hidden="true"></i>
+        Back</a>
+    </div>
+  </form>
+</div>
+<script src="/public/script/validate.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    Validator(
+        {
+            form: ".form-1",
+            error_message: ".form__group-message",
+            rules: [
+                Validator.isRequire("#username"),
+                Validator.isRequire("#password"),
+
+                Validator.isEmail("#username"),
+                Validator.minLength("#password", 8),
+            ],
+            onSubmit: function (data) {
+                 document.querySelector(".form-1").submit();
+            }
+        })
+
+</script>
+{{#if isAlert}}
+    <script>
+    Swal.fire({
+  icon: '{{this.icon}}',
+  title: '{{this.title}}',
+  showConfirmButton: true,
+  timer: 2500
+})
+    </script>
+{{/if}}

@@ -16,6 +16,8 @@
     type="text/css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/public/css/loading.css">
+  <link rel='stylesheet' href='/public/css/badge.css' />
+  <link rel='stylesheet' href='/public/css/search.css' />
   <style>
     * {
       scroll-behavior: smooth;
@@ -43,9 +45,17 @@
                     Menu
                 </div>
                 <ul class="list-group list-group-flush">
-                    <a name="" id="" class="list-group-item" href="#" role="button">Categories</a>
+                    <a name="" id="" class="list-group-item" href="/admin/categories" role="button">Categories</a>
                     <a name="" id="" class="list-group-item" href="#" role="button">Courses</a>
-                    <a name="" id="" class="list-group-item" href="#" role="button">Students</a>
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle list-group-item text-left" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                          Users
+                        </a>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item list-group-item" href="/admin/user?role=2">Student</a>
+                          <a class="dropdown-item list-group-item" href="/admin/user?role=1">Instructor</a>
+                        </div>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -71,6 +81,7 @@
     $(window).on('load', function () {
       $('.overlay').remove();
     }) 
+
   </script>
   {{{_sections.script}}}
 </body>

@@ -343,19 +343,7 @@ if (feedback) {
 }
 
 </script>
-<style>
-  .popover{
-    max-width: 60%; 
-    max-height: 300px;
-    overflow: hidden;
-}
-.popover li{
-  list-style-type: disc;
-}
-.popover *{
-  font-size: 16px
-}
-</style>
+
 <script>
   {{#each listNewest as |course|}}
     $(".popover-{{course.ID}}").popover({

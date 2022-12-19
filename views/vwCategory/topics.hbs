@@ -16,9 +16,10 @@
   </thead>
   <tbody>
     {{#each this.topicList}}
-      <tr >
+      <tr>
       <td>{{IDTopic}}</td>
-      <td> {{Name}} </td>
+      <td><img class="img-thumbnail " src="/public/images/categories/{{IDCate}}/{{IDTopic}}.jpg" alt=""  width="50" 
+     height="500"> {{Name}} </td>
       <td><a name="" id="" class="btn-sm btn-outline-primary float-right" href="/admin/categories/topic/edit?id={{IDTopic}}&catid={{IDCate}}" role="button">
        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
       </a></td>
@@ -29,10 +30,10 @@
     {{/if}}
   </div>
   <div class="card-footer text-muted">
-    <a name="" id="" class="btn btn-primary" href="/admin/categories" role="button">
+    <a name="" id="" class="btn btn-outline-success " href="/admin/categories" role="button">
       <i class="fa fa-sign-out" aria-hidden="true"></i>
       Back</a>
-    <a name="" id="" class="btn btn-outline-primary" href="/admin/categories/topic/add?catid={{this.catId}}" role="button"> 
+    <a name="" id="" class="btn btn-outline-primary ml-2" href="/admin/categories/topic/add?catid={{this.catId}}" role="button"> 
     <i class="fa fa-plus-circle" aria-hidden="true"></i>
     Add Topics</a>
   </div>

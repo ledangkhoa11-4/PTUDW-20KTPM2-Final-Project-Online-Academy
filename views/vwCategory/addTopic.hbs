@@ -1,8 +1,28 @@
+{{#section 'css'}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css" />
+{{/section}}
+
+{{#section 'script'}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/buffer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/filetype.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/piexif.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/sortable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/fileinput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/themes/fa4/theme.min.js"></script>
+  <script>
+    $('#fuMain').fileinput({
+      dropZoneEnabled: false,
+      maxFileCount: 5,
+      theme: 'fa4',
+      allowedFileExtensions: ['jpg', 'png', 'gif'],
+    });
+  </script>
+{{/section}}
 <div class="card">
   <div class="card-header">
     Add Topic
   </div>
-  <form action="" method="post">
+  <form method="post" enctype="multipart/form-data">
     <div class="card-body">
       <div class="form-group">
           <label for="txtCatID"> Category ID</label>
@@ -16,12 +36,16 @@
           <label for="txtTopicName"> Topic Name</label>
           <input type="text" name="Name" id="txtTopicName" class="form-control">
         </div>
+        <div class="form-group">
+          <label for="fuMain">Photo</label>
+          <input type="file" multiple id="fuMain" name="fuMain">
+      </div>
     </div>
     <div class="card-footer text-muted">
-      <a name="" id="" class="btn btn-outline-primary" href="/admin/categories/topic?id={{this.catId}}" role="button">
+      <a name="" id="" class="btn btn-outline-success " href="/admin/categories/topic?id={{this.catId}}" role="button">
       <i class="fa fa-sign-out" aria-hidden="true"></i>
       Back</a>
-      <button type="submit" name="" id="" class="btn btn-primary" > 
+      <button type="submit" name="" id="" class="btn btn-primary ml-2" > 
         <i class="fa fa-floppy-o" aria-hidden="true"></i>
         Save </button>
     </div>

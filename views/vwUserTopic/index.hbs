@@ -2,11 +2,11 @@
 <link rel='stylesheet' href='/public/css/search.css' />
 <link rel='stylesheet' href='/public/css/badge.css' />
 <link rel="stylesheet" href="/public/css/pagination.css">
-<div class='container-lg ml-4 mr-4 mb-5' style='margin-top: 100px;'>
+<div class='container-lg ml-4 mr-4 mb-5' style='margin-top: 100px; min-height: 1000px'>
     <div class='row'>
-        <div class='col-3 result-count dumb'>{{nResults}} results for {{name}}</div>
+        <div class='col-3 result-count dumb'>{{nResults}} courses for {{name}}</div>
         <div class='col-3 my-sidebar'>
-            <div id='accordion' class='myaccordion'>
+            {{!-- <div id='accordion' class='myaccordion'>
                 <div class="current-filter">
                     <a type="button" class=" btn-light">
                         Ratings Ascending
@@ -88,35 +88,36 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class='col ml-5'>
             <div class="outstanding-course mt-5">
-                <p>Relevent Course</p>
+                <p>Relevent Courses</p>
             </div>
             <div class="row">
                 {{#if this.isEmpty}}
                     <p>No data</p>
                     {{else}}
-                    {{#each coursesList}}
+                    {{#each coursesList as |course|}}
                         <div class="col-auto mt-3">
-                            <div class="card product-item" style="max-width: 300px; min-width: 300px" >
-                            <img src="/public/images/courses/{{ID}}.jpg" width="250" height="150" style="object-fit: cover;"
-                                class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title product-title">{{this.Name}}</h5>
-                                    <span class="text-muted product-category">{{TopicName}}</span>
-                                    <small class="text-muted">{{Instructor}}</small>
-                                    <div class="rating mt-1" rating_score={{AvgRating}} rating_count={{CountRating}}> {{!-- chỉ cần thêm attribute như thế này thì script
-                                    sẽ tự render rating --}}
-                                    </div>
-                                    <div class="product-price-wrapper mt-3">
-                                        <span class="old-price ">{{formatCurrency (calculateOldPrice PercentDiscount CourseFee)}}</span>
-                                        <span class="new-price float-right">{{formatCurrency CourseFee}}</span>
-                                    </div>
-                                </div>
-                            </div>                    
+                    <div class="card product-item popover-{{course.ID}}" style="max-width:300px; min-width:300px" >
+                        <img src="/public/images/courses/{{course.ID}}.jpg" width="250" height="150" style="object-fit: fill;"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title product-title">{{course.Name}}</h5>
+                            <span class="text-muted product-category">{{course.TopicName}}</span>
+                            <small class="text-muted">Ins: {{course.Instructor}}</small>
+                            <div class="rating mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{course.CountRating}}>
+                            </div>
+                            <div class="product-price-wrapper mt-3">
+                            {{#if course.PercentDiscount}}
+                                <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
+                            {{/if}}
+                            <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</span>
+                            </div>
                         </div>
+                    </div>                    
+                </div>
                     {{/each}}
                 {{/if}}
             </div>  
@@ -162,4 +163,9 @@
     };
     pagination(valuePage);
 </script>
-<script src="/public/script/rating.js"></script>
+
+<script src='/public/script/rating.js'></script>
+<script>
+     renderRating('.rating')
+       
+</script>

@@ -117,14 +117,8 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.use("/", homeRoute);
-app.use("/auth", authRoute);
-app.use("/search", searchRoute);
-app.use("/admin", categoriesRoute);
-app.use("/categories", userCategoriesRoute);
-app.use("/course", detailCourseRoute);
 
-app.use("/", homeRoute)
+app.use("/", homeRoute);
 app.use("/auth",authRoute);
 app.use('/search',searchRoute);
 app.use('/admin',categoriesRoute);

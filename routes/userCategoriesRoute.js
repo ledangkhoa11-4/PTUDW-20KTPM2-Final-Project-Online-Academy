@@ -11,6 +11,7 @@ Router.get("/", async (req, res, next) => {
 
   const list = await coursesService.getCourseIDByCatPage(id, limit, offset);
   const temp = await coursesService.getCourseIDByCat(id);
+  const name = await coursesService.getCourseNameByCat(id);
   const count = temp.length;
   let nPage = Math.floor(count / limit);
   if (count % limit > 0) nPage++;
@@ -25,7 +26,7 @@ Router.get("/", async (req, res, next) => {
     isEmpty: coursesList.length === 0,
     nPage,
     page,
-    id,
+    id,nResults: count, name
   });
 });
 
@@ -42,7 +43,9 @@ Router.get("/:catID", async (req, res, next) => {
     limit,
     offset
   );
+  // console.log(list);
   const temp = await coursesService.getCourseIDByTopic(catID, topicID);
+  const name = await coursesService.getCourseNameByCat(catID);
   const count = temp.length;
   let nPage = Math.floor(count / limit);
   if (count % limit > 0) nPage++;
@@ -58,7 +61,7 @@ Router.get("/:catID", async (req, res, next) => {
     nPage,
     page,
     topicID: topicID,
-    catID: catID,
+    catID: catID,nResults: count,name
   });
 });
 

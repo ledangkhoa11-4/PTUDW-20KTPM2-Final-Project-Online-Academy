@@ -34,6 +34,18 @@ export default {
     if (list) return list[0];
     return null;
   },
+  getCourseIDByTopic:async (catID,topicID)=>{
+    const list = await db.raw(`SELECT c.ID from courses c Where c.IDCategory = ${catID} And c.Topic = ${topicID}`)
+    if (list)
+        return list[0];
+    return null;
+  },
+  getCourseNameByCat:async (catID)=>{
+    const list = await db.raw(`SELECT cat.Name from courses c Left Join category cat on cat.IDCate = c.IDCategory Where c.IDCategory = ${catID}`)
+    if (list)
+        return list[0][0].Name;
+    return null;
+  },
   countCourseIDByCat: async (catID) => {
     const list = await db("courses").where("IDCategory", catID).count("ID");
     if (list) return list;
@@ -48,6 +60,14 @@ export default {
       .offset(offset);
     // console.log(list);
     if (list) return list;
+    return null;
+  },
+  getCourseIDByTopicPage:async (catID,topicID,limit,offset)=>{
+    // const list = await db.select('ID').from('courses').where('IDCategory',catID).andWhere('Topic',topicID).limit(limit).offset(offset);
+    const list = await db.raw(`SELECT c.ID From courses c Where c.IDCategory = ${catID} and c.Topic = ${topicID} limit ${limit} offset ${offset}`);
+    // console.log(list[0]);
+    if (list)
+        return list[0];
     return null;
   },
   /**
@@ -71,7 +91,7 @@ export default {
             return {...info1, ...info2}
         }  
         return null;
-  },
+    },
   getAllChapters: async (IDCourse) => {
     let list = await db.select("*").from("chapter").where("IDCourse", IDCourse);
     if (list) return JSON.parse(JSON.stringify(list));

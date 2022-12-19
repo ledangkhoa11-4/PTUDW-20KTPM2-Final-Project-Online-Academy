@@ -22,7 +22,7 @@ Router.get('/',async(req,res, next)=>{
     res.render('vwUserCategory/index',
     {coursesList,
     isEmpty: coursesList.length===0,
-    nPage,page,id,
+    nPage,page,id,nResults: count, name: coursesList[0].CatName
     }
 );
 })
@@ -48,7 +48,7 @@ Router.get('/:catID',async(req,res, next)=>{
     res.render('vwUserTopic/index',
     {coursesList,
     isEmpty: coursesList.length===0,
-    nPage,page,topicID: topicID,catID: catID
+    nPage,page,topicID: topicID,catID: catID,nResults: count, name: coursesList[0].CatName
     }
     );
 })

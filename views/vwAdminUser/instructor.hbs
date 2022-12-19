@@ -52,22 +52,4 @@
       Delete</a>
   </div>
 </div>
-<table>
-    <h5>History</h5>
-  <thead>
-    <tr>
-      <th scope="col">Alert</th>
-      <th scope="col">Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each this.courses}}
-      <tr ng-repeat="x in msg.payload">
-        <td scope="col">{{x.payload}}</td>
-        <td></td>
-      </tr>
-    {{/each}}
-    
-  </tbody>
-</table>
 

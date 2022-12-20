@@ -1,5 +1,5 @@
 import db from "../utils/db.js";
-import knex from "knex";
+
 
 export default {
   getPopular: async (limit) => {
@@ -132,5 +132,19 @@ export default {
     if(list)
       return list;
     return list;
+  },
+  addCourse: async(course)=>{
+    const result = await db('courses').insert(course)
+    return result[0];
+  },
+  updateCourse: async(id, newField)=>{
+    const result = await db('courses')
+    .where({ id: id })
+    .update(newField)
+    return result[0];
+  },
+  addVideo: async(info)=>{
+    const result = await db('circulativevideo').insert(info);
+    return result[0];
   }
 };

@@ -192,12 +192,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.1/typed.min.js"></script>
 
 <script>
-
   jarallax(document.querySelectorAll('.jarallax'));
   jarallax(document.querySelectorAll('.jarallax-keep-img'), {
     keepImg: true,
   });
-
+</script>
+<script>
+  {{#each listNewest as |course|}}
+    $(".popover-{{course.ID}}").popover({
+      trigger: 'hover',
+      container: 'body',
+      html: true,
+      title: "<i>{{course.Name}}</i>",
+      content: `
+        <div class="d-flex justify-content-between">
+            <small class="total-lecture">{{course.TotalLecture}} Lectures</small>
+            <small class="total-hour">{{convertMinuteToHour course.TotalLength}} total hour to learn</small>
+        </div>
+        
+        <br>
+        <h6>About course: </h6>
+        {{{course.FullDesc}}}
+      `
+  })
+  {{/each}}
 </script>
 <script>
   $('.slick-single').slick({
@@ -265,7 +283,7 @@
     slidesToScroll: 5,
     responsive: [
       {
-        breakpoint: 1250,
+        breakpoint: 1350,
         settings: {
           slidesToShow: 4,
           slidesToScroll: 4,
@@ -340,27 +358,7 @@ if (feedback) {
 
 </script>
 
-<script>
-  {{#each listNewest as |course|}}
-    $(".popover-{{course.ID}}").popover({
-      trigger: 'hover',
-      container: 'body',
-      html: true,
-      title: "<i>{{course.Name}}</i>",
-      content: `
-        <div class="d-flex justify-content-between">
-            <small class="total-lecture">{{course.TotalLecture}} Lectures</small>
-            <small class="total-hour">{{convertMinuteToHour course.TotalLength}} total hour to learn</small>
-        </div>
-        
-        <br>
-        <h6>About course: </h6>
-        {{{course.FullDesc}}}
-      `
-  })
-  {{/each}}
-  
-</script>
+
 <script>
   AOS.init({
     once: true,

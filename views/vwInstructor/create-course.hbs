@@ -56,7 +56,7 @@
       border-bottom: 2px solid #1e2fe9;
       box-shadow: none;
     }
-    input:not([type]), input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea {
+    .mainForm input:not([type]), .mainForm input[type=text], .mainForm input[type=password], .mainForm input[type=email], .mainForm input[type=url], .mainForm input[type=time], .mainForm input[type=date], .mainForm input[type=datetime-local], .mainForm input[type=tel], .mainForm input[type=number], .mainForm input[type=search], textarea.materialize-textarea {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid #9e9e9e;
@@ -97,12 +97,82 @@
     font-weight: bold;
     font-size: 18px;
 }
-  </style>
+/* Base for label styling */
+	[type="checkbox"]:not(:checked),
+	[type="checkbox"]:checked {
+		position: absolute;
+		left: 0;
+		opacity: 0.01;
+	}
+	[type="checkbox"]:not(:checked) + label,
+	[type="checkbox"]:checked + label {
+		position: relative;
+		padding-left: 2.3em;
+		font-size: 1.05em;
+		line-height: 1.7;
+		cursor: pointer;
+	}
+
+	/* checkbox aspect */
+	[type="checkbox"]:not(:checked) + label:before,
+	[type="checkbox"]:checked + label:before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 1.4em;
+		height: 1.4em;
+		border: 1px solid #aaa;
+		background: #FFF;
+		border-radius: .2em;
+		box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 rgba(203, 34, 237, .2);
+		-webkit-transition: all .275s;
+				transition: all .275s;
+	}
+
+	/* checked mark aspect */
+	[type="checkbox"]:not(:checked) + label:after,
+	[type="checkbox"]:checked + label:after {
+		content: '✕';
+		position: absolute;
+        top: .525em;
+        left: 0.1em;
+		font-size: 1.375em;
+		color: #CB22ED;
+		line-height: 0;
+		-webkit-transition: all .2s;
+				transition: all .2s;
+	}
+
+	/* checked mark aspect changes */
+	[type="checkbox"]:not(:checked) + label:after {
+		opacity: 0;
+		-webkit-transform: scale(0) rotate(45deg);
+				transform: scale(0) rotate(45deg);
+	}
+
+	[type="checkbox"]:checked + label:after {
+		opacity: 1;
+		-webkit-transform: scale(1) rotate(0);
+				transform: scale(1) rotate(0);
+	}
+
+	/* Disabled checkbox */
+
+	/* Accessibility */
+	[type="checkbox"]:checked:focus + label:before,
+	[type="checkbox"]:not(:checked):focus + label:before {
+		box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 6px rgba(203, 34, 237, .2);
+	}
+
+
 </style>
 <div class="container" style="min-height: 1500px; margin-top: 100px">
     <h2 style="color: red"><i>Course information</i> </h2>
     <hr>
-    <form method="POST" id="form_table" class="form-1 mainForm mt-1" novalidate>
+    <form method="POST" enctype="multipart/form-data" id="form_table" class="form-1 mainForm mt-1" novalidate>
+
+
 
     <div class="input-field col s12 mt-4 form__group ">
         <input type="text" name="Name" class="name pl-4" id="Name" autocomplete="none">
@@ -128,22 +198,19 @@
     <div class="row mt-5 ml-1 " style="width: 100%">
         <div class="col form__group">
             <label >Category*</label>
-            <select class="custom-select custom-select mb-3 choice-cate">
+            <select class="custom-select custom-select mb-3 choice-cate" id="cate-input" name="IDCate">
                 <option value="" selected>Select Category</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {{#each listCate as |item|}}
+                    <option value="{{item.IDCate}}">{{item.Name}}</option>
+                {{/each}}
             </select>
             <i class="fa-solid fa-triangle-exclamation error-icon"></i>
             <span class="form__group-message email-message"></span>
         </div>
         <div class="col form__group">
             <label >Topic*</label>
-            <select class="custom-select custom-select mb-3 choice-topic">
+            <select class="custom-select custom-select mb-3 choice-topic" id="topic-input" name="IDTopic">
                 <option value="" selected>Select Topic</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
             </select>
             <i class="fa-solid fa-triangle-exclamation error-icon"></i>
             <span class="form__group-message email-message"></span>
@@ -151,19 +218,30 @@
     </div>
     <div class=" col s12 mt-2 form__group ">
         <label for="fuMain">Photo</label>
-        <input type="file" id="fuMain" name="fuMain" accept=".jpg,.png,.gif">
+        <input type="file" id="image" name="image" accept=".jpg,.png,.gif">
         <span class="form__group-message email-message"></span>
     </div>
 
-    <div class="input-field col s12 mt-5 form__group ">
-        <label for="Price">Price</label>
-        <input type="text" name="Price" id="Price" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency">
-        <i class="fa-solid fa-triangle-exclamation error-icon"></i>
-        <span class="form__group-message email-message"></span>
+    <div class="row mt-5 ml-1 " style="width: 100%">
+        <div class="input-field col s12 form__group">
+            <label for="Price">Price</label>
+            <input class="required" type="text" name="Price" id="Price" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" data-type="currency">
+            <i class="fa-solid fa-triangle-exclamation error-icon"></i>
+            <span class="form__group-message email-message"></span>
+        </div>
+        <div class="col s12 input-field form__group" >
+            <label for="Discount">Discount Percent</label>
+            <input  type="number" name="Discount" id="Discount" min="0" max="100">
+        </div>
     </div>
     <h2 class="mt-5" style="color: red"><i>Curriculum</i> </h2>
     <hr>
     
+    <div class="col s12 mt-4" style="text-align: right;">
+        <input type="checkbox" id="checkbox" name="isCompleted" />
+        <label for="checkbox">Is your course completed?</label>
+    </div>
+
     <div class="chapter-wrapper">
         <div class="chapter-section container mb-4" style="border: 1px solid #ccc;" chapter="1">
             <div class="input-field col s12 mt-4 form__group d-flex" style="padding-left: 0;">
@@ -198,7 +276,7 @@
         <button onclick="addChapter(this, event);" type="button" class="btn btn-light mt-2 mb-2 add-lecture" style="border: 1px solid rgb(219, 219, 219)"><i class="bi bi-plus-lg"></i> Add more chapter</button>
     </div>
     
-    <div class="row">
+    <div class="row mt-5">
         <div class="col">
             <button type="submit" class="btn btn-info btn-lg btn-block">Complete the course creation process</button>
         </div>
@@ -228,7 +306,7 @@
     }); 
 </script>
 <script>
-    $('#fuMain').fileinput({
+    $('#image').fileinput({
       dropZoneEnabled: false,
       maxFileCount: 1,
       theme: 'fa4',
@@ -315,7 +393,25 @@ function formatCurrency(input, blur) {
   caret_pos = updated_len - original_len + caret_pos;
   input[0].setSelectionRange(caret_pos, caret_pos);
 }
-
+  </script>
+  <script>
+    let cateInput = document.querySelector('#cate-input');
+    let topicInput = document.querySelector("#topic-input")
+    cateInput.onchange = ()=>{
+        let catID = cateInput.value
+        if(catID == 0)
+            return topicInput.innerHTML = `<option value="" selected>Select Topic</option>`;
+        $.get(`cat/${catID}`, function(result){
+            let html = `<option value="" selected>Select Topic</option>`;
+            Array.from(result).forEach(topic=>{
+                let topId = topic.IDTopic;
+                let topName = topic.Name;
+                html += `<option value="${topId}">${topName}</option>`
+            })
+            topicInput.innerHTML = html;
+        })
+        
+    }
   </script>
 {{/section}}
 
@@ -335,7 +431,10 @@ function formatCurrency(input, blur) {
                 Validator.isRequire(".required"),
             ],
             onSubmit: function (data) {
-                 document.querySelector(".form-1").submit();
+                let value = document.querySelector("#Price").value;
+                value = value.replaceAll(",","");
+                document.querySelector("#Price").value = value;
+                document.querySelector(".form-1").submit();
             }
         })
 

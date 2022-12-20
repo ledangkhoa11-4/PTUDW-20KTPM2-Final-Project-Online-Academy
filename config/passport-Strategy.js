@@ -38,8 +38,12 @@ export default function (passport, strategy){
         
         // user chưa tồn tại -> Tạo user mới
         if(user.length == 0){
-          const result = await userService.addUser(userDat)}
-
+          const result = await userService.addUser(userDat)
+          userDat.IDUser = result
+        }else{
+          userDat.IDUser = user[0].IDUser;
+        }
+        
         return done(null, userDat);
       });
     }

@@ -28,9 +28,10 @@ export default{
         return list;
     },
     addUser: async(user)=>{
-        return db('user').insert(
-           user
-        )
+        const result = await db('user').insert(
+            user
+         )
+        return result[0];
     },
     getUserByEmail: async(email)=>{
         const user = await db.raw(`Select * From user u Where u.Email Like '${email}'`);

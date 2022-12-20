@@ -20,22 +20,27 @@ function Validator(formObj) {
             } else {
                 selectorRules[rule.selector] = [rule.test];
             }
-            let selector = document.querySelector(`${formObj.form} ${rule.selector}`);
-
-            selector.onblur = (e) => {
-                Validate(selector, rule)
-            }
-            selector.onfocus = (e) => {
-                selector.parentNode.classList.remove("error")
-            }
+            let selectors = document.querySelectorAll(`${formObj.form} ${rule.selector}`);
+            Array.from(selectors).forEach(selector=>{
+                selector.onblur = (e) => {
+                    Validate(selector, rule)
+                }
+                selector.onfocus = (e) => {
+                    selector.parentNode.classList.remove("error")
+                }
+            })
+           
         })
         form.onsubmit = (e) => {
             e.preventDefault();
             let flag = true;
             formObj.rules.forEach((rule) => {
-                let selector = document.querySelector(`${formObj.form} ${rule.selector}`);
-                if (!Validate(selector, rule))
+                let selectors = document.querySelectorAll(`${formObj.form} ${rule.selector}`);
+                Array.from(selectors).forEach(selector=>{
+                    if (!Validate(selector, rule))
                     flag = false;
+                })
+                
             })
             if (flag === true) {
                 let inputElement = document.querySelectorAll('input[name]');

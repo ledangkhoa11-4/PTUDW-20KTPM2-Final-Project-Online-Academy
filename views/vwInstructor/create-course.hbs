@@ -172,7 +172,7 @@
                 </div>
                 <div class="col">
                     <label for="chapter1-name">Chapter Name</label>
-                    <input type="text" name="chapter[]" id="chapter1-name">
+                    <input type="text" name="chapter[1][name]" id="chapter1-name" class="required">
                 </div>
             </div>
             <div class="input-field col s12 form__group d-flex " style="margin: 6px 0 6px 0;" lecture="1">
@@ -182,11 +182,11 @@
                 <div class="col d-flex" >
                     <div class="col">
                         <label for="chapter1-lecture1-name">Lecture Name</label>
-                        <input type="text" name="lecture[]" id="chapter1-lecture1-name">
+                        <input type="text" name="chapter[1][1][name]" id="chapter1-lecture1-name" class="required">
                     </div>
                     <div class="col">
                         <label for="chapter1-lecture1-url">URL Video</label>
-                        <input type="text" name="url[]" id="chapter1-lecture1-url">
+                        <input type="text" name="chapter[1][1][url]" id="chapter1-lecture1-url" class="required">
                     </div>
                 </div>
             </div>
@@ -198,6 +198,11 @@
         <button onclick="addChapter(this, event);" type="button" class="btn btn-light mt-2 mb-2 add-lecture" style="border: 1px solid rgb(219, 219, 219)"><i class="bi bi-plus-lg"></i> Add more chapter</button>
     </div>
     
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-info btn-lg btn-block">Complete the course creation process</button>
+        </div>
+    </div>
 </form>
 
 
@@ -327,6 +332,7 @@ function formatCurrency(input, blur) {
                 Validator.isRequire(".name"),
                 Validator.isRequire(".choice-cate"),
                 Validator.isRequire(".choice-topic"),
+                Validator.isRequire(".required"),
             ],
             onSubmit: function (data) {
                  document.querySelector(".form-1").submit();
@@ -363,9 +369,16 @@ function formatCurrency(input, blur) {
             labels[2].setAttribute('for', `chapter${nowChap}-lecture1-url`)
 
             let inputs = chapDiv.querySelectorAll('input');
-            inputs[0].id = `chapter${nowChap}-name`
-            inputs[1].id =  `chapter${nowChap}-lecture1-name`
-            inputs[2].id = `chapter${nowChap}-lecture1-url`
+            inputs[0].id = `chapter${nowChap}-name`;
+            inputs[0].name = `chapter[${nowChap}][name]`;
+            let cntLec = 1;
+            for(let i = 1; i< inputs.length ; i+=2){
+                inputs[i].id =  `chapter${nowChap}-lecture${cntLec}-name`
+                inputs[i].name =  `chapter[${nowChap}][${cntLec}][name]`
+                inputs[i+1].id =  `chapter${nowChap}-lecture${cntLec}-url`
+                inputs[i+1].name =  `chapter[${nowChap}][${cntLec}][url]`
+                cntLec++;
+            }
         }
     }
     function addChapter(t,e){
@@ -381,7 +394,7 @@ function formatCurrency(input, blur) {
                 </div>
                 <div class="col">
                     <label for="chapter${chapters}-name">Chapter Name</label>
-                    <input type="text" name="chapter[]" id="chapter${chapters}-name">
+                    <input type="text" name="chapter[${chapters}][name]" id="chapter${chapters}-name" class="required">
                 </div>
             </div>
             <div class="input-field col s12 form__group d-flex " style="margin: 6px 0 6px 0;" lecture="1">
@@ -391,11 +404,11 @@ function formatCurrency(input, blur) {
                 <div class="col d-flex" >
                     <div class="col">
                         <label for="chapter${chapters}-lecture1-name">Lecture Name</label>
-                        <input type="text" name="lecture[]" id="chapter${chapters}-lecture1-name">
+                        <input type="text" name="chapter[${chapters}][1][name]" id="chapter${chapters}-lecture1-name" class="required">
                     </div>
                     <div class="col">
                         <label for="chapter${chapters}-lecture1-url">URL Video</label>
-                        <input type="text" name="url[]" id="chapter${chapters}-lecture1-url">
+                        <input type="text" name="chapter[${chapters}][1][url]" id="chapter${chapters}-lecture1-url" class="required">
                     </div>
                 </div>
             </div>
@@ -429,11 +442,11 @@ function formatCurrency(input, blur) {
             <div class="col d-flex" >
                 <div class="col">
                     <label for="chapter${curChap}-lecture${curLec}-name">Lecture Name</label>
-                    <input type="text" name="lecture[]" id="chapter${curChap}-lecture${curLec}-name">
+                    <input type="text" name="chapter[${chapters}][${curLec}][name]" id="chapter${curChap}-lecture${curLec}-name" class="required">
                 </div>
                 <div class="col">
                     <label for="chapter${curChap}-lecture${curLec}-url">URL Video</label>
-                    <input type="text" name="url[]" id="chapter${curChap}-lecture${curLec}-url">
+                    <input type="text" name="chapter[${chapters}][${curLec}][url]" id="chapter${curChap}-lecture${curLec}-url" class="required">
                 </div>
              </div>
             <div class="col-auto d-flex align-items-center btn-wrapper">
@@ -470,7 +483,9 @@ function formatCurrency(input, blur) {
             labels[1].setAttribute('for',`chapter${curChap}-lecture${nowLec}-url`);
             let inputs = div.querySelectorAll('input');
             inputs[0].id = `chapter${curChap}-lecture${nowLec}-name`;
+            inputs[0].name = `chapter[${curChap}][${nowLec}][name]`;
             inputs[1].id = `chapter${curChap}-lecture${nowLec}-url`;
+            inputs[1].name = `chapter[${curChap}][${nowLec}][url]`;
         }
     }
     function createElementFromHTML(htmlString) {

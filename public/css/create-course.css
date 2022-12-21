@@ -1,0 +1,163 @@
+h2{
+    margin-left: -40px;
+}
+#form_table{
+    max-width: none;
+    box-shadow: none;
+    padding: 0px;
+}
+.form__group input:hover, .form__group input:focus{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.error input,
+.error select  {
+    border: none !important;
+    border-bottom: 1px solid red !important;
+    background-color: rgba(255, 0, 0, 0.1) !important;
+}
+
+.error-icon{
+    right: 3%;
+    top: 23.3%;
+}
+select + .error-icon{
+    right: 8.7%;
+    top: 37.3%;
+
+}
+*{
+    font-family: "Gentleman";
+}
+main {
+  flex: 1 0 auto;
+}
+
+body {
+  background: #fff;
+}
+
+.mainForm .input-field input[type=date]:focus + label,
+.mainForm .input-field input[type=text]:focus + label,
+.mainForm .input-field input[type=email]:focus + label,
+.mainForm .input-field input[type=password]:focus + label {
+  color: #1e2fe9;
+
+}
+
+.mainForm .input-field input[type=date]:focus,
+.mainForm .input-field input[type=text]:focus,
+.mainForm .input-field input[type=email]:focus,
+.mainForm .input-field input[type=password]:focus {
+  border-bottom: 2px solid #1e2fe9;
+  box-shadow: none;
+}
+.mainForm input:not([type]), .mainForm input[type=text], .mainForm input[type=password], .mainForm input[type=email], .mainForm input[type=url], .mainForm input[type=time], .mainForm input[type=date], .mainForm input[type=datetime-local], .mainForm input[type=tel], .mainForm input[type=number], .mainForm input[type=search], textarea.materialize-textarea {
+background-color: transparent;
+border: none;
+border-bottom: 1px solid #9e9e9e;
+border-radius: 0;
+outline: none;
+height: 3rem;
+width: 100%;
+font-size: 1rem;
+margin: 0 0 6px 0;
+padding: 0;
+box-shadow: none;
+transition: all .3s;
+}
+.input-field label {
+color: #6c6b6b;
+position: absolute;
+top: 0.8rem;
+left: 1rem;
+font-size: 1rem;
+cursor: text;
+transition: .2s ease-out;
+}
+.input-field label.active {
+font-size: 0.8rem;
+-webkit-transform: translateY(-140%);
+transform: translateY(-140%);
+}
+.chapter-section{
+position: relative;
+}
+.remove-chapter{
+position: absolute;
+top: -8px;
+right: 0;
+cursor: pointer;
+}
+.remove-chapter i{
+font-weight: bold;
+font-size: 18px;
+}
+/* Base for label styling */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+    position: absolute;
+    left: 0;
+    opacity: 0.01;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+    position: relative;
+    padding-left: 2.3em;
+    font-size: 1.05em;
+    line-height: 1.7;
+    cursor: pointer;
+}
+
+/* checkbox aspect */
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.4em;
+    height: 1.4em;
+    border: 1px solid #aaa;
+    background: #FFF;
+    border-radius: .2em;
+    box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 rgba(203, 34, 237, .2);
+    -webkit-transition: all .275s;
+            transition: all .275s;
+}
+
+/* checked mark aspect */
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+    content: '✕';
+    position: absolute;
+    top: .525em;
+    left: 0.1em;
+    font-size: 1.375em;
+    color: #CB22ED;
+    line-height: 0;
+    -webkit-transition: all .2s;
+            transition: all .2s;
+}
+
+/* checked mark aspect changes */
+[type="checkbox"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0) rotate(45deg);
+            transform: scale(0) rotate(45deg);
+}
+
+[type="checkbox"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1) rotate(0);
+            transform: scale(1) rotate(0);
+}
+
+/* Disabled checkbox */
+
+/* Accessibility */
+[type="checkbox"]:checked:focus + label:before,
+[type="checkbox"]:not(:checked):focus + label:before {
+    box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 6px rgba(203, 34, 237, .2);
+}

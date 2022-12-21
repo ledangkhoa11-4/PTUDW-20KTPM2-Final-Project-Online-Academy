@@ -59,5 +59,15 @@ export default{
         if(list[0])
             return true;
         return false
+    },
+    getInfo: async(id)=>{
+        const infos = await db('user').where({IDUser: id});
+        if(infos)
+            return infos[0];
+        return null;
+    },
+    updateInfo: async(id, infos)=>{
+        const result = await db('user').where({IDUser: id}).update(infos);
+        return result[0]
     }
 }

@@ -1,174 +1,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css" />
+
 <link rel="stylesheet" href="/public/css/auth.css">
-<style>
-    h2{
-        margin-left: -40px;
-    }
-    #form_table{
-        max-width: none;
-        box-shadow: none;
-        padding: 0px;
-    }
-    .form__group input:hover, .form__group input:focus{
-        border-top: none;
-        border-left: none;
-        border-right: none;
-    }
-    .error input,
-    .error select  {
-        border: none !important;
-        border-bottom: 1px solid red !important;
-        background-color: rgba(255, 0, 0, 0.1) !important;
-    }
-    
-    .error-icon{
-        right: 3%;
-        top: 23.3%;
-    }
-    select + .error-icon{
-        right: 8.7%;
-        top: 37.3%;
-
-    }
-    *{
-        font-family: "Gentleman";
-    }
-    main {
-      flex: 1 0 auto;
-    }
-
-    body {
-      background: #fff;
-    }
-
-    .mainForm .input-field input[type=date]:focus + label,
-    .mainForm .input-field input[type=text]:focus + label,
-    .mainForm .input-field input[type=email]:focus + label,
-    .mainForm .input-field input[type=password]:focus + label {
-      color: #1e2fe9;
-
-    }
-
-    .mainForm .input-field input[type=date]:focus,
-    .mainForm .input-field input[type=text]:focus,
-    .mainForm .input-field input[type=email]:focus,
-    .mainForm .input-field input[type=password]:focus {
-      border-bottom: 2px solid #1e2fe9;
-      box-shadow: none;
-    }
-    .mainForm input:not([type]), .mainForm input[type=text], .mainForm input[type=password], .mainForm input[type=email], .mainForm input[type=url], .mainForm input[type=time], .mainForm input[type=date], .mainForm input[type=datetime-local], .mainForm input[type=tel], .mainForm input[type=number], .mainForm input[type=search], textarea.materialize-textarea {
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #9e9e9e;
-    border-radius: 0;
-    outline: none;
-    height: 3rem;
-    width: 100%;
-    font-size: 1rem;
-    margin: 0 0 6px 0;
-    padding: 0;
-    box-shadow: none;
-    transition: all .3s;
-    }
-    .input-field label {
-    color: #6c6b6b;
-    position: absolute;
-    top: 0.8rem;
-    left: 1rem;
-    font-size: 1rem;
-    cursor: text;
-    transition: .2s ease-out;
-}
-.input-field label.active {
-    font-size: 0.8rem;
-    -webkit-transform: translateY(-140%);
-    transform: translateY(-140%);
-}
-.chapter-section{
-    position: relative;
-}
-.remove-chapter{
- position: absolute;
-    top: -8px;
-    right: 0;
-    cursor: pointer;
-}
-.remove-chapter i{
-    font-weight: bold;
-    font-size: 18px;
-}
-/* Base for label styling */
-	[type="checkbox"]:not(:checked),
-	[type="checkbox"]:checked {
-		position: absolute;
-		left: 0;
-		opacity: 0.01;
-	}
-	[type="checkbox"]:not(:checked) + label,
-	[type="checkbox"]:checked + label {
-		position: relative;
-		padding-left: 2.3em;
-		font-size: 1.05em;
-		line-height: 1.7;
-		cursor: pointer;
-	}
-
-	/* checkbox aspect */
-	[type="checkbox"]:not(:checked) + label:before,
-	[type="checkbox"]:checked + label:before {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 1.4em;
-		height: 1.4em;
-		border: 1px solid #aaa;
-		background: #FFF;
-		border-radius: .2em;
-		box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 rgba(203, 34, 237, .2);
-		-webkit-transition: all .275s;
-				transition: all .275s;
-	}
-
-	/* checked mark aspect */
-	[type="checkbox"]:not(:checked) + label:after,
-	[type="checkbox"]:checked + label:after {
-		content: '✕';
-		position: absolute;
-        top: .525em;
-        left: 0.1em;
-		font-size: 1.375em;
-		color: #CB22ED;
-		line-height: 0;
-		-webkit-transition: all .2s;
-				transition: all .2s;
-	}
-
-	/* checked mark aspect changes */
-	[type="checkbox"]:not(:checked) + label:after {
-		opacity: 0;
-		-webkit-transform: scale(0) rotate(45deg);
-				transform: scale(0) rotate(45deg);
-	}
-
-	[type="checkbox"]:checked + label:after {
-		opacity: 1;
-		-webkit-transform: scale(1) rotate(0);
-				transform: scale(1) rotate(0);
-	}
-
-	/* Disabled checkbox */
-
-	/* Accessibility */
-	[type="checkbox"]:checked:focus + label:before,
-	[type="checkbox"]:not(:checked):focus + label:before {
-		box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 6px rgba(203, 34, 237, .2);
-	}
-
-
-</style>
-<div class="container" style="min-height: 1500px; margin-top: 100px">
-    <h2 style="color: red"><i>Course information</i> </h2>
+<link rel="stylesheet" href="/public/css/create-course.css">
+<div class="container" style="margin-top: 20px">
+    <h2 style="color: #000472;"><i>Course information</i> </h2>
     <hr>
     <form method="POST" enctype="multipart/form-data" id="form_table" class="form-1 mainForm mt-1" novalidate>
 
@@ -176,7 +11,7 @@
 
     <div class="input-field col s12 mt-4 form__group ">
         <input type="text" name="Name" class="name pl-4" id="Name" autocomplete="none">
-        <label for="Name">Course title*</label>
+        <label for="Name" >Course title*</label>
         <i class="fa-solid fa-triangle-exclamation error-icon"></i>
         <span class="form__group-message email-message"></span>
     </div>
@@ -234,7 +69,7 @@
             <input  type="number" name="Discount" id="Discount" min="0" max="100">
         </div>
     </div>
-    <h2 class="mt-5" style="color: red"><i>Curriculum</i> </h2>
+    <h2 class="mt-5" style="color: #000472;"><i>Curriculum</i> </h2>
     <hr>
     
     <div class="col s12 mt-4" style="text-align: right;">
@@ -278,7 +113,7 @@
     
     <div class="row mt-5">
         <div class="col">
-            <button type="submit" class="btn btn-info btn-lg btn-block">Complete the course creation process</button>
+            <button type="submit" class="btn btn-lg btn-block" style="color: white; background-color: #000472;">Complete the course creation process</button>
         </div>
     </div>
 </form>
@@ -287,7 +122,7 @@
 </div>
 
 {{#section 'script'}}
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/buffer.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/filetype.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/piexif.min.js"></script>
@@ -295,6 +130,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/fileinput.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/themes/fa4/theme.min.js"></script>
 <script src="https://cdn.tiny.cloud/1/mkaemydy8btg089p8s8hb1ok60gyatj2vdic9oibqqlru367/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
     tinymce.init({
       selector: '#FullDes',
@@ -417,7 +253,7 @@ function formatCurrency(input, blur) {
 
 <script src="/public/script/validate.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 
 <script>
     Validator(
@@ -526,6 +362,7 @@ function formatCurrency(input, blur) {
         t.remove();
         chapterWrapper.appendChild(element);
         chapterWrapper.appendChild(btn);
+        matterialInput()
     }
     function addLecture(t,e){
         let parentDiv = t.parentNode;
@@ -557,6 +394,7 @@ function formatCurrency(input, blur) {
         let button = createElementFromHTML(btnHtml);
         parentDiv.appendChild(childHtml);
         parentDiv.appendChild(button);
+        matterialInput()
     }
 
     function removeLecture(t, e){
@@ -592,4 +430,22 @@ function formatCurrency(input, blur) {
         div.innerHTML = htmlString.trim();
         return div.firstChild;
 }
+</script>
+<script>
+    function matterialInput(){
+    let inputs = document.querySelectorAll('input');
+    Array.from(inputs).forEach(input =>{
+            input.onclick = ()=>{
+                let label = document.querySelector(`label[for='${input.id}']`)
+                if(label)
+                    label.classList.toggle('active', true);}
+        
+            input.onblur = ()=>{
+                let label = document.querySelector(`label[for='${input.id}']`)
+                if(label && input.value.length == 0)
+                    label.classList.toggle('active', false);}
+        }
+    )
+}
+matterialInput()
 </script>

@@ -4,6 +4,7 @@ import coursesService from '../services/courses-service.js';
 import categoryService from '../services/category.services.js';
 import chapterService from '../services/chapter-service.js';
 import discountService from '../services/discountService.js';
+import userService from '../services/user-service.js';
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './public/images/courses')
@@ -34,6 +35,7 @@ Router.use((req, res, next)=>{
 Router.get('/create-course',async (req,res, next)=>{
     const listCate = await categoryService.getAllCat();
     res.render('vwInstructor/create-course',{
+        layout: 'instructor',
         listCate
     })
 })
@@ -91,5 +93,14 @@ Router.get('/cat/:id',async (req,res, next)=>{
     let id = req.params.id;
     const list = await categoryService.getTopicByCat(id);
     res.json(list);
+})
+
+Router.get('/profile',async (req,res)=>{
+    const infos = await userService.getInfo(res.locals.auth.IDUser || 0);
+    res.render('vwInstructor/profile',{layout: 'instructor', infos})
+})
+Router.post('/profile',async (req,res)=>{
+    const resultUpdate = await userService.updateInfo(res.locals.auth.IDUser,req.body);
+    res.redirect('/instructor/profile')
 })
 export default Router;

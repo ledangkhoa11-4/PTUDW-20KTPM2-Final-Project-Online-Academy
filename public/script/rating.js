@@ -1,5 +1,4 @@
 function renderRating(selector){
-	console.log(selector);
 	let ratingDivs = document.querySelectorAll(selector);
 	Array.from(ratingDivs).forEach((div) => {
 		let score = div.attributes.rating_score.value;

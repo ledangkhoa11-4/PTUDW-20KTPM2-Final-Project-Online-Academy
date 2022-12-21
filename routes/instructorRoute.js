@@ -99,6 +99,10 @@ Router.get('/profile',async (req,res)=>{
     const infos = await userService.getInfo(res.locals.auth.IDUser || 0);
     res.render('vwInstructor/profile',{layout: 'instructor', infos})
 })
+Router.get('/my-courses',async (req,res)=>{
+    const listCourse = await coursesService.getCoursesByInstructor(res.locals.auth.IDUser);
+    res.render('vwInstructor/my-courses',{layout: 'instructor', listCourse})
+})
 Router.post('/profile',async (req,res)=>{
     const resultUpdate = await userService.updateInfo(res.locals.auth.IDUser,req.body);
     res.redirect('/instructor/profile')

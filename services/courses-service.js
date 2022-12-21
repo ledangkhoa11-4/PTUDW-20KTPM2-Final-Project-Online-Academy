@@ -146,5 +146,9 @@ export default {
   addVideo: async(info)=>{
     const result = await db('circulativevideo').insert(info);
     return result[0];
+  },
+  getCoursesByInstructor: async(IDInstructor)=>{
+    const result = await db('courses').where({IDInstructor});
+    return result;
   }
 };

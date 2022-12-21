@@ -62,7 +62,8 @@ Router.get('/',async (req,res, next)=>{
         totalPage = await searchEngine.countSearchBothNameAndCat(key);
         listID = await searchEngine.searchBothNameAndCat(key,order1,order2,limit,offset);
     }
-    totalPage = Math.ceil(totalPage.cnt / limit);
+    let totalResult = totalPage.cnt;
+    totalPage = Math.ceil(totalResult / limit);
 
     let newest = await searchEngine.searchBothNameAndCat(key,'c.CreatedTime desc',null,1,0);
     let bestSell = await searchEngine.searchBothNameAndCat(key,'COUNT(c.ID) desc',null,1,0);
@@ -93,6 +94,7 @@ Router.get('/',async (req,res, next)=>{
     res.render('vwSearch/index',{
         key,
         url,
+        totalResult,
         isFilter,
         findByName,
         findByCat,

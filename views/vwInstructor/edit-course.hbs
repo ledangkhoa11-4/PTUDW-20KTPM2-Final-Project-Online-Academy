@@ -1,0 +1,490 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css" />
+<link rel="stylesheet" href="/public/css/auth.css">
+<link rel="stylesheet" href="/public/css/create-course.css">
+<style>
+    .file-caption-icon {
+    top: 13px;
+    }
+</style>
+<div class="container" style="margin-top: 20px">
+    <h2 style="color: #000472;"><i>Course information</i> </h2>
+    <hr>
+    <form method="POST" enctype="multipart/form-data" id="form_table" class="form-1 mainForm mt-1" novalidate>
+
+    <input type="text" name="ID" id="" value="{{courseInfo.ID}}" style="display: none;">
+
+    <div class="input-field col s12 mt-4 form__group ">
+        <input type="text" name="Name" class="name pl-4" id="Name" autocomplete="none" value="{{courseInfo.Name}}">
+        <label for="Name" >Course title*</label>
+        <i class="fa-solid fa-triangle-exclamation error-icon"></i>
+        <span class="form__group-message email-message"></span>
+    </div>
+
+    <div class="input-field col s12 mt-4 form__group ">
+        <input type="text" name="TinyDes" class="TinyDes pl-4" id="TinyDes" autocomplete="none" value="{{courseInfo.TinyDesc}}">
+        <label for="TinyDes">Course brief description</label>
+        <i class="fa-solid fa-triangle-exclamation error-icon"></i>
+        <span class="form__group-message email-message"></span>
+    </div>
+
+    <div class=" col s12 mt-5 form__group ">
+        <label for="FullDes">Detail destination</label>
+        <textarea name="FullDes" id="FullDes" rows="10" style="width: 100%">{{courseInfo.FullDesc}}</textarea>
+        <i class="fa-solid fa-triangle-exclamation error-icon"></i>
+        <span class="form__group-message email-message"></span>
+    </div>
+
+    <div class="row mt-5 ml-1 " style="width: 100%">
+        <div class="col form__group">
+            <label >Category*</label>
+            <select class="custom-select custom-select mb-3 choice-cate" id="cate-input" name="IDCate">
+                <option value="" selected>Select Category</option>
+                {{#each listCate as |item|}}
+                    <option value="{{item.IDCate}}">{{item.Name}}</option>
+                {{/each}}
+            </select>
+            <i class="fa-solid fa-triangle-exclamation error-icon"></i>
+            <span class="form__group-message email-message"></span>
+        </div>
+        <div class="col form__group">
+            <label >Topic*</label>
+            <select class="custom-select custom-select mb-3 choice-topic" id="topic-input" name="IDTopic">
+                <option value="" selected>Select Topic</option>
+            </select>
+            <i class="fa-solid fa-triangle-exclamation error-icon"></i>
+            <span class="form__group-message email-message"></span>
+        </div>
+    </div>
+    <div class=" col s12 mt-2">
+        <label for="fuMain">Photo</label>
+        <input type="file" id="image" name="image" accept=".jpg,.png,.gif" value="C:\Users\GF75\Desktop\dog.jpg">
+        
+    </div>
+
+    <div class="row mt-5 ml-1 " style="width: 100%">
+        <div class="input-field col s12 form__group">
+            <label for="Price">Price</label>
+            <input class="required" type="text" name="Price" id="Price" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" data-type="currency" value="{{courseInfo.CourseFee}}">
+            <i class="fa-solid fa-triangle-exclamation error-icon"></i>
+            <span class="form__group-message email-message"></span>
+        </div>
+        <div class="col s12 input-field form__group" >
+            <label for="Discount">Discount Percent</label>
+            <input  type="number" name="Discount" id="Discount" min="0" max="100" value="{{courseInfo.PercentDiscount}}">
+        </div>
+    </div>
+    <h2 class="mt-5" style="color: #000472;"><i>Curriculum</i> </h2>
+    <hr>
+    
+    <div class="col s12 mt-4" style="text-align: right;">
+        <input type="checkbox" id="checkbox" name="isCompleted" {{#if courseInfo.IsCompleted}}checked{{/if}}/>
+        <label for="checkbox">Is your course completed? </label>
+    </div>
+
+    <div class="chapter-wrapper">
+        {{#each chapters as |chapter|}}
+        <div class="chapter-section container mb-4" style="border: 1px solid #ccc;" chapter="{{add1 @index}}">
+            {{#if @index}}
+                <button onclick="removeChapter(this, event);" type="button" class="btn btn-light mt-2 mb-2 remove-chapter">
+                <i class="bi bi-x"></i>
+            </button>
+            {{/if}}
+            <div class="input-field col s12 mt-4 form__group d-flex" style="padding-left: 0;">
+                <div class="col-auto" style="align-items: center; display: flex; justify-content: flex-start; padding-left:0">
+                    <b class="chap-title" >Chapter {{add1 @index}}:</b>
+                </div>
+                <div class="col">
+                    <label for="chapter{{add1 @index}}-name">Chapter Name</label>
+                    <input type="text" name="chapter[{{add1 @index}}][name]" id="chapter{{add1 @index}}-name" class="required" value="{{chapter.Name}}">
+                </div>
+            </div>
+            {{#each (lookup ../videos @index) as |video|}}
+            <div class="input-field col s12 form__group d-flex " style="margin: 6px 0 6px 0;" lecture="{{add1 @index}}">
+                <div class="col-auto" style="align-items: center; display: flex;">
+                    <span>Lecture {{add1 @index}}:</span>
+                </div>
+                <div class="col d-flex" >
+                    <div class="col">
+                        <label for="chapter{{add1 @../index}}-lecture{{add1 @index}}-name">Lecture Name</label>
+                        <input type="text" name="chapter[{{add1 @../index}}][{{add1 @index}}][name]" id="chapter{{add1 @../index}}-lecture{{add1 @index}}-name" class="required" value="{{video.Name}}">
+                    </div>
+                    <div class="col">
+                        <label for="chapter{{add1 @../index}}-lecture{{add1 @index}}-url">URL Video</label>
+                        <input type="text" name="chapter[{{add1 @../index}}][{{add1 @index}}][url]" id="chapter1-lecture1-url" class="required" value="{{video.URL}}">
+                    </div>
+                </div>
+                {{#if @index}}
+                <div class="col-auto d-flex align-items-center btn-wrapper">
+                     <button onclick="removeLecture(this,event);" type="button" class="btn btn-light"><i class="bi bi-x"></i> Remove</button>
+                </div>
+                {{/if}}
+                
+            </div>
+            {{/each}}
+            <button onclick="addLecture(this, event);" type="button" class="btn btn-light mt-2 mb-2 add-lecture" style="border: 1px solid rgb(219, 219, 219)">
+                <i class="bi bi-plus-lg"></i>
+                 Add more lecture
+            </button>
+        </div>
+        {{/each}}
+        <button onclick="addChapter(this, event);" type="button" class="btn btn-light mt-2 mb-2 add-lecture" style="border: 1px solid rgb(219, 219, 219)"><i class="bi bi-plus-lg"></i> Add more chapter</button>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <button type="submit" class="btn btn-lg btn-block" style="color: white; background-color: #000472;">Update this course</button>
+        </div>
+    </div>
+</form>
+
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+{{#section 'script'}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/buffer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/filetype.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/piexif.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/sortable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/fileinput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/themes/fa4/theme.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/mkaemydy8btg089p8s8hb1ok60gyatj2vdic9oibqqlru367/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+      selector: '#FullDes',
+      menubar: false,
+      plugins: ['paste',  'link', 'autolink', 'lists','table'],
+      toolbar: [
+        'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+      ],
+    }); 
+</script>
+<script>
+    $('#image').fileinput({
+      dropZoneEnabled: false,
+      maxFileCount: 1,
+      theme: 'fa4',
+      allowedFileExtensions: ['jpg', 'png', 'gif'],
+      initialPreview: [
+         "/public/images/courses/{{courseInfo.ID}}.jpg"
+      ] ,
+      initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
+    initialPreviewFileType: 'image',
+    
+    });
+  </script>
+  <script>
+    // Jquery Dependency
+
+$("input[data-type='currency']").on({
+    keyup: function() {
+      formatCurrency($(this));
+    },
+    blur: function() { 
+      formatCurrency($(this), "blur");
+    }
+});
+let priceInput = document.querySelector("input[data-type='currency']")
+priceInput.focus();
+priceInput.blur();
+
+function formatNumber(n) {
+  // format number 1000000 to 1,234,567
+  return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
+
+
+function formatCurrency(input, blur) {
+  // appends $ to value, validates decimal side
+  // and puts cursor back in right position.
+  
+  // get input value
+  var input_val = input.val();
+  
+  // don't validate empty input
+  if (input_val === "") { return; }
+  
+  // original length
+  var original_len = input_val.length;
+
+  // initial caret position 
+  var caret_pos = input.prop("selectionStart");
+    
+  // check for decimal
+  if (input_val.indexOf(".") >= 0) {
+
+    // get position of first decimal
+    // this prevents multiple decimals from
+    // being entered
+    var decimal_pos = input_val.indexOf(".");
+
+    // split number by decimal point
+    var left_side = input_val.substring(0, decimal_pos);
+    var right_side = input_val.substring(decimal_pos);
+
+    // add commas to left side of number
+    left_side = formatNumber(left_side);
+
+    // validate right side
+    right_side = formatNumber(right_side);
+    
+    // On blur make sure 2 numbers after decimal
+  
+    
+    // Limit decimal to only 2 digits
+    right_side = right_side.substring(0, 2);
+
+    // join number by .
+    input_val = "$" + left_side + "." + right_side;
+
+  } else {
+    // no decimal entered
+    // add commas to number
+    // remove all non-digits
+    input_val = formatNumber(input_val);
+    input_val =  input_val;
+    
+
+  }
+  
+  // send updated string to input
+  input.val(input_val);
+
+  // put caret back in the right position
+  var updated_len = input_val.length;
+  caret_pos = updated_len - original_len + caret_pos;
+  input[0].setSelectionRange(caret_pos, caret_pos);
+}
+  </script>
+  <script>
+    async function  getTopic(catID){
+        await $.get(`../cat/${catID}`, function(result){
+            let html = `<option value="" selected>Select Topic</option>`;
+            Array.from(result).forEach(topic=>{
+                let topId = topic.IDTopic;
+                let topName = topic.Name;
+                html += `<option value="${topId}">${topName}</option>`
+            })
+            topicInput.innerHTML = html;
+        })
+    }
+    let cateInput = document.querySelector('#cate-input');
+    let topicInput = document.querySelector("#topic-input")
+    cateInput.onchange = ()=>{
+        let catID = cateInput.value
+        if(catID == 0)
+            return topicInput.innerHTML = `<option value="" selected>Select Topic</option>`;
+        getTopic(catID);
+        
+    }
+    document.querySelector('body').onload = async ()=>{
+        let IDCate = {{courseInfo.IDCate}};
+        let IDTopic = {{courseInfo.IDTopic}};
+        console.log(IDTopic)
+        cateInput.querySelector(`option[value='${IDCate}'`).setAttribute('selected','');
+        await getTopic(IDCate);
+        topicInput.querySelector(`option[value='${IDTopic}'`).setAttribute('selected','');
+    }
+  </script>
+
+
+{{/section}}
+
+<script src="/public/script/validate.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+    Validator(
+        {
+            form: ".form-1",
+            error_message: ".form__group-message",
+            rules: [
+                Validator.isRequire(".name"),
+                Validator.isRequire(".choice-cate"),
+                Validator.isRequire(".choice-topic"),
+                Validator.isRequire(".required"),
+            ],
+            onSubmit: function (data) {
+                let value = document.querySelector("#Price").value;
+                value = value.replaceAll(",","");
+                document.querySelector("#Price").value = value;
+                document.querySelector(".form-1").submit();
+            }
+        })
+
+
+</script>
+
+
+<script>
+    let chapters = {{chapterLength}};
+    let lectures = [{{videosLength}}];
+    let chapterWrapper = document.querySelector('.chapter-wrapper');
+    function removeChapter(t,e){
+        let chapDel = +t.parentNode.getAttribute('chapter');
+  
+        if(chapDel<chapters){
+            changeChapName(chapDel);
+        }
+        t.parentNode.remove();
+        chapters--;
+        lectures.splice(chapDel-1,1)
+    }
+    function changeChapName(chapDel){
+        for(let i = chapDel + 1; i <= chapters; i++){
+            let nowChap = i-1;
+            let chapDiv = chapterWrapper.querySelector(`div[chapter='${i}']`);
+            chapDiv.setAttribute('chapter', nowChap)
+            chapDiv.querySelector('.chap-title').textContent = `Chapter ${nowChap}`;
+            let labels = chapDiv.querySelectorAll('label');
+            labels[0].setAttribute('for', `chapter${nowChap}-name`)
+            labels[1].setAttribute('for', `chapter${nowChap}-lecture1-name`)
+            labels[2].setAttribute('for', `chapter${nowChap}-lecture1-url`)
+
+            let inputs = chapDiv.querySelectorAll('input');
+            inputs[0].id = `chapter${nowChap}-name`;
+            inputs[0].name = `chapter[${nowChap}][name]`;
+            let cntLec = 1;
+            for(let i = 1; i< inputs.length ; i+=2){
+                inputs[i].id =  `chapter${nowChap}-lecture${cntLec}-name`
+                inputs[i].name =  `chapter[${nowChap}][${cntLec}][name]`
+                inputs[i+1].id =  `chapter${nowChap}-lecture${cntLec}-url`
+                inputs[i+1].name =  `chapter[${nowChap}][${cntLec}][url]`
+                cntLec++;
+            }
+        }
+    }
+    function addChapter(t,e){
+        chapters++;
+        lectures.push(1);
+        htmlStr = `<div class="chapter-section container mb-4" style="border: 1px solid #ccc;" chapter="${chapters}">
+            <button onclick="removeChapter(this, event);" type="button" class="btn btn-light mt-2 mb-2 remove-chapter">
+                <i class="bi bi-x"></i>
+            </button>
+            <div class="input-field col s12 mt-4 form__group d-flex" style="padding-left: 0;">
+                <div class="col-auto" style="align-items: center; display: flex; justify-content: flex-start; padding-left:0">
+                    <b class="chap-title">Chapter ${chapters}:</b>
+                </div>
+                <div class="col">
+                    <label for="chapter${chapters}-name">Chapter Name</label>
+                    <input type="text" name="chapter[${chapters}][name]" id="chapter${chapters}-name" class="required">
+                </div>
+            </div>
+            <div class="input-field col s12 form__group d-flex " style="margin: 6px 0 6px 0;" lecture="1">
+                <div class="col-auto" style="align-items: center; display: flex;">
+                    <span>Lecture 1:</span>
+                </div>
+                <div class="col d-flex" >
+                    <div class="col">
+                        <label for="chapter${chapters}-lecture1-name">Lecture Name</label>
+                        <input type="text" name="chapter[${chapters}][1][name]" id="chapter${chapters}-lecture1-name" class="required">
+                    </div>
+                    <div class="col">
+                        <label for="chapter${chapters}-lecture1-url">URL Video</label>
+                        <input type="text" name="chapter[${chapters}][1][url]" id="chapter${chapters}-lecture1-url" class="required">
+                    </div>
+                </div>
+            </div>
+            <button onclick="addLecture(this, event);" type="button" class="btn btn-light mt-2 mb-2 add-lecture" style="border: 1px solid rgb(219, 219, 219)">
+                <i class="bi bi-plus-lg"></i>
+                 Add more lecture
+            </button>
+
+        </div>`
+
+
+        let htmlBtn = `<button onclick="addChapter(this, event);" type="button" class="btn btn-light mt-2 mb-2 add-lecture" style="border: 1px solid rgb(219, 219, 219)"><i class="bi bi-plus-lg"></i> Add more chapter</button>`
+
+        let element = createElementFromHTML(htmlStr);
+        let btn = createElementFromHTML(htmlBtn);
+        t.remove();
+        chapterWrapper.appendChild(element);
+        chapterWrapper.appendChild(btn);
+        matterialInput()
+    }
+    function addLecture(t,e){
+        let parentDiv = t.parentNode;
+        let curChap = +parentDiv.getAttribute('chapter');
+        lectures[curChap-1]++
+        let curLec = +lectures[curChap-1];
+        let btnHtml = `<button onclick="addLecture(this, event);" type="button" class="btn btn-light mt-2 mb-2 add-lecture" style="border: 1px solid rgb(219, 219, 219)"><i class="bi bi-plus-lg"></i> Add more lecture</button>`
+        let lectureHtml = `  
+        <div class="input-field col s12 form__group d-flex" style="margin: 6px 0 6px 0;" lecture = "${curLec}">
+            <div class="col-auto" style="align-items: center; display: flex;">
+                <span>Lecture ${curLec}:</span>
+            </div>
+            <div class="col d-flex" >
+                <div class="col">
+                    <label for="chapter${curChap}-lecture${curLec}-name">Lecture Name</label>
+                    <input type="text" name="chapter[${chapters}][${curLec}][name]" id="chapter${curChap}-lecture${curLec}-name" class="required">
+                </div>
+                <div class="col">
+                    <label for="chapter${curChap}-lecture${curLec}-url">URL Video</label>
+                    <input type="text" name="chapter[${chapters}][${curLec}][url]" id="chapter${curChap}-lecture${curLec}-url" class="required">
+                </div>
+             </div>
+            <div class="col-auto d-flex align-items-center btn-wrapper">
+                <button onclick="removeLecture(this,event);" type="button" class="btn btn-light"><i class="bi bi-x"></i> Remove</button>
+            </div>
+        </div>`
+        t.remove();
+        let childHtml = createElementFromHTML(lectureHtml);
+        let button = createElementFromHTML(btnHtml);
+        parentDiv.appendChild(childHtml);
+        parentDiv.appendChild(button);
+        matterialInput()
+    }
+
+    function removeLecture(t, e){
+        let curLec = +t.parentNode.parentNode.getAttribute('lecture');
+        let curChap =  +t.parentNode.parentNode.parentNode.getAttribute('chapter');
+        if(curLec < lectures[curChap-1])
+            changeLecName(curChap, curLec);
+
+        lectures[curChap-1]--; 
+        t.parentNode.parentNode.remove();
+
+    }
+
+    function changeLecName(curChap, curLec){
+        let divChap = document.querySelector(`div[chapter='${curChap}']`)
+        for(let i = curLec + 1; i <= lectures[curChap-1];i++){
+            let div = divChap.querySelector(`div[lecture = '${i}']`);
+            let nowLec = i-1;
+            div.setAttribute('lecture', nowLec)
+            div.querySelector('span').textContent = `Lecture ${nowLec}:`;
+            let labels = div.querySelectorAll('label');
+            labels[0].setAttribute('for',`chapter${curChap}-lecture${nowLec}-name`);
+            labels[1].setAttribute('for',`chapter${curChap}-lecture${nowLec}-url`);
+            let inputs = div.querySelectorAll('input');
+            inputs[0].id = `chapter${curChap}-lecture${nowLec}-name`;
+            inputs[0].name = `chapter[${curChap}][${nowLec}][name]`;
+            inputs[1].id = `chapter${curChap}-lecture${nowLec}-url`;
+            inputs[1].name = `chapter[${curChap}][${nowLec}][url]`;
+        }
+    }
+    function createElementFromHTML(htmlString) {
+        var div = document.createElement('div');
+        div.innerHTML = htmlString.trim();
+        return div.firstChild;
+}
+</script>
+<script>
+    function matterialInput(){
+    let inputs = document.querySelectorAll('input');
+    Array.from(inputs).forEach(input =>{
+            input.onclick = ()=>{
+                let label = document.querySelector(`label[for='${input.id}']`)
+                if(label)
+                    label.classList.toggle('active', true);}
+        
+            input.onblur = ()=>{
+                let label = document.querySelector(`label[for='${input.id}']`)
+                if(label && input.value.length == 0)
+                    label.classList.toggle('active', false);}
+        }
+    )
+}
+matterialInput()
+</script>

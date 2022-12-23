@@ -22,7 +22,7 @@
 			<td>{{course.Name}}</td>
 			<td >{{course.TinyDesc}}</td>
 			<td>{{formatCurrency course.CourseFee}}</td>
-			<td>{{#if course.isCompleted}}Completed{{else}}Not Completed{{/if}}</td>
+			<td>{{#if course.IsCompleted}}Completed{{else}}Not Completed{{/if}}</td>
             <th style="text-align: center;"><a href="/instructor/edit/{{course.ID}}" type="button"><i class="fa-solid fa-file-pen"></i></a></th>
 		</tr>
         {{/each}}

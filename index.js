@@ -83,6 +83,12 @@ app.engine('hbs', engine({
             return options.fn(this);
             }
           return options.inverse(this);
+        },
+        isMatch(txt1, txt2){
+            return txt1 == txt2;
+        },
+        add1(num){
+          return num+1;
         }
     }
     
@@ -102,7 +108,6 @@ app.use(async (req, res, next) => {
     cateTree.push(item);
   }
   res.locals.cateTree = cateTree;
-
   if (req.cookies.user) {
     res.locals.isLogged = true;
     res.locals.auth = req.cookies.user;

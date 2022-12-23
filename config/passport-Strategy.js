@@ -43,7 +43,8 @@ export default function (passport, strategy){
         }else{
           userDat.IDUser = user[0].IDUser;
         }
-        
+        delete userDat.Bio;
+        delete userDat.Password;
         return done(null, userDat);
       });
     }
@@ -59,8 +60,12 @@ export default function (passport, strategy){
       return done(null, false);
     const hashedPassword = user[0].Password;
     const verify = await bcrypt.compare(password, hashedPassword);
-    if(verify)
+    if(verify){
+      delete user[0].Bio;
+      delete user[0].Password;
       return done(null, user[0])
+    }
+      
     return done(null, false)
   }))
 }

@@ -7,6 +7,7 @@ import discountService from '../services/discountService.js';
 import userService from '../services/user-service.js';
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
+        
       cb(null, './public/images/courses')
     },
     filename: function (req, file, cb) {
@@ -14,15 +15,22 @@ const storage = multer.diskStorage({
       cb(null, id + '.jpg')
     }
 })
-const upload = multer({ 
+const uploadCreate = multer({ 
     fileFilter : async (req, file, cb) => { 
         const IDAdded = await coursesService.addCourse({});
         req.IDAdded = IDAdded;
+        
         cb(null, true)
      },
     storage: storage,
 })
-
+const uploadEdit = multer({ 
+    fileFilter : async (req, file, cb) => { 
+        req.IDAdded = req.body.ID || 0;
+        cb(null, true)
+     },
+    storage: storage,
+})
 const Router = express.Router();
 
 Router.use((req, res, next)=>{
@@ -39,7 +47,7 @@ Router.get('/create-course',async (req,res, next)=>{
         listCate
     })
 })
-Router.post('/create-course',upload.single('image'),async (req,res, next)=>{
+Router.post('/create-course',uploadCreate.single('image'),async (req,res, next)=>{
     let IDCourse = req.IDAdded;
     let discountPercent = req.body.Discount;
     let discountRes = await discountService.getDiscount(discountPercent);
@@ -107,4 +115,83 @@ Router.post('/profile',async (req,res)=>{
     const resultUpdate = await userService.updateInfo(res.locals.auth.IDUser,req.body);
     res.redirect('/instructor/profile')
 })
+Router.get('/edit/:id',async (req,res)=>{
+    const ID = req.params.id;
+    const listCate = await categoryService.getAllCat();
+    const courseInfo = await coursesService.getInfoCourse(ID);
+    const chapters = await coursesService.getAllChapters(ID);
+    let videos = [];
+    let videosLength = [];
+    for(let i = 0; i < chapters.length; i++){
+        const videoOfChapter = await coursesService.getAllVideosByChapter(ID, chapters[i].IDChapter);
+        videos.push(videoOfChapter);
+        videosLength.push(videoOfChapter.length);
+    }
+
+    if(courseInfo.ID != ID)
+        return res.render('404',{layout: false})
+
+    res.render('vwInstructor/edit-course',{
+        layout: 'instructor',
+        listCate,
+        courseInfo,
+        chapters,
+        videos,
+        chapterLength: chapters.length,
+        videosLength
+
+    })
+})
+
+Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
+    let IDCourse = req.body.ID;
+    let discountPercent = req.body.Discount;
+    let discountRes = await discountService.getDiscount(discountPercent);
+    if(!discountRes || discountRes.length == 0){
+        discountRes = await discountService.addDiscount(discountPercent);
+    }else{
+        discountRes = discountRes.ID
+    }
+
+    //Xoá tất cả chapter, video cũ
+    const delChap = await chapterService.removeAllChapterOfCourse(IDCourse);
+    const delVideos = await coursesService.removeVideoOfCourse(IDCourse);
+
+
+    let course = {
+        Name: req.body.Name || "",
+        IDCategory: req.body.IDCate || 0,
+        Topic: req.body.IDTopic || 0 ,
+        TinyDesc: req.body.TinyDes || "",
+        FullDesc: req.body.FullDes || "",
+        CourseFee: req.body.Price || 0,
+        IDDiscount: discountRes || 0,
+        IDInstructor: res.locals.auth.IDUser,
+        IsCompleted : req.body.isCompleted === 'on', 
+    }
+    let resultUpdateCourse = await coursesService.updateCourse(IDCourse, course);
+    
+    let chapters = req.body.chapter;
+    let chapCnt = 1;
+    for(let i = 0; i< chapters.length; i++){
+        let chapter = chapters[i];
+        if(chapter){
+            let chapterName = chapter.name;
+            delete chapter.name;
+            
+            const resultAddChap = await chapterService.addChapter(IDCourse,chapCnt,chapterName);
+            for (const [key, value] of Object.entries(chapter)) {
+                let lectureNum = key
+                let lectureName = value.name;
+                let lectureUrl = value.url;
+                const resultAddVideo = await coursesService.addVideo({
+                    IDCourse, IDChapter: chapCnt, No: lectureNum, Name: lectureName,URL: lectureUrl
+                })
+            }
+            chapCnt = chapCnt + 1;
+        }
+    }
+    res.json(req.body);
+})
+
 export default Router;

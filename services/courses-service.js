@@ -75,7 +75,7 @@ export default {
    */
   getInfoCourse: async (IDCourse) => {
     let info1 =
-      await db.raw(`Select c.ID, cat.IDCate as IDCate, t.IDTopic as IDTopic , c.Name as Name, c.TinyDesc, c.FullDesc, c.CourseFee, d.PercentDiscount,  cat.Name as CatName, t.Name as TopicName, u.FullName as Instructor, AVG(p.Rating) as AvgRating, COUNT(p.Rating) as CountRating, c.CreatedTime
+      await db.raw(`Select c.ID, cat.IDCate as IDCate, t.IDTopic as IDTopic , c.Name as Name, c.TinyDesc, c.FullDesc, c.CourseFee, d.PercentDiscount,  cat.Name as CatName, t.Name as TopicName, u.FullName as Instructor, c.IsCompleted, AVG(p.Rating) as AvgRating, COUNT(p.Rating) as CountRating, c.CreatedTime
         From courses c LEFT JOIN category cat on c.IDCategory = cat.IDCate LEFT JOIN topic t ON t.IDTopic = c.Topic and t.IDCate = cat.IDCate LEFT JOIN participate p ON c.ID = p.IDCourse LEFT JOIN user u ON c.IDInstructor = u.IDUser Left Join discount d on d.ID = c.IDDiscount
         WHERE c.ID = ${IDCourse}
         GROUP by c.ID, c.Name, cat.Name, c.TinyDesc, c.FullDesc, t.Name, u.FullName`);
@@ -150,5 +150,14 @@ export default {
   getCoursesByInstructor: async(IDInstructor)=>{
     const result = await db('courses').where({IDInstructor});
     return result;
-  }
+  },
+  removeCourse: async(IDCourse)=>{
+    const result = await db('course').where({IDCourse}).del();
+    return result[0];
+  },
+  removeVideoOfCourse: async(IDCourse)=>{
+    const result = await db('circulativevideo').where({IDCourse}).del();
+    return result[0];
+  },
+
 };

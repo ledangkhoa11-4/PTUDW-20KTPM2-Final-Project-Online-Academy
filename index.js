@@ -1,13 +1,16 @@
 import _ from "./config/config.js";
+import asyncError from 'express-async-errors';
 import express, { urlencoded } from "express";
 import { engine } from "express-handlebars";
 import express_handlebars_sections from "express-handlebars-sections";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import numeral from "numeral";
+import formatTime from "humanize-duration";
 import categoryServices from "./services/category.services.js";
 import passport from "passport";
 import settingStrategy from "./config/passport-Strategy.js";
+
 //Route
 import authRoute from './routes/authRoute.js'
 import searchRoute from './routes/searchRoute.js'
@@ -19,6 +22,7 @@ import moment from 'moment/moment.js';
 import admin_userRoute from './routes/admin-userRoute.js';
 import instructorRoute from './routes/instructorRoute.js'
 const app = express();
+
 
 app.use("/public", express.static("public"));
 app.use(cookieParser());
@@ -43,8 +47,8 @@ app.engine('hbs', engine({
     extname: 'hbs',
     helpers:{
         section: express_handlebars_sections(),
-        convertMinuteToHour(minute){
-            return  (minute/60).toPrecision(4) + "";
+        convertMinuteToHour(minute){ //second not minute
+            return formatTime(minute * 1000,{ units: ["d", "h", "m"], round: true });
         },
         ratingConvert(ratingScore){
             if(ratingScore)
@@ -132,7 +136,11 @@ app.use('/categories',userCategoriesRoute);
 app.use("/course", detailCourseRoute);
 app.use("/instructor", instructorRoute);
 
+
+
 app.use((req,res)=>res.status(404).render('404',{layout: false}))
 app.listen(process.env.PORT, ()=>{
     console.log(`Server running at http://127.0.0.1:${process.env.PORT}`);
 })
+
+

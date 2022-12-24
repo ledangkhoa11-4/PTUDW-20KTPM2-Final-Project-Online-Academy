@@ -32,7 +32,7 @@ export default{
         return null;
     },
     findTopic: async(topicId,catId)=>{
-        const topic=await db.raw(`Select * from topic t where t.IDCate=${catId} and t.IDTopic=${topicId}`);
+        const topic=await db.raw(`Select * from topic t where t.IDCate='${catId}' and t.IDTopic='${topicId}'`);
         if(topic){
             return topic[0][0];
         }

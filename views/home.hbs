@@ -45,7 +45,7 @@
                       <span class="text-muted product-category">{{course.TopicName}}</span>
                       <small class="text-muted">By: {{course.Instructor}}</small>
                       <p> </p>
-                      <small class="text-muted">{{convertMinuteToHour course.TotalLength}} total hour . {{course.TotalLecture}} lectures</small>
+                      <small class="text-muted">{{convertMinuteToHour course.TotalLength}} to learn . {{course.TotalLecture}} lectures</small>
                       <p class="tinyDesc ellipsis-2l" style="margin-top: 16px;">{{course.TinyDesc}}</p>
                       <div class="rating mt-1 justify-content-end" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{CountRating}}><small class="rating-score mr-2">0</small><i class="bi bi-star mr-1"></i><i class="bi bi-star mr-1"></i><i class="bi bi-star mr-1"></i><i class="bi bi-star mr-1"></i><i class="bi bi-star mr-1"></i><small class="rating-count ml-1  ">(0)</small></div>
                       <div class="product-price-wrapper mt-3 d-flex " style="justify-content: flex-end">
@@ -97,7 +97,7 @@
               <span class="text-muted product-category">{{course.TopicName}}</span>
               <small class="text-muted">By: {{course.Instructor}}</small>
               <p> </p>
-              <small class="text-muted">{{convertMinuteToHour course.TotalLength}} total hour . {{course.TotalLecture}} lectures</small>
+              <small class="text-muted">{{convertMinuteToHour course.TotalLength}} to learn. {{course.TotalLecture}} lectures</small>
               <p class="tinyDesc" style="margin-top: 16px;">{{course.TinyDesc}}</p>
               <div class="rating mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{CountRating}}> {{!-- chỉ cần thêm attribute như thế này thì
                 script
@@ -207,7 +207,7 @@
       content: `
         <div class="d-flex justify-content-between">
             <small class="total-lecture">{{course.TotalLecture}} Lectures</small>
-            <small class="total-hour">{{convertMinuteToHour course.TotalLength}} total hour to learn</small>
+            <small class="total-hour">{{convertMinuteToHour course.TotalLength}} to learn</small>
         </div>
         
         <br>

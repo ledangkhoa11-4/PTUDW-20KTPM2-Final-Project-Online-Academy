@@ -1,4 +1,5 @@
 import express from 'express'
+import youtubeInfo from 'updated-youtube-info'
 import multer from 'multer';
 import coursesService from '../services/courses-service.js';
 import categoryService from '../services/category.services.js';
@@ -41,10 +42,15 @@ Router.use((req, res, next)=>{
     res.render('403', {layout: false});
 })
 Router.get('/create-course',async (req,res, next)=>{
+    let isAlert = false;
+    if(req.query.noti){
+        isAlert = true;
+    }
     const listCate = await categoryService.getAllCat();
     res.render('vwInstructor/create-course',{
         layout: 'instructor',
-        listCate
+        listCate,
+        isAlert
     })
 })
 Router.post('/create-course',uploadCreate.single('image'),async (req,res, next)=>{
@@ -76,6 +82,7 @@ Router.post('/create-course',uploadCreate.single('image'),async (req,res, next)=
     
     let chapters = req.body.chapter;
     let chapCnt = 1;
+    res.redirect('/instructor/create-course?noti=1')
     for(let i = 0; i< chapters.length; i++){
         let chapter = chapters[i];
         if(chapter){
@@ -87,14 +94,20 @@ Router.post('/create-course',uploadCreate.single('image'),async (req,res, next)=
                 let lectureNum = key
                 let lectureName = value.name;
                 let lectureUrl = value.url;
+                let videoLength = 0;
+                try{
+                    const info = await youtubeInfo(`${lectureUrl}`);
+                    videoLength = info.duration;
+                }catch(err){
+                    videoLength = 0;
+                }
                 const resultAddVideo = await coursesService.addVideo({
-                    IDCourse, IDChapter: chapCnt, No: lectureNum, Name: lectureName,URL: lectureUrl
+                    IDCourse, IDChapter: chapCnt, No: lectureNum, Name: lectureName,URL: lectureUrl, Length: videoLength
                 })
             }
             chapCnt = chapCnt + 1;
         }
     }
-    res.json(req.body);
 })
 
 Router.get('/cat/:id',async (req,res, next)=>{
@@ -173,6 +186,7 @@ Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
     
     let chapters = req.body.chapter;
     let chapCnt = 1;
+    res.redirect('/instructor/create-course?noti=1')
     for(let i = 0; i< chapters.length; i++){
         let chapter = chapters[i];
         if(chapter){
@@ -184,14 +198,20 @@ Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
                 let lectureNum = key
                 let lectureName = value.name;
                 let lectureUrl = value.url;
+                let videoLength = 0;
+                try{
+                    const info = await youtubeInfo(`${lectureUrl}`);
+                    videoLength = info.duration;
+                }catch(err){
+                    videoLength = 0;
+                }
                 const resultAddVideo = await coursesService.addVideo({
-                    IDCourse, IDChapter: chapCnt, No: lectureNum, Name: lectureName,URL: lectureUrl
+                    IDCourse, IDChapter: chapCnt, No: lectureNum, Name: lectureName,URL: lectureUrl, Length: videoLength
                 })
             }
             chapCnt = chapCnt + 1;
         }
     }
-    res.json(req.body);
 })
 
 export default Router;

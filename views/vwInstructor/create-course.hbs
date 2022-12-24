@@ -449,3 +449,18 @@ function formatCurrency(input, blur) {
 }
 matterialInput()
 </script>
+
+{{#if isAlert}}
+    <script src="sweetalert2.all.min.js"></script>
+<script>
+    Swal.fire({
+    icon: 'success',
+    width: 800,
+    title: 'Your work has been saved. It may take a while for it to appear on your dashboard',
+    showConfirmButton: false,
+    timer: 2500
+    }).then(result=>{
+        window.location.href = "/instructor/my-courses"
+    })
+</script>
+{{/if}}

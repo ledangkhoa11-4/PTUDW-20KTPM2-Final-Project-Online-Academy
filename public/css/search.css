@@ -1,6 +1,6 @@
 .myaccordion {
 	max-width: 500px;
-	margin: 50px auto;
+	margin: -2px auto;
 	box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
@@ -39,21 +39,33 @@
     width: 300px !important;
     min-width: 300px !important;
     max-width: 300px !important;
+    
 }
-@media screen and (max-width: 425px) {
-    .my-sidebar{
-        display: none
-    }
-}
+
 .dumb{
     width: 300px !important;
     min-width: 300px !important;
     max-width: 300px !important;
 }
+.collapse-active{
+    transition: all 0.2s ease-in;
+    position: absolute;
+    left: -300px;
+
+}
+.dumb.collapse-active{
+    transition: all 0.2s ease-in;
+    
+    position: absolute;
+    left: -250px;
+}
 .result-count{
     font-family: "Gentleman";
     font-size: 22px;
     font-weight: bold;
+}
+.hidden{
+    display: none;
 }
 
 a{
@@ -71,12 +83,30 @@ a:hover{
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
-@media screen and (max-width: 692px) {
+
+@media screen and (max-width: 992px) {
     .my-sidebar{
-        display: none
+        z-index: 99999999;
+        left: 0;
     }
-}
-@media screen and (max-width: 692px) {
+    .collapse-active{
+        display: none;
+    }
+    .overlay-screen{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 99999;
+    }
+    .hidden-overlay{
+        display: none;
+    }
+    .bi-x-lg{
+        color: white;
+    }
     .row{
         justify-content: center;
     }
@@ -95,3 +125,4 @@ a:hover{
 .disabled *{
     cursor: context-menu !important;
 }
+

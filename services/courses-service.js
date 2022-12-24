@@ -29,13 +29,13 @@ export default {
   },
   getCourseIDByCat: async (catID) => {
     const list = await db.raw(
-      `SELECT c.ID from courses c Where c.IDCategory = ${catID}`
+      `SELECT c.ID from courses c Where c.IDCategory = '${catID}'`
     );
     if (list) return list[0];
     return null;
   },
   getCourseIDByTopic:async (catID,topicID)=>{
-    const list = await db.raw(`SELECT c.ID from courses c Where c.IDCategory = ${catID} And c.Topic = ${topicID}`)
+    const list = await db.raw(`SELECT c.ID from courses c Where c.IDCategory = '${catID}' And c.Topic = '${topicID}'`)
     if (list)
         return list[0];
     return null;
@@ -64,7 +64,7 @@ export default {
   },
   getCourseIDByTopicPage:async (catID,topicID,limit,offset)=>{
     // const list = await db.select('ID').from('courses').where('IDCategory',catID).andWhere('Topic',topicID).limit(limit).offset(offset);
-    const list = await db.raw(`SELECT c.ID From courses c Where c.IDCategory = ${catID} and c.Topic = ${topicID} limit ${limit} offset ${offset}`);
+    const list = await db.raw(`SELECT c.ID From courses c Where c.IDCategory = '${catID}' and c.Topic = '${topicID}' limit ${limit} offset ${offset}`);
     // console.log(list[0]);
     if (list)
         return list[0];
@@ -77,13 +77,13 @@ export default {
     let info1 =
       await db.raw(`Select c.ID, cat.IDCate as IDCate, t.IDTopic as IDTopic , c.Name as Name, c.TinyDesc, c.FullDesc, c.CourseFee, d.PercentDiscount,  cat.Name as CatName, t.Name as TopicName, u.FullName as Instructor, c.IsCompleted, AVG(p.Rating) as AvgRating, COUNT(p.Rating) as CountRating, c.CreatedTime
         From courses c LEFT JOIN category cat on c.IDCategory = cat.IDCate LEFT JOIN topic t ON t.IDTopic = c.Topic and t.IDCate = cat.IDCate LEFT JOIN participate p ON c.ID = p.IDCourse LEFT JOIN user u ON c.IDInstructor = u.IDUser Left Join discount d on d.ID = c.IDDiscount
-        WHERE c.ID = ${IDCourse}
+        WHERE c.ID = '${IDCourse}'
         GROUP by c.ID, c.Name, cat.Name, c.TinyDesc, c.FullDesc, t.Name, u.FullName`);
 
     let info2 =
       await db.raw(`Select count(video.No) as TotalLecture, sum(video.Length) as TotalLength 
         From courses c LEFT JOIN circulativevideo video on c.ID = video.IDCourse
-        WHERE c.ID = ${IDCourse}`
+        WHERE c.ID = '${IDCourse}'`
         )
         if(info2 && info1){
             info1 = info1[0][0];
@@ -107,7 +107,7 @@ export default {
   },
   getAllVideosByChapter: async (IDCourse, IDChapter) => {
     let list = await db.raw(
-      `Select * From circulativevideo Where IDCourse = ${IDCourse} and IDChapter = ${IDChapter}`
+      `Select * From circulativevideo Where IDCourse = '${IDCourse}' and IDChapter = '${IDChapter}'`
     );
     if (list) return JSON.parse(JSON.stringify(list[0]));
     return null;
@@ -119,7 +119,7 @@ export default {
     return list
   },
   findByIDStudent: async(id)=>{
-    const list= await db.raw(`SELECT c.* FROM participate p, courses c WHERE p.IDStudent=${id} AND p.IDCourse=c.ID;`);
+    const list= await db.raw(`SELECT c.* FROM participate p, courses c WHERE p.IDStudent='${id}' AND p.IDCourse=c.ID;`);
     // console.log(list[0]);
     if(list[0]==[]){
       return 0;

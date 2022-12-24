@@ -2,11 +2,19 @@
 <link rel='stylesheet' href='/public/css/search.css' />
 <link rel='stylesheet' href='/public/css/badge.css' />
 <link rel="stylesheet" href="/public/css/pagination.css">
+
 <div class='container-lg ml-4 mr-4 mb-5' style='margin-top: 100px; min-height: 1000px'>
+    <div class="overlay-screen hidden-overlay"></div>
     <div class='row'>
-        <div class='col-3 result-count dumb'>{{totalResult}} results for “{{key}}”</div>
+        <div class='col-3 result-count dumb'>
+            <div class="row">
+                <div class="col">{{totalResult}} results for “{{key}}”</div>
+            </div> 
+        </div>
+        
         <div class='col-3 my-sidebar'>
             <div id='accordion' class='myaccordion'>
+                <div class="col-auto" style="text-align: right;"><a style="z-index: 999;" id="btn-collapse" href="#"><i class="bi bi-x-lg" style="font-size: 24px"></i></a></div>
                 <div class='card'>
                     <div class='card-header' id='headingOne'>
                         <h2 class='mb-0'>
@@ -194,7 +202,9 @@
                 
             </div>
         </div>
+        <div class="col-auto " style="text-align: right;"><a class="hidden" style="z-index: 999;" id="btn-open" href="#"><i class="bi bi-list" style="font-size: 24px; color: black;"></i></a></div>
         <div class='col ml-5'>
+            
             {{#unless length}}
                 <h1>Sorry, we couldn't find any results for "{{key}}"</h1>
                 <h5>Try adjusting your search. Here are some ideas:</h5>
@@ -226,7 +236,7 @@
                                     <h5 class='card-title product-title'>{{newestCourse.Name}}</h5>
                                     
                                     <small class='text-muted'>By: {{newestCourse.Instructor}}</small>
-                                    <small class='text-muted'>{{convertMinuteToHour newestCourse.TotalLength}} total hour . {{newestCourse.TotalLecture}} lectures</small>
+                                    <small class='text-muted'>{{convertMinuteToHour newestCourse.TotalLength}} to learn. {{newestCourse.TotalLecture}} lectures</small>
                                     <p class='tinyDesc' style='margin-top: 16px;'>{{newestCourse.TinyDesc}}</p>
                                     <div class='rating mt-1' rating_score={{#if newestCourse.AvgRating}}{{newestCourse.AvgRating}}{{else}}0{{/if}} rating_count={{newestCourse.CountRating}}>
                                     </div>
@@ -259,7 +269,7 @@
                                     <h5 class='card-title product-title'>{{bestRatingCourse.Name}}</h5>
                                     
                                     <small class='text-muted'>By: {{bestRatingCourse.Instructor}}</small>
-                                    <small class='text-muted'>{{convertMinuteToHour bestRatingCourse.TotalLength}} total hour . {{bestRatingCourse.TotalLecture}} lectures</small>
+                                    <small class='text-muted'>{{convertMinuteToHour bestRatingCourse.TotalLength}} to learn. {{bestRatingCourse.TotalLecture}} lectures</small>
                                     <p class='tinyDesc' style='margin-top: 16px;'>{{bestRatingCourse.TinyDesc}}</p>
                                     <div class='rating mt-1' rating_score={{#if bestRatingCourse.AvgRating}}{{bestRatingCourse.AvgRating}}{{else}}0{{/if}} rating_count={{bestRatingCourse.CountRating}}>
                                     </div>
@@ -292,7 +302,7 @@
                                     <h5 class='card-title product-title'>{{bestSellCourse.Name}}</h5>
                                     
                                     <small class='text-muted'>By: {{bestSellCourse.Instructor}}</small>
-                                    <small class='text-muted'>{{convertMinuteToHour bestSellCourse.TotalLength}} total hour . {{bestSellCourse.TotalLecture}} lectures</small>
+                                    <small class='text-muted'>{{convertMinuteToHour bestSellCourse.TotalLength}} to learn. {{bestSellCourse.TotalLecture}} lectures</small>
                                     <p class='tinyDesc' style='margin-top: 16px;'>{{bestSellCourse.TinyDesc}}</p>
                                     <div class='rating mt-1' rating_score={{#if bestSellCourse.AvgRating}}{{bestSellCourse.AvgRating}}{{else}}0{{/if}} rating_count={{bestSellCourse.CountRating}}>
                                     </div>
@@ -386,7 +396,7 @@
       content: `
         <div class="d-flex justify-content-between">
             <small class="total-lecture">{{course.TotalLecture}} Lectures</small>
-            <small class="total-hour">{{convertMinuteToHour course.TotalLength}} total hour to learn</small>
+            <small class="total-hour">{{convertMinuteToHour course.TotalLength}} to learn</small>
         </div>
         
         <br>
@@ -430,3 +440,34 @@
 
 </script>
 
+<script>
+    let collapse = document.querySelector('#btn-collapse');
+    let open = document.querySelector('#btn-open');
+    let dumb = document.querySelector('.dumb');
+    let sidebar = document.querySelector('.my-sidebar');
+    let overlay = document.querySelector('.overlay-screen');
+    collapse.onclick = ()=>{
+        dumb.classList.toggle('collapse-active');
+        sidebar.classList.toggle('collapse-active');
+        open.classList.remove('hidden');
+         overlay.classList.add('hidden-overlay')
+    }
+    open.onclick = ()=>{
+        dumb.classList.toggle('collapse-active');
+        sidebar.classList.toggle('collapse-active');
+        open.classList.add('hidden')
+        overlay.classList.remove('hidden-overlay')
+    }
+    overlay.onclick = ()=>{
+        dumb.classList.toggle('collapse-active');
+        sidebar.classList.toggle('collapse-active');
+        open.classList.remove('hidden');
+         overlay.classList.add('hidden-overlay')
+    }
+    let width = window.innerWidth;
+    if(width <= 992){
+        dumb.classList.add('collapse-active');
+        sidebar.classList.add('collapse-active');
+        open.classList.remove('hidden');
+    }
+</script>

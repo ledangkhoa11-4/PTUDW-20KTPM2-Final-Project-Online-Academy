@@ -2,7 +2,9 @@ import facebookStrategy from "passport-facebook";
 import localStrategy from 'passport-local';
 import userService from "../services/user-service.js";
 import bcrypt from 'bcrypt'
+import googleStrategy from 'passport-google-oauth20'
 
+const GoogleStrategy = googleStrategy.Strategy;
 const FacebookStrategy = facebookStrategy.Strategy;
 const LocalStrategy = localStrategy.Strategy;
 export default function (passport, strategy){
@@ -68,7 +70,42 @@ export default function (passport, strategy){
       
     return done(null, false)
   }))
+
+
+  passport.use(new GoogleStrategy({
+    clientID: process.env.google_key,
+    clientSecret: process.env.google_secret,
+    callbackURL: process.env.callback_google_url,
+    profileFields: ['profile','email']
+    },
+    function(accessToken, refreshToken, profile, done) {
+      let email = profile.emails[0].value;
+      let id = profile.id;
+      let name = profile._json.name;
+      const userDat = {
+        FullName: name,
+        Email: email,
+        Password: "",
+        Role: 2,
+        OTP: 0,
+        IDSocial: id
+      }
+      process.nextTick(async function () {
+        const user = await userService.getUserByEmail(email);
+        // user chưa tồn tại -> Tạo user mới
+        if(user.length == 0){
+          const result = await userService.addUser(userDat)
+          userDat.IDUser = result
+        }else{
+          userDat.IDUser = user[0].IDUser;
+        }
+        delete userDat.Bio;
+        delete userDat.Password;
+        return done(null, userDat);
+      });
+    }
+  ));
 }
-// Passport session setup. 
+
 
 

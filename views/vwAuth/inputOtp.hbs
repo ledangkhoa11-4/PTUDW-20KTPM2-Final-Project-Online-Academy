@@ -58,12 +58,17 @@ form input{
 }
 
 let tabChange = function(val){
-    let ele = document.querySelectorAll('input');
-    if(ele[val-1].value != ''){
-      ele[val].focus()
-    }else if(ele[val-1].value == ''){
-      ele[val-2].focus()
-    }   
+    let ele = document.querySelectorAll('input.otp');
+    try{
+      if(ele[val-1].value != ''){
+        ele[val].focus()
+      }else if(ele[val-1].value == ''){
+        ele[val-2].focus()
+      } 
+    }catch(err){
+      //ignore
+    }
+  
  }
 
 </script>

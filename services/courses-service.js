@@ -159,5 +159,8 @@ export default {
     const result = await db('circulativevideo').where({IDCourse}).del();
     return result[0];
   },
-
+  getInsByCourse: async(ID)=>{
+    const result = await db.from('courses').select('IDInstructor').where({ID});
+    return result[0]
+  }
 };

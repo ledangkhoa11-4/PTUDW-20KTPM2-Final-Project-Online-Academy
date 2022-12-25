@@ -1,6 +1,7 @@
 import express from 'express'
 import youtubeInfo from 'updated-youtube-info'
 import multer from 'multer';
+import middleware from '../middlewares/middleware.js';
 import coursesService from '../services/courses-service.js';
 import categoryService from '../services/category.services.js';
 import chapterService from '../services/chapter-service.js';
@@ -34,13 +35,7 @@ const uploadEdit = multer({
 })
 const Router = express.Router();
 
-Router.use((req, res, next)=>{
-    if(res.locals.auth){
-        if(res.locals.auth.Role == 1)
-            return next();
-    }
-    res.render('403', {layout: false});
-})
+Router.use(middleware.isInstructor)
 Router.get('/create-course',async (req,res, next)=>{
     let isAlert = false;
     if(req.query.noti){
@@ -128,7 +123,7 @@ Router.post('/profile',async (req,res)=>{
     const resultUpdate = await userService.updateInfo(res.locals.auth.IDUser,req.body);
     res.redirect('/instructor/profile')
 })
-Router.get('/edit/:id',async (req,res)=>{
+Router.get('/edit/:id',middleware.isOwnCourse,async (req,res)=>{
     const ID = req.params.id;
     const listCate = await categoryService.getAllCat();
     const courseInfo = await coursesService.getInfoCourse(ID);

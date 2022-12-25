@@ -121,6 +121,7 @@ Router.post('/register',async (req,res, next)=>{
 })
 
 Router.get('/facebook', passport.authenticate('facebook',{scope:'email'}));
+Router.get('/google', passport.authenticate('google',{scope:['profile','email']}));
 
 Router.get('/facebook/callback',
   passport.authenticate('facebook', { successRedirect : '/', failureRedirect: '/login' }),
@@ -128,5 +129,10 @@ Router.get('/facebook/callback',
     res.redirect('/');
   });
 
+Router.get('/google/callback',
+  passport.authenticate('google', { successRedirect : '/', failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
 
 export default Router;

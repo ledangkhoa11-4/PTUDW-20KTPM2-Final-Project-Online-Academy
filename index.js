@@ -137,8 +137,12 @@ app.use("/course", detailCourseRoute);
 app.use("/instructor", instructorRoute);
 
 
-
+app.use((err,req,res, next)=> {
+  console.log(err);
+  next();
+})
 app.use((req,res)=>res.status(404).render('404',{layout: false}))
+
 app.listen(process.env.PORT, ()=>{
     console.log(`Server running at http://127.0.0.1:${process.env.PORT}`);
 })

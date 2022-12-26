@@ -85,8 +85,8 @@
         {{#each chapters as |chapter|}}
         <div class="chapter-section container mb-4" style="border: 1px solid #ccc;" chapter="{{add1 @index}}">
             {{#if @index}}
-                <button onclick="removeChapter(this, event);" type="button" class="btn btn-light mt-2 mb-2 remove-chapter">
-                <i class="bi bi-x"></i>
+                <button onclick="removeChapter(this, event);" type="button" class="btn  mt-2 mb-2 remove-chapter" style="cursor: pointer;">
+                <i class="fa-solid fa-xmark"></i>
             </button>
             {{/if}}
             <div class="input-field col s12 mt-4 form__group d-flex" style="padding-left: 0;">
@@ -99,7 +99,7 @@
                 </div>
             </div>
             {{#each (lookup ../videos @index) as |video|}}
-            <div class="input-field col s12 form__group d-flex " style="margin: 6px 0 6px 0;" lecture="{{add1 @index}}">
+            <div class="input-field col s12 form__group d-flex " style="margin: 20px 0 20px 0;" lecture="{{add1 @index}}">
                 <div class="col-auto" style="align-items: center; display: flex;">
                     <span>Lecture {{add1 @index}}:</span>
                 </div>
@@ -110,12 +110,17 @@
                     </div>
                     <div class="col">
                         <label for="chapter{{add1 @../index}}-lecture{{add1 @index}}-url">URL Video</label>
-                        <input type="text" name="chapter[{{add1 @../index}}][{{add1 @index}}][url]" id="chapter1-lecture1-url" class="required" value="{{video.URL}}">
+                        <input type="text" name="chapter[{{add1 @../index}}][{{add1 @index}}][url]" id="chapter{{add1 @../index}}-lecture{{add1 @index}}-url" class="required" value="{{video.URL}}">
+                    </div>
+                    
+                    <div class="col-auto s12">
+                        <input type="checkbox" id="chapter{{add1 @../index}}-lecture{{add1 @index}}-isPreview" name="chapter[{{add1 @../index}}][{{add1 @index}}][isPreview]" {{#if video.IsPreview}} checked{{/if}}/>
+                        <label for="chapter{{add1 @../index}}-lecture{{add1 @index}}-isPreview">Preview</label>
                     </div>
                 </div>
                 {{#if @index}}
                 <div class="col-auto d-flex align-items-center btn-wrapper">
-                     <button onclick="removeLecture(this,event);" type="button" class="btn btn-light"><i class="bi bi-x"></i> Remove</button>
+                     <button onclick="removeLecture(this,event);" type="button" class="btn btn-light"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 {{/if}}
                 
@@ -313,7 +318,14 @@ function formatCurrency(input, blur) {
             }
         })
 
-
+        let discountInput = document.querySelector('#Discount');
+    discountInput.onchange = (e)=>{
+        let value = discountInput.value;
+        if(value < 0)
+            discountInput.value = 0;
+        if(value > 100)
+            discountInput.value = 100;
+    }
 </script>
 
 
@@ -341,6 +353,7 @@ function formatCurrency(input, blur) {
             labels[0].setAttribute('for', `chapter${nowChap}-name`)
             labels[1].setAttribute('for', `chapter${nowChap}-lecture1-name`)
             labels[2].setAttribute('for', `chapter${nowChap}-lecture1-url`)
+            labels[3].setAttribute('for', `chapter${nowChap}-lecture1-isPreview`)
 
             let inputs = chapDiv.querySelectorAll('input');
             inputs[0].id = `chapter${nowChap}-name`;
@@ -351,6 +364,8 @@ function formatCurrency(input, blur) {
                 inputs[i].name =  `chapter[${nowChap}][${cntLec}][name]`
                 inputs[i+1].id =  `chapter${nowChap}-lecture${cntLec}-url`
                 inputs[i+1].name =  `chapter[${nowChap}][${cntLec}][url]`
+                inputs[i+2].id =  `chapter${nowChap}-lecture${cntLec}-isPreview`
+                inputs[i+2].name =  `chapter[${nowChap}][${cntLec}][isPreview]`
                 cntLec++;
             }
         }
@@ -359,8 +374,8 @@ function formatCurrency(input, blur) {
         chapters++;
         lectures.push(1);
         htmlStr = `<div class="chapter-section container mb-4" style="border: 1px solid #ccc;" chapter="${chapters}">
-            <button onclick="removeChapter(this, event);" type="button" class="btn btn-light mt-2 mb-2 remove-chapter">
-                <i class="bi bi-x"></i>
+            <button onclick="removeChapter(this, event);" type="button" class="btn mt-2 mb-2 remove-chapter">
+                <i class="fa-solid fa-xmark"></i>
             </button>
             <div class="input-field col s12 mt-4 form__group d-flex" style="padding-left: 0;">
                 <div class="col-auto" style="align-items: center; display: flex; justify-content: flex-start; padding-left:0">
@@ -383,6 +398,10 @@ function formatCurrency(input, blur) {
                     <div class="col">
                         <label for="chapter${chapters}-lecture1-url">URL Video</label>
                         <input type="text" name="chapter[${chapters}][1][url]" id="chapter${chapters}-lecture1-url" class="required">
+                    </div>
+                    <div class="col-auto s12">
+                        <input type="checkbox" id="chapter${chapters}-lecture1-isPreview" name="chapter[${chapters}][1][isPreview]"/>
+                        <label for="chapter${chapters}-lecture1-isPreview">Preview</label>
                     </div>
                 </div>
             </div>
@@ -423,9 +442,13 @@ function formatCurrency(input, blur) {
                     <label for="chapter${curChap}-lecture${curLec}-url">URL Video</label>
                     <input type="text" name="chapter[${chapters}][${curLec}][url]" id="chapter${curChap}-lecture${curLec}-url" class="required">
                 </div>
+                <div class="col-auto s12">
+                    <input type="checkbox" id="chapter${curChap}-lecture${curLec}-isPreview" name="chapter[${chapters}][${curLec}][isPreview]"/>
+                    <label for="chapter${curChap}-lecture${curLec}-isPreview">Preview</label>
+                </div>
              </div>
             <div class="col-auto d-flex align-items-center btn-wrapper">
-                <button onclick="removeLecture(this,event);" type="button" class="btn btn-light"><i class="bi bi-x"></i> Remove</button>
+                <button onclick="removeLecture(this,event);" type="button" class="btn btn-light"><i class="fa-solid fa-xmark"></i> </button>
             </div>
         </div>`
         t.remove();
@@ -457,11 +480,14 @@ function formatCurrency(input, blur) {
             let labels = div.querySelectorAll('label');
             labels[0].setAttribute('for',`chapter${curChap}-lecture${nowLec}-name`);
             labels[1].setAttribute('for',`chapter${curChap}-lecture${nowLec}-url`);
+            labels[2].setAttribute('for',`chapter${curChap}-lecture${nowLec}-isPreview`);
             let inputs = div.querySelectorAll('input');
             inputs[0].id = `chapter${curChap}-lecture${nowLec}-name`;
             inputs[0].name = `chapter[${curChap}][${nowLec}][name]`;
             inputs[1].id = `chapter${curChap}-lecture${nowLec}-url`;
             inputs[1].name = `chapter[${curChap}][${nowLec}][url]`;
+            inputs[2].id = `chapter${curChap}-lecture${nowLec}-isPreview`;
+            inputs[2].name = `chapter[${curChap}][${nowLec}][isPreview]`;
         }
     }
     function createElementFromHTML(htmlString) {
@@ -472,7 +498,7 @@ function formatCurrency(input, blur) {
 </script>
 <script>
     function matterialInput(){
-    let inputs = document.querySelectorAll('input');
+    let inputs = document.querySelectorAll('input[type]:not([type="checkbox"])');
     Array.from(inputs).forEach(input =>{
             input.onclick = ()=>{
                 let label = document.querySelector(`label[for='${input.id}']`)

@@ -9,11 +9,9 @@ export default {
     },
     isOwnCourse:async (req, res, next)=>{
         const instructor = await coursesService.getInsByCourse(req.params.id);
-        if(res.locals.auth.IDUser == instructor.IDInstructor){
-            return next();
-        }else{
-            res.render('403', {layout: false});
+        if(!instructor || res.locals.auth.IDUser != instructor.IDInstructor){
+            return res.render('403', {layout: false});;
         }
-        
+        return next();  
     }
 }

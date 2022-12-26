@@ -52,6 +52,8 @@ Router.post('/create-course',uploadCreate.single('image'),async (req,res, next)=
     let IDCourse = req.IDAdded;
     let discountPercent = req.body.Discount;
     let discountRes = await discountService.getDiscount(discountPercent);
+    let ModifiedTime = new Date().toISOString();
+    
     if(!discountRes || discountRes.length == 0){
         discountRes = await discountService.addDiscount(discountPercent);
     }else{
@@ -67,7 +69,8 @@ Router.post('/create-course',uploadCreate.single('image'),async (req,res, next)=
         CourseFee: req.body.Price || 0,
         IDDiscount: discountRes || 0,
         IDInstructor: res.locals.auth.IDUser,
-        IsCompleted : req.body.isCompleted === 'on', 
+        IsCompleted : req.body.isCompleted === 'on',
+        ModifiedTime
     }
     if(IDCourse){
         let resultUpdateCourse = await coursesService.updateCourse(IDCourse, course);
@@ -90,6 +93,7 @@ Router.post('/create-course',uploadCreate.single('image'),async (req,res, next)=
                 let lectureName = value.name;
                 let lectureUrl = value.url;
                 let videoLength = 0;
+                let IsPreview = value.isPreview === "on";
                 try{
                     const info = await youtubeInfo(`${lectureUrl}`);
                     videoLength = info.duration;
@@ -97,7 +101,7 @@ Router.post('/create-course',uploadCreate.single('image'),async (req,res, next)=
                     videoLength = 0;
                 }
                 const resultAddVideo = await coursesService.addVideo({
-                    IDCourse, IDChapter: chapCnt, No: lectureNum, Name: lectureName,URL: lectureUrl, Length: videoLength
+                    IDCourse, IDChapter: chapCnt, No: lectureNum, Name: lectureName,URL: lectureUrl, Length: videoLength, IsPreview
                 })
             }
             chapCnt = chapCnt + 1;
@@ -138,7 +142,6 @@ Router.get('/edit/:id',middleware.isOwnCourse,async (req,res)=>{
 
     if(courseInfo.ID != ID)
         return res.render('404',{layout: false})
-
     res.render('vwInstructor/edit-course',{
         layout: 'instructor',
         listCate,
@@ -155,6 +158,7 @@ Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
     let IDCourse = req.body.ID;
     let discountPercent = req.body.Discount;
     let discountRes = await discountService.getDiscount(discountPercent);
+    let ModifiedTime = new Date().toISOString();
     if(!discountRes || discountRes.length == 0){
         discountRes = await discountService.addDiscount(discountPercent);
     }else{
@@ -176,6 +180,7 @@ Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
         IDDiscount: discountRes || 0,
         IDInstructor: res.locals.auth.IDUser,
         IsCompleted : req.body.isCompleted === 'on', 
+        ModifiedTime
     }
     let resultUpdateCourse = await coursesService.updateCourse(IDCourse, course);
     
@@ -194,6 +199,7 @@ Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
                 let lectureName = value.name;
                 let lectureUrl = value.url;
                 let videoLength = 0;
+                let IsPreview = value.isPreview === "on";
                 try{
                     const info = await youtubeInfo(`${lectureUrl}`);
                     videoLength = info.duration;
@@ -201,7 +207,7 @@ Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
                     videoLength = 0;
                 }
                 const resultAddVideo = await coursesService.addVideo({
-                    IDCourse, IDChapter: chapCnt, No: lectureNum, Name: lectureName,URL: lectureUrl, Length: videoLength
+                    IDCourse, IDChapter: chapCnt, No: lectureNum, Name: lectureName,URL: lectureUrl, Length: videoLength, IsPreview
                 })
             }
             chapCnt = chapCnt + 1;

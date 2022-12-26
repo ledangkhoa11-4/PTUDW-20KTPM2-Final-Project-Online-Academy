@@ -148,7 +148,7 @@ export default {
     return result[0];
   },
   getCoursesByInstructor: async(IDInstructor)=>{
-    const result = await db('courses').leftJoin('discount','courses.IDDiscount','=','discount.ID').where({IDInstructor});
+    const result = await db('courses').leftJoin('discount','courses.IDDiscount','=','discount.ID').where({IDInstructor}).select('courses.ID','Name','TinyDesc', 'CourseFee', 'IsCompleted', 'PercentDiscount');
     return result;
   },
   removeCourse: async(IDCourse)=>{

@@ -285,7 +285,6 @@ function formatCurrency(input, blur) {
     document.querySelector('body').onload = async ()=>{
         let IDCate = {{courseInfo.IDCate}};
         let IDTopic = {{courseInfo.IDTopic}};
-        console.log(IDTopic)
         cateInput.querySelector(`option[value='${IDCate}'`).setAttribute('selected','');
         await getTopic(IDCate);
         topicInput.querySelector(`option[value='${IDTopic}'`).setAttribute('selected','');

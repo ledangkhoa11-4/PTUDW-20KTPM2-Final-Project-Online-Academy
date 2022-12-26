@@ -155,6 +155,7 @@ Router.get('/edit/:id',middleware.isOwnCourse,async (req,res)=>{
 })
 
 Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
+ 
     let IDCourse = req.body.ID;
     let discountPercent = req.body.Discount;
     let discountRes = await discountService.getDiscount(discountPercent);
@@ -189,7 +190,7 @@ Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
     res.redirect('/instructor/create-course?noti=1')
     for(let i = 0; i< chapters.length; i++){
         let chapter = chapters[i];
-        if(chapter){
+         if(chapter){
             let chapterName = chapter.name;
             delete chapter.name;
             

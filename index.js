@@ -68,7 +68,7 @@ app.engine('hbs', engine({
         calculateNewPrice(percent, price){
             if(!percent)
                 percent = 0;
-            return (price - (price*percent)/100 ).toPrecision(4) + "";
+            return (price - (price*percent)/100).toPrecision(4);
         },
         isEmpty(array){
             return array.length === 0;

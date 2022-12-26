@@ -44,7 +44,9 @@
       </div>
 
     </div>
-    <div style="padding:10%; padding-top:0%">
+    <div class="row">
+    <div class="col-8">
+      <div style="padding:10%; padding-top:0%">
       <div class="card">
         <div class="card-body">
 
@@ -78,14 +80,37 @@
             <span class="icon_drop">+</span>{{chapter.Name}}
           </div>
           <div class="lecture" id="lecture">
+              <div class="card">
+                      <div class="card-body">
               {{#each (lookup ../videos @index) as |video|}}
-                  <a href="#">{{video.No}} {{video.Name}}</a>
-                  <br>
-                  <br>
+                    
+                        <a href="#">{{video.No}} {{video.Name}}</a>
+                                     <br>
+                                     <br>
               {{/each}}
+               </div>
+                    </div>
+              </div>
           </div>
-        </div>
+        
       {{/each}}
+      </div>
+    </div>
+    <div class="col-4" style="top: 0;
+    bottom:0;
+    position:fixed;
+    right: 0;
+  ">
+      <div class="card" style="width: 18rem;">
+  <img src="../../public/images/categories/1/1.jpg" class="card-img-top" alt="...">
+  <div class="card-body" style="display: flex; justify-content:center; flex-direction: column;">
+    <h5 class="card-title">₫ 1.049.000</h5>
+    <a href="#" class="btn btn-outline-primary">Add to watch list </a>
+    <br>
+    <a href="#" class="btn btn-outline-success">Buy now</a>
+    <p class="card-text">Ensuring refund in 30days</p>
+</div>
+    </div>
     </div>
   {{/if}}
 </div>

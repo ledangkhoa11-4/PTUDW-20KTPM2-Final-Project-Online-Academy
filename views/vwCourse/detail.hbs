@@ -36,16 +36,17 @@
           hours</p>
 
         <p class="card-text" style="font-size:medium;">Average rating:
-          {{this.course.AvgRating}}/10</p>
-
-        <p class="card-text"><small class="text-muted">Create time:
-            {{this.course.time}}mm/dd/yyyy</small></p>
+          {{this.course.AvgRating}}/5</p>
+        <p class="card-text" style="font-size:medium;">Number of rating: 500k+</p>
+        <p class="card-text" style="font-size:medium;">Number of student: 1m+</p>
+        <p class="card-text"><small class="text-muted">Last modify:
+            {{this.course.ModifiedTime}}mm/dd/yyyy</small></p>
 
       </div>
 
     </div>
     <div class="row">
-    <div class="col-8">
+      <div class="col-8">
       <div style="padding:10%; padding-top:0%">
       <div class="card">
         <div class="card-body">
@@ -95,22 +96,79 @@
         
       {{/each}}
       </div>
+      </div>
+      <div class="col-3">
+        <div class="buy-course">
+          <div class="card" style="width: 18rem;">
+            <img src="../../public/images/categories/1/1.jpg" class="card-img-top" alt="...">
+            <div class="card-body" style="display: flex; justify-content:center; flex-direction: column;">
+              {{#if course.PercentDiscount}}
+                                <span class="old-price ">{{formatCurrency this.course.CourseFee}}</span>
+                            {{/if}}
+                            <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice this.course.PercentDiscount this.course.CourseFee)}}</span>
+                            
+              <a href="#" class="btn btn-outline-primary">Add to watch list </a>
+              <br>
+              <a href="#" class="btn btn-outline-success">Buy now</a>
+              <p class="card-text">Ensuring refund in 30days</p>
+            </div>
+          </div>
+        </div>
+        <div class="feedback">
+          <div class="container justify-content-center mt-5 border-left border-right">
+            <h3>Feedback</h3>
+            {{#each this.feedback}}
+            <div class="d-flex justify-content-flex-start py-2">
+              <div class="second py-2 px-2"> 
+                <div class="d-flex justify-content-between py-1 pt-2">
+                  <div><img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_600x600.png" width="30"><span class="text2"><h5>{{FullName}}</h5></span></div>
+                </div>
+                <span class="text1">{{Feedback}}</span>
+                <div class="rating mt-1" rating_score={{#if Rating}}{{Rating}}{{else}}0{{/if}} rating_count={{Rating}}>
+                            </div>
+                <script src="/public/script/rating.js"></script>
+                <script> renderRating('.rating')</script>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-4" style="top: 0;
-    bottom:0;
-    position:fixed;
-    right: 0;
-  ">
-      <div class="card" style="width: 18rem;">
-  <img src="../../public/images/categories/1/1.jpg" class="card-img-top" alt="...">
-  <div class="card-body" style="display: flex; justify-content:center; flex-direction: column;">
-    <h5 class="card-title">₫ 1.049.000</h5>
-    <a href="#" class="btn btn-outline-primary">Add to watch list </a>
-    <br>
-    <a href="#" class="btn btn-outline-success">Buy now</a>
-    <p class="card-text">Ensuring refund in 30days</p>
-</div>
-    </div>
+    <div class='col ml-5'>
+            <div class="outstanding-course mt-5">
+                <p>Relevent Courses</p>
+            </div>
+            <div class="row">
+                {{#if this.isEmpty}}
+                    <p>No data</p>
+                    {{else}}
+                    {{#each coursesList as |course|}}
+                        <div class="col-auto mt-3">
+                    <div class="card product-item popover-{{course.ID}}" style="max-width:300px; min-width:300px" >
+                        <img src="/public/images/courses/{{course.ID}}.jpg" width="250" height="150" style="object-fit: fill;"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <a href="/course?id={{course.ID}}"><h5 class="card-title product-title">{{course.Name}}</h5></a>
+                            <span class="text-muted product-category">{{course.TopicName}}</span>
+                            <small class="text-muted">Ins: {{course.Instructor}}</small>
+                            <div class="rating mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{course.CountRating}}>
+                            </div>
+                            <div class="product-price-wrapper mt-3">
+                            {{#if course.PercentDiscount}}
+                                <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
+                            {{/if}}
+                            <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</span>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+                    {{/each}}
+                {{/if}}
+            </div>  
+            <div class="page-container">
+                <div id="pagination"></div>
+            </div>
     </div>
   {{/if}}
 </div>

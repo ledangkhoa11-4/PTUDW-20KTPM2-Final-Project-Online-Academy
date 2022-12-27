@@ -1,6 +1,5 @@
 import db from "../utils/db.js";
 
-
 export default {
   getPopular: async (limit) => {
     const list = await db.raw(
@@ -34,16 +33,18 @@ export default {
     if (list) return list[0];
     return null;
   },
-  getCourseIDByTopic:async (catID,topicID)=>{
-    const list = await db.raw(`SELECT c.ID from courses c Where c.IDCategory = '${catID}' And c.Topic = '${topicID}'`)
-    if (list)
-        return list[0];
+  getCourseIDByTopic: async (catID, topicID) => {
+    const list = await db.raw(
+      `SELECT c.ID from courses c Where c.IDCategory = '${catID}' And c.Topic = '${topicID}'`
+    );
+    if (list) return list[0];
     return null;
   },
-  getCourseNameByCat:async (catID)=>{
-    const list = await db.raw(`SELECT cat.Name from courses c Left Join category cat on cat.IDCate = c.IDCategory Where c.IDCategory = ${catID}`)
-    if (list)
-        return list[0][0].Name;
+  getCourseNameByCat: async (catID) => {
+    const list = await db.raw(
+      `SELECT cat.Name from courses c Left Join category cat on cat.IDCate = c.IDCategory Where c.IDCategory = ${catID}`
+    );
+    if (list) return list[0][0].Name;
     return null;
   },
   countCourseIDByCat: async (catID) => {
@@ -62,12 +63,13 @@ export default {
     if (list) return list;
     return null;
   },
-  getCourseIDByTopicPage:async (catID,topicID,limit,offset)=>{
+  getCourseIDByTopicPage: async (catID, topicID, limit, offset) => {
     // const list = await db.select('ID').from('courses').where('IDCategory',catID).andWhere('Topic',topicID).limit(limit).offset(offset);
-    const list = await db.raw(`SELECT c.ID From courses c Where c.IDCategory = '${catID}' and c.Topic = '${topicID}' limit ${limit} offset ${offset}`);
+    const list = await db.raw(
+      `SELECT c.ID From courses c Where c.IDCategory = '${catID}' and c.Topic = '${topicID}' limit ${limit} offset ${offset}`
+    );
     // console.log(list[0]);
-    if (list)
-        return list[0];
+    if (list) return list[0];
     return null;
   },
   /**
@@ -78,20 +80,19 @@ export default {
       await db.raw(`Select c.ID, cat.IDCate as IDCate, t.IDTopic as IDTopic , c.Name as Name, c.TinyDesc, c.FullDesc, c.CourseFee, d.PercentDiscount,  cat.Name as CatName, t.Name as TopicName, u.FullName as Instructor, c.IsCompleted, AVG(p.Rating) as AvgRating, COUNT(p.Rating) as CountRating, c.CreatedTime
         From courses c LEFT JOIN category cat on c.IDCategory = cat.IDCate LEFT JOIN topic t ON t.IDTopic = c.Topic and t.IDCate = cat.IDCate LEFT JOIN participate p ON c.ID = p.IDCourse LEFT JOIN user u ON c.IDInstructor = u.IDUser Left Join discount d on d.ID = c.IDDiscount
         WHERE c.ID = '${IDCourse}'
-        GROUP by c.ID, c.Name, cat.Name, c.TinyDesc, c.FullDesc, t.Name, u.FullName`);
+        GROUP by c.ID, c.Name, cat.IDCate, cat.Name, c.TinyDesc, c.FullDesc, t.IDTopic, t.Name, u.FullName`);
 
     let info2 =
       await db.raw(`Select count(video.No) as TotalLecture, sum(video.Length) as TotalLength 
         From courses c LEFT JOIN circulativevideo video on c.ID = video.IDCourse
-        WHERE c.ID = '${IDCourse}'`
-        )
-        if(info2 && info1){
-            info1 = info1[0][0];
-            info2 = info2[0][0];
-            return {...info1, ...info2}
-        }  
-        return null;
-    },
+        WHERE c.ID = '${IDCourse}'`);
+    if (info2 && info1) {
+      info1 = info1[0][0];
+      info2 = info2[0][0];
+      return { ...info1, ...info2 };
+    }
+    return null;
+  },
   getAllChapters: async (IDCourse) => {
     let list = await db.select("*").from("chapter").where("IDCourse", IDCourse);
     if (list) return JSON.parse(JSON.stringify(list));
@@ -112,55 +113,62 @@ export default {
     if (list) return JSON.parse(JSON.stringify(list[0]));
     return null;
   },
-  findByIDInstructor: async(id)=>{
-    const list=await db('courses').where('IDInstructor',id);
-    if(list)
-        return list;
-    return list
+  findByIDInstructor: async (id) => {
+    const list = await db("courses").where("IDInstructor", id);
+    if (list) return list;
+    return list;
   },
-  findByIDStudent: async(id)=>{
-    const list= await db.raw(`SELECT c.* FROM participate p, courses c WHERE p.IDStudent='${id}' AND p.IDCourse=c.ID;`);
+  findByIDStudent: async (id) => {
+    const list = await db.raw(
+      `SELECT c.* FROM participate p, courses c WHERE p.IDStudent='${id}' AND p.IDCourse=c.ID;`
+    );
     // console.log(list[0]);
-    if(list[0]==[]){
+    if (list[0] == []) {
       return 0;
-      
     }
     return list[0];
   },
-  getAllCourses:async()=>{
-    const list = await db('courses')
-    if(list)
-      return list;
+  getAllCourses: async () => {
+    const list = await db("courses");
+    if (list) return list;
     return list;
   },
-  addCourse: async(course)=>{
-    const result = await db('courses').insert(course)
+  addCourse: async (course) => {
+    const result = await db("courses").insert(course);
     return result[0];
   },
-  updateCourse: async(id, newField)=>{
-    const result = await db('courses')
-    .where({ id: id })
-    .update(newField)
+  updateCourse: async (id, newField) => {
+    const result = await db("courses").where({ id: id }).update(newField);
     return result[0];
   },
-  addVideo: async(info)=>{
-    const result = await db('circulativevideo').insert(info);
+  addVideo: async (info) => {
+    const result = await db("circulativevideo").insert(info);
     return result[0];
   },
-  getCoursesByInstructor: async(IDInstructor)=>{
-    const result = await db('courses').where({IDInstructor});
+  getCoursesByInstructor: async (IDInstructor) => {
+    const result = await db("courses").where({ IDInstructor });
     return result;
   },
-  removeCourse: async(IDCourse)=>{
-    const result = await db('course').where({IDCourse}).del();
+  removeCourse: async (IDCourse) => {
+    const result = await db("course").where({ IDCourse }).del();
     return result[0];
   },
-  removeVideoOfCourse: async(IDCourse)=>{
-    const result = await db('circulativevideo').where({IDCourse}).del();
+  removeVideoOfCourse: async (IDCourse) => {
+    const result = await db("circulativevideo").where({ IDCourse }).del();
     return result[0];
   },
-  getInsByCourse: async(ID)=>{
-    const result = await db.from('courses').select('IDInstructor').where({ID});
-    return result[0]
-  }
+  getInsByCourse: async (ID) => {
+    const result = await db
+      .from("courses")
+      .select("IDInstructor")
+      .where({ ID });
+    return result[0];
+  },
+  getFeedbackByCourse: async (ID) => {
+    const list = await db.raw(
+      `SELECT * FROM participate as p JOIN user as u Where p.IDStudent = u.IDUser and u.Role = 2;`
+    );
+    if (list[0]) return JSON.parse(JSON.stringify(list[0]));
+    return null;
+  },
 };

@@ -1,0 +1,328 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css" />
+<link rel="stylesheet" href="/public/css/auth.css">
+<form action="change-email" method="POST" class="form-1">
+	<div class="container-fluid">
+		<h1 class="title">Account Setting</h1>
+
+		<div class="grid">
+			<div class="form-group ">
+				<label for="email"><i class="fa-solid fa-envelope mr-2 ml-3"></i>Email</label>
+				<input id="email" class="email" type="text" value="{{auth.Email}}" name="email">
+				<span class="form__group-message email-message"></span>
+			</div>
+
+			<div class="form-group">
+				<label for="password"><i class="fa-solid fa-key mr-2 ml-3"></i>Password</label>
+				<div class="d-flex" style="position: relative;">
+					<input type="password" value="*****************" autocomplete="true"
+						disabled style="flex:1" autocomplete="new-password">
+					<button type="button" class="btn btn-light" style="position: absolute; right: 0; height: 54px"
+						data-toggle="modal" data-target="#exampleModalCenter"><i class="fa-solid fa-pen"></i></button>
+				</div>
+
+				<span class="form__group-message email-message"></span>
+			</div>
+
+		</div>
+
+		<div class="button-container">
+			<button class="button" type="submit"><i class="bi bi-pencil mr-2"></i>Change Email</button>
+		</div>
+	</div>
+
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+	aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Change Password</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="change-password" method="POST" class="form-2">
+					<div class="container-fluid">
+						<div class="grid">
+							<div class="form-group ">
+								<label for="password">New password</label>
+								<input id="password" class="password" type="password"  name="password" autocomplete="new-password">
+								<span class="form__group-message email-message"></span>
+							</div>
+							<div class="form-group ">
+								<label for="password">Confirm new password</label>
+								<input id="confirm-password" class="confirm-password" type="password" autocomplete="new-password">
+								<span class="form__group-message email-message"></span>
+							</div>
+						</div>
+						<div class="button-container">
+							<button class="button" type="submit">Apply Change</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+<script src="/public/script/validate.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+	Validator(
+		{
+			form: ".form-1",
+			error_message: ".form__group-message",
+			rules: [
+				Validator.isRequire(".email"),
+				Validator.isRequire(".password"),
+				Validator.isEmail(".email"),
+				Validator.minLength(".password", 8),
+			],
+			onSubmit: function (data) {
+				document.querySelector(".form-1").submit();
+			}
+		})
+		Validator(
+		{
+			form: ".form-2",
+			error_message: ".form__group-message",
+			rules: [
+				Validator.isRequire(".password"),
+				Validator.minLength(".password", 8),
+				Validator.isConfirm(".confirm-password", ()=>{
+                	return document.querySelector(`.form-2 input[type="password"]`).value
+            }),
+			],
+			onSubmit: function (data) {
+				document.querySelector(".form-2").submit();
+			}
+		})
+</script>
+{{#if isAlert}}
+<script>
+	Swal.fire({
+		width: 600,
+		icon:`{{icon}}`,
+		title: `{{title}}`,
+		showConfirmButton: false,
+		timer: 2500
+	}).then(result=>{
+		{{#if reLogin}} window.location.href = '/auth/login'{{/if}}
+	})
+</script>
+{{/if}}
+
+{{#section 'script'}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/buffer.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/filetype.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/piexif.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/sortable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/themes/fa4/theme.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/mkaemydy8btg089p8s8hb1ok60gyatj2vdic9oibqqlru367/tinymce/6/tinymce.min.js"
+	referrerpolicy="origin"></script>
+<script>
+	tinymce.init({
+		selector: '#bio',
+		menubar: false,
+		height: 600,
+		plugins: ['paste', 'link', 'autolink', 'lists', 'table'],
+		toolbar: [
+			'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+		],
+	}); 
+</script>
+{{/section}}
+<style>
+	@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+
+
+	.container {
+		background: #fff;
+		width: 100%;
+		padding: 1rem;
+	}
+
+	.title {
+		font-size: 24px;
+		line-height: 28px;
+		font-weight: bold;
+		color: #374151;
+		padding-bottom: 11px;
+		border-bottom: 1px solid #d7dbdf;
+	}
+
+	.form-group {
+		margin-top: 25px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.textarea-group label,
+	.form-group label {
+		color: #374151;
+		font-size: 16px;
+		line-height: 19px;
+		margin-bottom: 10px;
+	}
+
+	.form-group [type],
+	.textarea-group textarea {
+		border: 1px solid #d2d6db;
+		border-radius: 6px;
+		padding: 15px;
+	}
+
+	.form-group [type]:hover,
+	.textarea-group textarea:hover {
+		border-color: #a8afb9;
+	}
+
+	.form-group [type]:focus,
+	.textarea-group textarea:focus {
+		border-color: #5850eb;
+	}
+
+	.textarea-group {
+		margin-top: 24px;
+	}
+
+	.textarea-group textarea {
+		resize: none;
+		width: 100%;
+		margin-top: 10px;
+		height: calc(100% - 59px);
+	}
+
+	.checkbox-group {
+		margin-top: 25px;
+	}
+
+	.checkbox-group label {
+		display: flex;
+	}
+
+	.checkbox-group label::before {
+		content: "\0020";
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 16px;
+		height: 16px;
+		margin-right: 8px;
+		border: 1px solid #d2d6db;
+		border-radius: 6px;
+		transition: background 0.1s ease-in;
+	}
+
+	.checkbox-group input[type="checkbox"] {
+		/* ici on ne doit pas mettre de display: none afin de pouvoir "tabber" */
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		border: 0;
+	}
+
+	.checkbox-group input[type="checkbox"]:focus+label:before {
+		border-color: #5850eb;
+	}
+
+	.checkbox-group input[type="checkbox"]:checked+label:before {
+		color: #fff;
+		content: "\2713";
+		background: #5850eb;
+		border-color: #5850eb;
+	}
+
+	.button {
+		font-weight: bold;
+		line-height: 19px;
+		background: #5850eb;
+		border: none;
+		padding: 15px 25px;
+		border-radius: 6px;
+		color: white;
+		width: 100%;
+		margin-top: 24px;
+	}
+
+	.button:hover {
+		background: #6e67ee;
+	}
+
+	.button:focus {
+		background: #4239e8;
+	}
+
+	@media screen and (min-width: 768px) {
+		body {
+			align-items: center;
+			justify-content: center;
+		}
+
+		.container {
+			margin: 2rem;
+			box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+			border-radius: 4px;
+			max-width: 32rem;
+			padding: 2rem;
+		}
+	}
+
+	@media screen and (min-width: 1024px) {
+		.container {
+			max-width: 80%;
+			width: 100%;
+		}
+
+		.checkboxes {
+			display: flex;
+		}
+
+		.checkboxes> :not(:first-child) {
+			margin-left: 1rem;
+		}
+
+		.grid {
+			display: grid;
+			grid-gap: 24px;
+			grid-template-columns: 1fr 1fr;
+			grid-auto-rows: 1fr;
+		}
+
+		.email-group {
+			grid-column: 1;
+			grid-row: 2;
+		}
+
+		.phone-group {
+			grid-column: 2;
+			grid-row: 2;
+		}
+
+		.textarea-group {
+			grid-column: 3;
+			grid-row: span 2;
+		}
+
+		.button-container {
+			text-align: right;
+		}
+
+		.button {
+			/* bon, bon, bon
+		c'est pas tout mais j'ai faim moi ^^
+		*/
+			width: auto;
+		}
+	}
+</style>

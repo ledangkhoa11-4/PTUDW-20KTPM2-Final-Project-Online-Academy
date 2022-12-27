@@ -93,6 +93,11 @@ app.engine('hbs', engine({
         },
         add1(num){
           return num+1;
+        },
+        roleToString(role){
+          if(role == 0) return "Administrator";
+          if(role == 1 ) return "Instructor";
+          if(role == 2) return "Student"
         }
     }
     
@@ -116,8 +121,8 @@ app.use(async (req, res, next) => {
     res.locals.isLogged = true;
     res.locals.auth = req.cookies.user;
   }
-
   if (req.session.passport) {
+    req.session.passport.user
     res.locals.isLogged = true;
     res.locals.auth = req.session.passport.user;
     res.cookie("user", req.session.passport.user);

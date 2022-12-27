@@ -42,7 +42,7 @@ export default {
   },
   getCourseNameByCat: async (catID) => {
     const list = await db.raw(
-      `SELECT cat.Name from courses c Left Join category cat on cat.IDCate = c.IDCategory Where c.IDCategory = ${catID}`
+      `SELECT cat.Name from courses c Left Join category cat on cat.IDCate = c.IDCategory Where c.IDCategory = '${catID}'`
     );
     if (list) return list[0][0].Name;
     return null;

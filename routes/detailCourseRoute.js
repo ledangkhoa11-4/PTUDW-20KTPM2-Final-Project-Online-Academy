@@ -35,7 +35,6 @@ Router.get("/", async (req, res) => {
     limit,
     offset
   );
-  // console.log(list);
   const temp = await coursesService.getCourseIDByTopic(catID, topicID);
   const name = await coursesService.getCourseNameByCat(catID);
   const count = temp.length;

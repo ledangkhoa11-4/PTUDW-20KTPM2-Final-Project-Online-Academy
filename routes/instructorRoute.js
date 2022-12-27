@@ -1,6 +1,7 @@
 import express from 'express'
 import youtubeInfo from 'updated-youtube-info'
 import multer from 'multer';
+import bcrypt from 'bcrypt'
 import middleware from '../middlewares/middleware.js';
 import coursesService from '../services/courses-service.js';
 import categoryService from '../services/category.services.js';
@@ -36,6 +37,11 @@ const uploadEdit = multer({
 const Router = express.Router();
 
 Router.use(middleware.isInstructor)
+Router.get('/',async (req,res, next)=>{
+    res.render('vwInstructor/empty',{
+        layout: 'instructor',
+    })
+})
 Router.get('/create-course',async (req,res, next)=>{
     let isAlert = false;
     if(req.query.noti){
@@ -215,5 +221,56 @@ Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
         }
     }
 })
-
+Router.get('/account',(req, res, next)=>{
+    res.render('vwInstructor/account',{
+        layout: 'instructor'
+    })
+})
+Router.post('/change-email',async (req, res, next)=>{
+   const newEmail = req.body.email;
+   if(newEmail == res.locals.auth.Email)
+        return res.render('vwInstructor/account',{
+            layout: 'instructor', 
+            isAlert: true,
+            icon: 'info',
+		    title: 'You have entered your current Email!',
+        })
+   const isExists = await userService.isEmailExists(newEmail);
+   if(isExists)
+        return res.render('vwInstructor/account',{
+            layout: 'instructor', 
+            isAlert: true,
+            icon: 'error',
+            title: 'Email already exists!',
+        })
+    const resultChange = await userService.changeEmail(res.locals.auth.IDUser,newEmail);
+    res.clearCookie('user');
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        return res.render('vwInstructor/account',{
+            layout: 'instructor', 
+            isAlert: true,
+            icon: 'success',
+            title: 'Email changed successfully. Please login again',
+            reLogin: true
+        })
+      });
+    
+})
+Router.post('/change-password',async (req, res, next)=>{
+    const password = req.body.password;
+    const hashedPassword = await bcrypt.hash(password,5);
+    const resultChange = await userService.changePassword(res.locals.auth.IDUser, hashedPassword);
+    res.clearCookie('user');
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        return res.render('vwInstructor/account',{
+            layout: 'instructor', 
+            isAlert: true,
+            icon: 'success',
+            title: 'Password changed successfully. Please login again',
+            reLogin: true
+        })
+      });
+ })
 export default Router;

@@ -1,8 +1,20 @@
 import express from "express";
+import categoryServices from "../services/category.services.js";
 import coursesService from "../services/courses-service.js";
 
 const Router = express.Router();
 
+Router.use( async(req, res, next)=>{
+  const allCats = await categoryServices.getAllCat();
+  let topics = [];
+  for(let i = 0; i< allCats.length;i++){
+    const topic = await categoryServices.getTopicByCat(allCats[i].IDCate);
+    topics.push(topic)
+  }
+  res.locals.allCats = allCats;
+  res.locals.allTopics = topics;
+  next();
+})
 Router.get("/", async (req, res, next) => {
   const id = req.query.catID;
   const page = req.query.p || 1;
@@ -21,12 +33,23 @@ Router.get("/", async (req, res, next) => {
     const info = await coursesService.getInfoCourse(list[i].ID);
     coursesList.push(info);
   }
+  let catNum = res.locals.allCats.length;
+  
+  for (let i = 0; i < catNum; i++) {
+
+    if(res.locals.allCats[i].IDCate == id){
+      res.locals.allCats[i].active = true;
+      break;
+    }
+  }
+  let url = `/categories?catID=${id}`
   res.render("vwUserCategory/index", {
     coursesList,
     isEmpty: coursesList.length === 0,
     nPage,
     page,
-    id,nResults: count, name
+    id,nResults: count, name,
+    url,
   });
 });
 
@@ -55,13 +78,29 @@ Router.get("/:catID", async (req, res, next) => {
     const info = await coursesService.getInfoCourse(list[i].ID);
     coursesList.push(info);
   }
-  res.render("vwUserTopic/index", {
+  let catNum = res.locals.allCats.length;
+  for (let i = 0; i < catNum; i++) {
+    if(res.locals.allCats[i].IDCate == catID){
+      res.locals.allCats[i].active = true;
+      let topicNum = res.locals.allTopics[i].length;
+      for(let j = 0; j < topicNum; j++){
+        if(res.locals.allTopics[i][j].IDTopic == topicID){
+          res.locals.allTopics[i][j].active = true;
+          break;
+        }
+      }
+    }
+  }
+ 
+  let url = `/categories/${catID}?topicID=${topicID}` 
+  res.render("vwUserCategory/index", {
     coursesList,
     isEmpty: coursesList.length === 0,
     nPage,
     page,
     topicID: topicID,
-    catID: catID,nResults: count,name
+    catID: catID,nResults: count,name,
+    url
   });
 });
 

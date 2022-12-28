@@ -39,25 +39,45 @@
     width: 300px !important;
     min-width: 300px !important;
     max-width: 300px !important;
-    
+    animation: opens 0.2s ease-in forwards;
 }
 
 .dumb{
     width: 300px !important;
     min-width: 300px !important;
     max-width: 300px !important;
+    animation: opens 0.2s ease-in forwards;
 }
 .collapse-active{
     transition: all 0.2s ease-in;
     position: absolute;
-    left: -300px;
-
+    animation: collapses 0.4s ease-in forwards;
 }
+
 .dumb.collapse-active{
-    transition: all 0.2s ease-in;
-    
+    animation: collapses 0.4s ease-in forwards;
     position: absolute;
     left: -250px;
+}
+@keyframes collapses {
+    0%{
+        left: 20px;
+        opacity: 0.6;
+    }
+    100%{
+        left: -400px;
+        opacity: 0;
+    }
+}
+@keyframes opens {
+    0%{
+        left: -400px;
+        opacity: 0.6;
+    }
+    100%{
+        left: 20px;
+        opacity: 1;
+    }
 }
 .result-count{
     font-family: "Gentleman";
@@ -86,6 +106,14 @@ a:hover{
 
 @media screen and (max-width: 992px) {
     .my-sidebar{
+        z-index: 99999999;
+        left: 0;
+    }
+    .result-count{
+        color: white;
+    }
+    .side{
+        position: absolute;
         z-index: 99999999;
         left: 0;
     }

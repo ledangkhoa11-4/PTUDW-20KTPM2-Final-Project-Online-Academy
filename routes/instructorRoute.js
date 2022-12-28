@@ -3,6 +3,7 @@ import youtubeInfo from 'updated-youtube-info'
 import multer from 'multer';
 import bcrypt from 'bcrypt'
 import middleware from '../middlewares/middleware.js';
+import moment from 'moment/moment.js';
 import coursesService from '../services/courses-service.js';
 import categoryService from '../services/category.services.js';
 import chapterService from '../services/chapter-service.js';
@@ -58,8 +59,7 @@ Router.post('/create-course',uploadCreate.single('image'),async (req,res, next)=
     let IDCourse = req.IDAdded;
     let discountPercent = req.body.Discount;
     let discountRes = await discountService.getDiscount(discountPercent);
-    let ModifiedTime = new Date().toISOString();
-    
+    let ModifiedTime = moment().format('yyyy-M-D');
     if(!discountRes || discountRes.length == 0){
         discountRes = await discountService.addDiscount(discountPercent);
     }else{
@@ -165,7 +165,7 @@ Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
     let IDCourse = req.body.ID;
     let discountPercent = req.body.Discount;
     let discountRes = await discountService.getDiscount(discountPercent);
-    let ModifiedTime = new Date().toISOString();
+    let ModifiedTime = moment().format('yyyy-M-D')
     if(!discountRes || discountRes.length == 0){
         discountRes = await discountService.addDiscount(discountPercent);
     }else{

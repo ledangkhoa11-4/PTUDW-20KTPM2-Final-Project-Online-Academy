@@ -25,15 +25,15 @@ try {
 
 export default database;
 
-/*TEST HOSTING DATABASE */ //trên clever clound
+// /*TEST HOSTING DATABASE */ //trên Filess.io
 // const database = knex({
 // 	client: 'mysql',
 // 	connection: {
-// 		host: 'blje6shixeokdbenq3et-mysql.services.clever-cloud.com',
+// 		host: 'qa1.h.filess.io',
 // 		port: 3306,
-// 		user: 'ugudpok78vbce96x',
-// 		password: '20NmQKwynRHjd9zirIkv',
-// 		database: 'blje6shixeokdbenq3et',
+// 		user: 'udemall_grouppage',
+// 		password: '795b2d3b0c07fa28aa71704e4710ebc37329466f',
+// 		database: 'udemall_grouppage',
 // 	},
 // 	pool: {
 // 		min: 0,

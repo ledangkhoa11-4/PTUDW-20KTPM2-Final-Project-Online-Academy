@@ -131,6 +131,9 @@ Router.get('/my-courses',async (req,res)=>{
 })
 Router.post('/profile',async (req,res)=>{
     const resultUpdate = await userService.updateInfo(res.locals.auth.IDUser,req.body);
+    req.cookies.user.FullName = req.body.FullName;
+    req.cookies.user.CurrentJob = req.body.CurrentJob;
+    res.cookie("user", req.cookies.user);
     res.redirect('/instructor/profile')
 })
 Router.get('/edit/:id',middleware.isOwnCourse,async (req,res)=>{
@@ -161,7 +164,6 @@ Router.get('/edit/:id',middleware.isOwnCourse,async (req,res)=>{
 })
 
 Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
- 
     let IDCourse = req.body.ID;
     let discountPercent = req.body.Discount;
     let discountRes = await discountService.getDiscount(discountPercent);
@@ -244,33 +246,24 @@ Router.post('/change-email',async (req, res, next)=>{
             title: 'Email already exists!',
         })
     const resultChange = await userService.changeEmail(res.locals.auth.IDUser,newEmail);
-    res.clearCookie('user');
-    req.logout(function(err) {
-        if (err) { return next(err); }
-        return res.render('vwInstructor/account',{
-            layout: 'instructor', 
-            isAlert: true,
-            icon: 'success',
-            title: 'Email changed successfully. Please login again',
-            reLogin: true
-        })
-      });
-    
+    req.cookies.user.Email = newEmail
+    res.cookie("user", req.cookies.user);
+    return res.render('vwInstructor/account',{
+        layout: 'instructor', 
+        isAlert: true,
+        icon: 'success',
+        title: 'Email changed successfully.',
+    })
 })
 Router.post('/change-password',async (req, res, next)=>{
     const password = req.body.password;
     const hashedPassword = await bcrypt.hash(password,5);
     const resultChange = await userService.changePassword(res.locals.auth.IDUser, hashedPassword);
-    res.clearCookie('user');
-    req.logout(function(err) {
-        if (err) { return next(err); }
-        return res.render('vwInstructor/account',{
-            layout: 'instructor', 
-            isAlert: true,
-            icon: 'success',
-            title: 'Password changed successfully. Please login again',
-            reLogin: true
-        })
-      });
+    return res.render('vwInstructor/account',{
+        layout: 'instructor', 
+        isAlert: true,
+        icon: 'success',
+        title: 'Password changed successfully.',
+    })
  })
 export default Router;

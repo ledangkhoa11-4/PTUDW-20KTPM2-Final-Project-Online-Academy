@@ -56,7 +56,7 @@
         </div>
         
         <form action="/search" class="form-inline my-2 my-lg-0 ml-5 mr-5" style="flex: 1; align-items: center; justify-content: center;">
-            <div class="p-1 bg-light rounded rounded-pill shadow-sm" style="flex-basis: 65%; border: 1px solid #ccc">
+            <div class="p-1 bg-light rounded rounded-pill shadow-sm" style="flex-basis: 75%; border: 1px solid #ccc">
                 <div class="input-group" style="border-radius: 8px">
                     <input name="k" type="search" placeholder="What're you searching for?" {{#if keySearch}}value="{{keySearch}}"{{/if}} aria-describedby="button-addon1 "
                         class="form-control border-0"
@@ -84,7 +84,7 @@
 </a>
 {{/unless}}
 {{#if isLogged}}
- <ul class="navbar-nav ml-auto" style="padding: 0 16px 0 16pxD; cursor: pointer">
+ {{!-- <ul class="navbar-nav ml-auto" style="padding: 0 16px 0 16pxD; cursor: pointer">
             <li class="user-bar nav-item dropdown ml-4">
                 <a class="username nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     Wellcome, {{auth.FullName}}
@@ -109,7 +109,30 @@
                     </a>
                 </div>
             </li>
+        </ul> --}}
+<div class="action">
+      <div class="username nav-link dropdown-toggle profile" onclick="menuToggle();">Wellcome, {{auth.FullName}}</div>
+      <div class="menu">
+        <h3>{{auth.FullName}}<br /><span>Role: {{roleToString auth.Role}}</span> <br> <span>{{auth.Email}}</span></h3>
+        <ul>
+          <li>
+            <a href="/instructor/profile"> <i class="fa-solid fa-id-card-clip mr-3"></i>My profile</a>
+          </li>
+          <li>
+            <a href="/instructor/my-courses"><i class="bi bi-list-task mr-3"></i>My courses</a>
+          </li>
+          <li>
+            <a href="/instructor/create-course"><i class="bi bi-file-earmark-plus mr-3"></i>Create new courses</a>
+          </li>
+          <li>
+            <a href="/instructor/account"><i class="bi bi-person-gear mr-3"></i>Account</a>
+          </li>
+          <li>
+            <a href="/auth/logout"><i class="fa-solid fa-right-from-bracket mr-3"></i>Logout</a>
+          </li>
         </ul>
+      </div>
+    </div>
 {{/if}}
 
         
@@ -184,4 +207,8 @@
             }
         };
     });
+    function menuToggle() {
+        const toggleMenu = document.querySelector(".menu");
+        toggleMenu.classList.toggle("active");
+      }
 </script>

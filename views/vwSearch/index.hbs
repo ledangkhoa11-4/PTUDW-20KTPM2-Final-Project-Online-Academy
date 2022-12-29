@@ -464,10 +464,18 @@
         open.classList.remove('hidden');
          overlay.classList.add('hidden-overlay')
     }
-    let width = window.innerWidth;
-    if(width <= 992){
+    bodyElement = document.getElementsByTagName("BODY")[0];
+    sideBar.classList.add('collapse-active')
+        openBtn.classList.remove('hidden')
+        overlay.classList.add('hidden-overlay')
+    window.onresize = ()=>{
+      newWidth = bodyElement.offsetWidth;
+      if(newWidth <= 992){
         dumb.classList.add('collapse-active');
         sidebar.classList.add('collapse-active');
         open.classList.remove('hidden');
+        overlay.classList.add('hidden-overlay')
+      }
     }
+
 </script>

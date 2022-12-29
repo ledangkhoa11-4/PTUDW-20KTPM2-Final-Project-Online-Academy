@@ -32,6 +32,7 @@
     flex-basis: 20%;
     min-width: 300px;
     transition: all 0.2s ease-in-out;
+    min-height: 90vh;
 }
 .sidebar .image-wrapper {
     overflow: hidden;

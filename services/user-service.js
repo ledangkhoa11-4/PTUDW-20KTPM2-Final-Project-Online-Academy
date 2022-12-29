@@ -69,5 +69,13 @@ export default{
     updateInfo: async(id, infos)=>{
         const result = await db('user').where({IDUser: id}).update(infos);
         return result[0]
+    },
+    changeEmail: async(IDUser, newEmail)=>{
+        const result= await db('user').where({IDUser}).update({Email: newEmail});
+        return result[0]
+    },
+    changePassword: async(IDUser, newPassword)=>{
+        const result= await db('user').where({IDUser}).update({Password: newPassword});
+        return result[0]
     }
 }

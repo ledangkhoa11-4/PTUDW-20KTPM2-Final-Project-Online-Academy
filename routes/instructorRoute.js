@@ -1,7 +1,9 @@
 import express from 'express'
 import youtubeInfo from 'updated-youtube-info'
 import multer from 'multer';
+import bcrypt from 'bcrypt'
 import middleware from '../middlewares/middleware.js';
+import moment from 'moment/moment.js';
 import coursesService from '../services/courses-service.js';
 import categoryService from '../services/category.services.js';
 import chapterService from '../services/chapter-service.js';
@@ -36,6 +38,11 @@ const uploadEdit = multer({
 const Router = express.Router();
 
 Router.use(middleware.isInstructor)
+Router.get('/',async (req,res, next)=>{
+    res.render('vwInstructor/empty',{
+        layout: 'instructor',
+    })
+})
 Router.get('/create-course',async (req,res, next)=>{
     let isAlert = false;
     if(req.query.noti){
@@ -52,8 +59,7 @@ Router.post('/create-course',uploadCreate.single('image'),async (req,res, next)=
     let IDCourse = req.IDAdded;
     let discountPercent = req.body.Discount;
     let discountRes = await discountService.getDiscount(discountPercent);
-    let ModifiedTime = new Date().toISOString();
-    
+    let ModifiedTime = moment().format('yyyy-M-D');
     if(!discountRes || discountRes.length == 0){
         discountRes = await discountService.addDiscount(discountPercent);
     }else{
@@ -125,6 +131,9 @@ Router.get('/my-courses',async (req,res)=>{
 })
 Router.post('/profile',async (req,res)=>{
     const resultUpdate = await userService.updateInfo(res.locals.auth.IDUser,req.body);
+    req.cookies.user.FullName = req.body.FullName;
+    req.cookies.user.CurrentJob = req.body.CurrentJob;
+    res.cookie("user", req.cookies.user);
     res.redirect('/instructor/profile')
 })
 Router.get('/edit/:id',middleware.isOwnCourse,async (req,res)=>{
@@ -155,11 +164,10 @@ Router.get('/edit/:id',middleware.isOwnCourse,async (req,res)=>{
 })
 
 Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
- 
     let IDCourse = req.body.ID;
     let discountPercent = req.body.Discount;
     let discountRes = await discountService.getDiscount(discountPercent);
-    let ModifiedTime = new Date().toISOString();
+    let ModifiedTime = moment().format('yyyy-M-D')
     if(!discountRes || discountRes.length == 0){
         discountRes = await discountService.addDiscount(discountPercent);
     }else{
@@ -215,5 +223,47 @@ Router.post('/edit/:id',uploadEdit.single("image"),async (req,res, next)=>{
         }
     }
 })
-
+Router.get('/account',(req, res, next)=>{
+    res.render('vwInstructor/account',{
+        layout: 'instructor'
+    })
+})
+Router.post('/change-email',async (req, res, next)=>{
+   const newEmail = req.body.email;
+   if(newEmail == res.locals.auth.Email)
+        return res.render('vwInstructor/account',{
+            layout: 'instructor', 
+            isAlert: true,
+            icon: 'info',
+		    title: 'You have entered your current Email!',
+        })
+   const isExists = await userService.isEmailExists(newEmail);
+   if(isExists)
+        return res.render('vwInstructor/account',{
+            layout: 'instructor', 
+            isAlert: true,
+            icon: 'error',
+            title: 'Email already exists!',
+        })
+    const resultChange = await userService.changeEmail(res.locals.auth.IDUser,newEmail);
+    req.cookies.user.Email = newEmail
+    res.cookie("user", req.cookies.user);
+    return res.render('vwInstructor/account',{
+        layout: 'instructor', 
+        isAlert: true,
+        icon: 'success',
+        title: 'Email changed successfully.',
+    })
+})
+Router.post('/change-password',async (req, res, next)=>{
+    const password = req.body.password;
+    const hashedPassword = await bcrypt.hash(password,5);
+    const resultChange = await userService.changePassword(res.locals.auth.IDUser, hashedPassword);
+    return res.render('vwInstructor/account',{
+        layout: 'instructor', 
+        isAlert: true,
+        icon: 'success',
+        title: 'Password changed successfully.',
+    })
+ })
 export default Router;

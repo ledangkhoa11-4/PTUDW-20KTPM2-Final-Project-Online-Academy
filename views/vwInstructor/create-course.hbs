@@ -310,16 +310,19 @@ function formatCurrency(input, blur) {
             chapDiv.setAttribute('chapter', nowChap)
             chapDiv.querySelector('.chap-title').textContent = `Chapter ${nowChap}`;
             let labels = chapDiv.querySelectorAll('label');
-            labels[0].setAttribute('for', `chapter${nowChap}-name`)
-            labels[1].setAttribute('for', `chapter${nowChap}-lecture1-name`)
-            labels[2].setAttribute('for', `chapter${nowChap}-lecture1-url`)
-            labels[3].setAttribute('for', `chapter${nowChap}-lecture1-isPreview`)
-
             let inputs = chapDiv.querySelectorAll('input');
+
+            labels[0].setAttribute('for', `chapter${nowChap}-name`)
             inputs[0].id = `chapter${nowChap}-name`;
             inputs[0].name = `chapter[${nowChap}][name]`;
+
+            
             let cntLec = 1;
-            for(let i = 1; i< inputs.length ; i+=2){
+            for(let i = 1; i< inputs.length ; i+=3){
+                labels[i].setAttribute('for', `chapter${nowChap}-lecture${cntLec}-name`)
+                labels[i+1].setAttribute('for', `chapter${nowChap}-lecture${cntLec}-url`)
+                labels[i+2].setAttribute('for', `chapter${nowChap}-lecture1${cntLec}-isPreview`)
+                
                 inputs[i].id =  `chapter${nowChap}-lecture${cntLec}-name`
                 inputs[i].name =  `chapter[${nowChap}][${cntLec}][name]`
                 inputs[i+1].id =  `chapter${nowChap}-lecture${cntLec}-url`
@@ -330,6 +333,7 @@ function formatCurrency(input, blur) {
             }
         }
     }
+    
     function addChapter(t,e){
         chapters++;
         lectures.push(1);
@@ -396,14 +400,14 @@ function formatCurrency(input, blur) {
             <div class="col d-flex" >
                 <div class="col">
                     <label for="chapter${curChap}-lecture${curLec}-name">Lecture Name</label>
-                    <input type="text" name="chapter[${chapters}][${curLec}][name]" id="chapter${curChap}-lecture${curLec}-name" class="required">
+                    <input type="text" name="chapter[${curChap}][${curLec}][name]" id="chapter${curChap}-lecture${curLec}-name" class="required">
                 </div>
                 <div class="col">
                     <label for="chapter${curChap}-lecture${curLec}-url">URL Video</label>
-                    <input type="text" name="chapter[${chapters}][${curLec}][url]" id="chapter${curChap}-lecture${curLec}-url" class="required">
+                    <input type="text" name="chapter[${curChap}][${curLec}][url]" id="chapter${curChap}-lecture${curLec}-url" class="required">
                 </div>
                 <div class="col-auto s12">
-                    <input type="checkbox" id="chapter${curChap}-lecture${curLec}-isPreview" name="chapter[${chapters}][${curLec}][isPreview]"/>
+                    <input type="checkbox" id="chapter${curChap}-lecture${curLec}-isPreview" name="chapter[${curChap}][${curLec}][isPreview]"/>
                     <label for="chapter${curChap}-lecture${curLec}-isPreview">Preview</label>
                 </div>
              </div>

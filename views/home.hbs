@@ -33,16 +33,18 @@
           <div class="swiper feedback__slider">
             <div class="swiper-wrapper">
               {{#each popular as |course|}}
-                <div class="feedback__item swiper-slide">
+                <div class="feedback__item swiper-slide" style="position: relative;">
+                <a href="/course?id={{course.ID}}" class="anchor-cover"></a>
                 <div class="row no-gutters">
                   <div class="col-md-6 d-flex align-items-center justify-content-center" >
                     <img src="/public/images/courses/{{course.ID}}.jpg" style="width: 85%; border-radius: 16px" alt="...">
                   </div>
-                  <div class="col-md-6" style="max-height: 300px">
+                  <div class="col-md-6" style="max-height: 300px; position: relative">
                     <div class="card-body" style="text-align: right;">
                       <p> </p>
                       <h5 class="card-title product-title" style="font-size: 22px;">{{course.Name}}</h5>
-                      <span class="text-muted product-category">{{course.TopicName}}</span>
+                      <a href="categories/{{course.IDCate}}?topicID={{course.IDTopic}}"><span class="text-muted product-category">{{course.TopicName}}</span></a>
+                      
                       <small class="text-muted">By: {{course.Instructor}}</small>
                       <p> </p>
                       <small class="text-muted">{{convertMinuteToHour course.TotalLength}} to learn . {{course.TotalLecture}} lectures</small>
@@ -71,11 +73,20 @@
 
 <div class="container-fluid mb-4 mt-4" style="background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
   <div class="row justify-content-center align-items-center mt-5" style="flex-direction: column;min-height:100px" >
-    <p class=" mt-2 mb-2" style="font-style: italic;
+    {{#if auth}}
+      <p class=" mt-2 mb-2" style="font-style: italic;
+    font-size: 21px;
+    font-family: cursive;
+    text-align: center;">Become an instructor with Udemall?</p>
+    <a href="/instructor" class="btn active mb-2" style="background-color: #fbcd46;" role="button" aria-pressed="true">Join us</a>
+    {{else}}
+      <p class=" mt-2 mb-2" style="font-style: italic;
     font-size: 21px;
     font-family: cursive;
     text-align: center;">Ready to kick-start your career?</p>
     <a href="/auth/login" class="btn active mb-2" style="background-color: #fbcd46;" role="button" aria-pressed="true">Join us</a>
+    {{/if}}
+    
   </div>
 </div>
 
@@ -84,7 +95,8 @@
   <div class="container-sm ml-5 mr-5">
     <div class="card-deck2 slick-single ">
       {{#each topViewer as |course|}}
-      <div class="card mb-3 ">
+      <div class="card mb-3 " style="display: relative;">
+        <a href="/course?id={{course.ID}}" class="anchor-cover"></a>
         <div class="row no-gutters">
           <div class="col-md-4" style="max-height: 300px">
             <img src="/public/images/courses/{{course.ID}}.jpg" style="width: 100%; height: 100%"
@@ -94,7 +106,7 @@
             <div class="card-body">
               <p> </p>
               <h5 class="card-title product-title" style="font-size: 20px;">{{course.Name}}</h5>
-              <span class="text-muted product-category">{{course.TopicName}}</span>
+              <a href="categories/{{course.IDCate}}?topicID={{course.IDTopic}}"><span class="text-muted product-category">{{course.TopicName}}</span></a>
               <small class="text-muted">By: {{course.Instructor}}</small>
               <p> </p>
               <small class="text-muted">{{convertMinuteToHour course.TotalLength}} to learn. {{course.TotalLecture}} lectures</small>
@@ -127,12 +139,13 @@
     <div class="card-deck slick-5">
 
       {{#each listNewest as |course|}}
-      <div class="card product-item popover-{{course.ID}}">
+      <div class="card product-item popover-{{course.ID}}" style="position: relative">
+        <a href="/course?id={{course.ID}}" class="anchor-cover"></a>
         <img src="/public/images/courses/{{course.ID}}.jpg" height="170"
           class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title product-title" style="min-height:38px">{{course.Name}}</h5>
-          <span class="text-muted product-category">{{course.TopicName}}</span>
+          <a href="categories/{{course.IDCate}}?topicID={{course.IDTopic}}"><span class="text-muted product-category">{{course.TopicName}}</span></a>
           <small class="text-muted">{{#if course.Instructor}}{{course.Instructor}}{{else}}Undefined{{/if}}</small>
           <div class="rating mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{CountRating}}> {{!-- chỉ cần thêm attribute như thế này thì script
             sẽ tự render rating --}}
@@ -169,7 +182,7 @@
   <div class="row slick-4 categories-list">
     {{#each topCateList as |list|}}
       <div class="col">
-        <a href="">
+        <a href="categories/{{list.IDCate}}?topicID={{list.IDTopic}}">
           <div class="row align-items-center categories-item-wrapper">
               <img class="categories-item" src="/public/images/categories/{{list.IDCate}}/{{list.IDTopic}}.jpg" alt="">
               <p class="categories-title  mb-0">{{list.TopicName}}</p>

@@ -59,4 +59,34 @@ Router.get("/", async (req, res) => {
     feedback,
   });
 });
+Router.get("/:courseId", async (req, res) => {
+  const courseId = req.params.courseId;
+  const chapterId = req.query.chapterId || 0;
+  const lectureId = req.query.lectureId || 0;
+
+  const chapters = await coursesService.getAllChapters(courseId);
+  const videos = [];
+
+  for (let i = 0; i < chapters.length; i++) {
+    let videoOfChapter = await coursesService.getAllVideosByChapter(
+      chapters[i].IDCourse,
+      chapters[i].IDChapter
+    );
+    videos.push(videoOfChapter);
+  }
+
+  let crrVideo = await coursesService.getVideo(courseId, chapterId, lectureId);
+  crrVideo.URL = "https://www.youtube.com/embed/" + crrVideo[0].URL;
+  crrVideo.isCrr = true;
+  crrVideo.Name = crrVideo[0].Name;
+  console.log(crrVideo);
+
+  res.render("vwCourse/videoLecture", {
+    layout: "main",
+    chapters,
+    videos,
+    crrVideo,
+  });
+});
+
 export default Router;

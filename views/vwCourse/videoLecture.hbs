@@ -1,0 +1,129 @@
+<div class="row" style="margin-top: 5%;">
+  <div class="col-8">
+    <div style="margin-left: 5%; border-bottom: 1px solid black;">
+      <iframe
+        width="853"
+        height="480"
+        src={{this.crrVideo.URL}}
+        title=""
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-light"
+      style="margin-left: 5%;"
+    >
+      <a class="navbar-brand" href="#">Overview</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarText"
+        aria-controls="navbarText"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Q&A
+              <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Notes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Announcements</a>
+          </li>
+        </ul>
+
+      </div>
+    </nav>
+  </div>
+  <div class="col-4" style="border-left: 1px solid black;">
+    <h3><i class="fa fa-book" aria-hidden="true"></i>
+      Course content</h3>
+
+    <div class="accordion" id="accordionExample">
+      {{#each this.chapters}}
+        <div class="card">
+          <div class="card-header" id="heading1" style="padding-left:0">
+            <h2 class="mb-0">
+              <button
+                class="btn btn-link btn-block text-left"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapse{{IDChapter}}"
+                aria-expanded="true"
+                aria-controls="collapse{{IDChapter}}"
+                style="text-decoration: none;"
+              >
+                <h5 style="color: black;">{{Name}}</h5>
+              </button>
+            </h2>
+          </div>
+
+          <div
+            id="collapse{{IDChapter}}"
+            class="collapse show"
+            aria-labelledby="heading{{IDChapter}}"
+            data-parent="#accordionExample"
+          >
+            <div class="card-body" style="padding: 0;">
+              <div class="card">
+                <form action="">
+                  <ul class="list-group list-group-flush">
+                     {{#each (lookup ../videos @index) as |video|}}
+                      {{#if (isMatch ../../this.crrVideo.Name video.Name)}}
+                      <li class="list-group-item list-group-item-dark">
+                        <div
+                          style="display: flex; justify-content:space-between"
+                        ><span class="text"><input
+                              type="checkbox"
+                              name=""
+                              id=""
+                            /><a
+                              href="#"
+                              style="text-decoration: none; color: black"
+                            >&nbsp; {{video.No}} {{video.Name}} </a></span>
+                        </div>
+                        <br>
+                        <div
+                            class="text" style="display: flex;justify-content: flex-end;"
+                          ><i class="bi bi-clock"></i> &nbsp; {{convertMinuteToHour video.Length}}</div>
+                      </li>
+                      {{else}}
+                      <li class="list-group-item">
+                        <div
+                          style="display: flex; justify-content:space-between"
+                        ><span class="text"><input
+                              type="checkbox"
+                              name=""
+                              id=""
+                            /><a
+                              href="/course/{{video.IDCourse}}?chapterId={{video.IDChapter}}&lectureId={{video.No}}"
+                              style="text-decoration: none; color: black"
+                            >&nbsp; {{video.No}} {{video.Name}} </a></span>
+                        </div>
+                        <br>
+                        <div
+                            class="text" style="display: flex;justify-content: flex-end;"
+                          ><i class="bi bi-clock"></i> &nbsp; {{convertMinuteToHour video.Length}}</div>
+                      </li>
+                    {{/if}}
+                    {{/each}}
+                  </ul>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+
+  </div>
+</div>

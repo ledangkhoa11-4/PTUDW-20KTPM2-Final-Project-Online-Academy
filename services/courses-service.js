@@ -174,9 +174,16 @@ export default {
       .where({ ID });
     return result[0];
   },
-  getFeedbackByCourse: async (ID) => {
+  getFeedbackByCourse: async (id) => {
     const list = await db.raw(
-      `SELECT * FROM participate as p JOIN user as u Where p.IDStudent = u.IDUser and u.Role = 2;`
+      `SELECT * FROM participate as p JOIN user as u Where p.IDStudent = u.IDUser and u.Role = 2 and p.IDCourse = '${id}';`
+    );
+    if (list[0]) return JSON.parse(JSON.stringify(list[0]));
+    return null;
+  },
+  getVideo: async (CourseId, ChapterId, LectureId) => {
+    const list = await db.raw(
+      `SELECT * FROM circulativevideo as c WHERE c.IDCourse = ${CourseId} and c.IDChapter = ${ChapterId} and c.No = ${LectureId}`
     );
     if (list[0]) return JSON.parse(JSON.stringify(list[0]));
     return null;

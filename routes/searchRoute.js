@@ -13,23 +13,26 @@ Router.get('/',async (req,res, next)=>{
     let priceOption = req.query.priceOption;
     let currentPage = req.query.p || 1;
     url = url.replaceAll(/&p=[0-9]/g,"");
-
+   
     if (Array.isArray(priceOption)  && priceOption.length >= 2){
         let option = priceOption[priceOption.length-1];
-        url = url.replaceAll("&priceOption=asc","");
-        url = url.replaceAll("&priceOption=des","");
+        url = url.replaceAll(/&priceOption=asc/ig,"");
+        url = url.replaceAll(/&priceOption=des/ig,"");
         priceOption = option
         url += "&priceOption=" + option
+        return res.redirect(`${url}`);
     }
         
     let ratingOption = req.query.ratingOption;
     if (Array.isArray(ratingOption)  && ratingOption.length >= 2){
         let option = ratingOption[ratingOption.length-1];
-        url = url.replaceAll("&ratingOption=asc","");
-        url = url.replaceAll("&ratingOption=des","");
+        url = url.replaceAll(/&ratingOption=asc/g,"");
+        url = url.replaceAll(/&ratingOption=des/g,"");
         ratingOption = option
-        url += "&ratingOption=" + option
+        url += "&ratingOption=" + option;
+        return res.redirect(`${url}`);
     }
+
     let isFilter = true;
     let anchor = true;
     if( !findByCat && !priceOption && !ratingOption){
@@ -48,6 +51,17 @@ Router.get('/',async (req,res, next)=>{
     if(ratingOption === 'des')
         order2 = "AVG(p.Rating) desc"   
     
+    //Xét thứ tự filter
+    let priceOrder = url.indexOf("priceOption");
+    let ratingOrder = url.indexOf("ratingOption");
+    if(priceOrder != -1 && ratingOrder != -1){
+        if(priceOrder > ratingOrder){
+            let temp = order1;
+            order1 = order2;
+            order2 = temp;
+        }
+    }
+
     if(findByName && !findByCat){
         totalPage = await searchEngine.countSearchByName(key);
         listID = await searchEngine.searchByName(key,order1,order2,limit,offset);

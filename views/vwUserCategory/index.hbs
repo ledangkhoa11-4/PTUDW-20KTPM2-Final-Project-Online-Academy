@@ -67,7 +67,19 @@
                 {{/if}}
             </div>
             <div class="page-container">
+                <a class="first-page">
+                <i class="fas fa-angle-double-left"></i>
+                </a>
+                <a class="prev-page">
+                <i class="fas fa-angle-left"></i>
+                </a>
                 <div id="pagination"></div>
+                <a class="next-page">
+                <i class="fas fa-angle-right"></i>
+                </a>
+                <a class="last-page">
+                <i class="fas fa-angle-double-right"></i>
+                </a>
             </div>
         </div>
 
@@ -81,11 +93,11 @@
 </script>
 <script>
     const valuePage = {
-        totalPages: {{nPage}},
+    totalPages: {{nPage}},
     curPage: {{page}},
     truncate: true,
-        numLinksTwoSide: 1,
-            url: `{{url}}`
+    numLinksTwoSide: 1,
+    url: `{{url}}`
     };
     pagination(valuePage);
 </script>

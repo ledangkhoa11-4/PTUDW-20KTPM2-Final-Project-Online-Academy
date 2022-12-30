@@ -26,7 +26,7 @@ function pagination(valuePage) {
     let url = valuePage.url;
     url = url.replaceAll('&#x3D;',"=")
     url = url.replaceAll('&amp;',"&")
-  const range = delta + 4; // use for handle visible number of links left side
+  const range = delta + 3; // use for handle visible number of links left side
 
   let render = "";
   let renderTwoSide = "";

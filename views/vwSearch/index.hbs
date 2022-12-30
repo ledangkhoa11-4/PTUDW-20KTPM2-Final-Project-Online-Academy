@@ -326,14 +326,16 @@
             <div class="container">
                 <div class="row">
                 {{#each result as |course|}}
-                    <div class="col-auto mt-3">
+                <div class="col-auto mt-3">
                     <div class="card product-item popover-{{course.ID}}" style="max-width:250px; min-width:250px" >
+                        <a href="/course?id={{course.ID}}" class="anchor-cover"></a>
                         <img src="/public/images/courses/{{course.ID}}.jpg" width="250" height="150" style="object-fit: fill;"
                             class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title product-title">{{course.Name}}</h5>
-                            <span class="text-muted product-category">{{course.TopicName}}</span>
-                            <small class="text-muted">Ins: {{course.Instructor}}</small>
+                            <h5 class="card-title product-title" style="min-height:38px">{{course.Name}}</h5>
+
+                            <a href="categories/{{course.IDCate}}?topicID={{course.IDTopic}}"><span class="text-muted product-category">{{course.TopicName}}</span></a>
+                            <small class="text-muted">Instructor: {{course.Instructor}}</small>
                             <div class="rating mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{course.CountRating}}>
                             </div>
                             <div class="product-price-wrapper mt-3">
@@ -465,9 +467,11 @@
          overlay.classList.add('hidden-overlay')
     }
     bodyElement = document.getElementsByTagName("BODY")[0];
-    sideBar.classList.add('collapse-active')
-        openBtn.classList.remove('hidden')
+    if(bodyElement.offsetWidth <= 992){
+        sidebar.classList.add('collapse-active')
+        open.classList.remove('hidden')
         overlay.classList.add('hidden-overlay')
+    }
     window.onresize = ()=>{
       newWidth = bodyElement.offsetWidth;
       if(newWidth <= 992){

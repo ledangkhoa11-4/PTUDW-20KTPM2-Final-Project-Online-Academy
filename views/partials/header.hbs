@@ -70,46 +70,23 @@
             </div>
         </form>
 {{#unless isLogged}}
-<a href="/auth/register" type="button" class="btn btn-primary">
-    <span style="color: white">
-        <i class="bi bi-person"></i>
-        Register
+<div class="row justify-content-end">
+    <a href="/auth/login" type="button" class="btn btn-light mr-3" style="width: 120px">
+        <span style="color: black">
+            <i class="bi bi-person"></i>
+            Login
         </span> 
-</a>
-<a href="/auth/login" type="button" class="btn btn-light ml-3">
-     <span style="color: black">
-        <i class="bi bi-person"></i>
-        Login
-    </span> 
-</a>
+    </a>
+    <a href="/auth/register" type="button" class="btn mr-3" style="background-color: #33CABB; width: 120px">
+        <span style="color: white">
+            <i class="bi bi-person"></i>
+            Signup
+            </span> 
+    </a>
+
+</div>
 {{/unless}}
 {{#if isLogged}}
- {{!-- <ul class="navbar-nav ml-auto" style="padding: 0 16px 0 16pxD; cursor: pointer">
-            <li class="user-bar nav-item dropdown ml-4">
-                <a class="username nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    Wellcome, {{auth.FullName}}
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">
-                        <i class="fa-solid fa-book mr-2"></i>
-                        My Learning
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <i class="bi bi-bookmark-star mr-2"></i>
-                        My Watchlist
-                    </a>
-                    <a class="dropdown-item" href="/me/prof">
-                        <i class="bi bi-bookmark-star mr-2"></i>
-                        My Profile
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/auth/logout">
-                        <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
-                        Logout
-                    </a>
-                </div>
-            </li>
-        </ul> --}}
 <div class="action">
       <div class="username nav-link dropdown-toggle profile" onclick="menuToggle();">Wellcome, {{auth.FullName}}</div>
       <div class="menu">
@@ -177,8 +154,8 @@
 </style>
 
 <script>
-    document.querySelector(".logo-svg").classList.remove("active")
-    setTimeout(() => {
+ document.querySelector(".logo-svg").classList.remove("active")
+      setTimeout(() => {
         document.querySelector(".logo-svg").classList.add("active")
     }, 500)
 </script>

@@ -68,31 +68,49 @@ Router.get('/categories/topic',async (req,res, next)=>{
 
 Router.get('/categories/topic/add', async (req,res)=>{
     const catId=req.query.catid||0;
-    
-    res.render('vwCategory/addTopic',{layout:'admin',catId});
+    let isAlert=false;
+    console.log(req.query.alert);
+    if(req.query.alert) isAlert=true;
+    res.render('vwCategory/addTopic',{
+        layout:'admin',
+        catId,
+        isAlert,
+        icon:'error',
+        title:'ID or Topic Name has been existed'
+        });
 })
 Router.post('/categories/topic/add',  (req,res)=>{
     const storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-          cb(null, `./public/images/categories/${req.body.IDCate}`);
+        destination: async function (req, file, cb) {
+            const catID=req.body.IDCate||0;
+            const topicId=req.body.IDTopic||0;
+            const isExist=await categoryServices.findTopic(topicId,catID);
+           if(isExist) {
+            console.log('cc');
+            //cb(null, './cut/cc');
+            return res.redirect(`/admin/categories/topic/add?catid=${catID}&alert=1`)
+           }
+           else{
+           cb(null, `./public/images/categories/${req.body.IDCate}`);}
         },
         filename: function (req, file, cb) {
           cb(null, req.body.IDTopic+'.jpg');
         }
+        
       });
-    
+      
       const upload = multer({ storage: storage });
       upload.array('fuMain', 5)(req, res, async function (err) {
-        console.log(req.body);
-        const catID=req.body.IDCate;
+        const catID=req.body.IDCate||0;
+        
         const ret=await categoryServices.addtopic(req.body);
-        res.redirect(`/admin/categories/topic?id=${catID}`);
+        
         if (err) {
           console.error(err);
         } else {
-          res.render('vwCategory/addTopic');
+            return res.redirect(`/admin/categories/topic?id=${catID}`);
         }
-    
+        
         // Everything went fine.
       })
     
@@ -119,7 +137,7 @@ Router.get('/categories/topic/edit', async(req,res)=>{
 Router.post('/categories/topic/patch', async(req,res)=>{
     const catID=req.body.IDCate;
     const ret = await categoryServices.patchTopic(req.body);
-    res.redirect(`/admin/categories/${catID}`);
+    res.redirect(`/admin/categories/topic?id=${catID}`);
 })
 Router.post('/categories/topic/del', async(req,res)=>{
     const catId=req.body.IDCate||0;

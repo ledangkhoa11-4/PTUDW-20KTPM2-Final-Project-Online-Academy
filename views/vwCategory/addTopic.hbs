@@ -1,7 +1,9 @@
 {{#section 'css'}}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css" />
 {{/section}}
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 {{#section 'script'}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/buffer.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/filetype.min.js"></script>
@@ -18,6 +20,7 @@
     });
   </script>
 {{/section}}
+
 <div class="card">
   <div class="card-header">
     Add Topic
@@ -26,19 +29,19 @@
     <div class="card-body">
       <div class="form-group">
           <label for="txtCatID"> Category ID</label>
-          <input type="text" name="IDCate" id="txtCatName" class="form-control" value="{{this.catId}}" readonly>
+          <input type="text" name="IDCate" id="txtCatName" class="form-control" value="{{this.catId}}" readonly required>
         </div>
         <div class="form-group">
           <label for="txtTopicID"> Topic ID</label>
-          <input type="text" name="IDTopic" id="txtTopicID" class="form-control">
+          <input type="text" name="IDTopic" id="txtTopicID" class="form-control" required>
         </div>
         <div class="form-group">
           <label for="txtTopicName"> Topic Name</label>
-          <input type="text" name="Name" id="txtTopicName" class="form-control">
+          <input type="text" name="Name" id="txtTopicName" class="form-control" required>
         </div>
         <div class="form-group">
           <label for="fuMain">Photo</label>
-          <input type="file" multiple id="fuMain" name="fuMain">
+          <input type="file" multiple id="fuMain" name="fuMain" required>
       </div>
     </div>
     <div class="card-footer text-muted">
@@ -51,4 +54,15 @@
     </div>
   </form>
 </div>
-
+ <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{#if this.isAlert}}
+  <script>
+     Swal.fire({
+  icon: '{{this.icon}}',
+  title: '{{this.title}}',
+  text: 'Something went wrong!',
+  footer: '<a href="">Why do I have this issue?</a>',
+  timer: 2500
+})
+  </script>
+{{/if}}

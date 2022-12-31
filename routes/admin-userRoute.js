@@ -2,6 +2,8 @@ import express from 'express'
 import coursesService from '../services/courses-service.js';
 import userService from '../services/user-service.js';
 import bcrypt from 'bcrypt';
+import { match } from 'assert';
+
 const Router = express.Router();
 Router.get('/user',async(req,res, next)=>{
     const role= req.query.role;
@@ -131,11 +133,20 @@ Router.get('/student', async (req,res)=>{
 
 })
 Router.get('/courses', async (req,res)=>{
-const list=await coursesService.getAllCourses();
+
+const page = req.query.p || 1;
+const limit = 10;
+const offset = (page - 1) * limit;
+const list=await coursesService.getCourseByPage(limit,offset);
+const totalCourse=await coursesService.getTotalCourse();
+let nPage=Math.ceil(totalCourse/limit);
 res.render('vwAdminUser/courses',{
     layout:'admin',
     list,
-    isEmpty: list.lenght===0
+    isEmpty: list.lenght===0,
+    nPage,
+    page,
+    url:'/admin/courses?'
 })
 })
 export default Router;

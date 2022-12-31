@@ -188,4 +188,12 @@ export default {
     if (list[0]) return JSON.parse(JSON.stringify(list[0]));
     return null;
   },
+  getCourseByPage:async (limit,offset)=>{
+    const list=await db("courses").limit(limit).offset(offset);
+    return list;
+  },
+  getTotalCourse:async ()=>{
+    const total=await db("courses").count({amount:"ID"})
+    return total[0].amount;
+  }
 };

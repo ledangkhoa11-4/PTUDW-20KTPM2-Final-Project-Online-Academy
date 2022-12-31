@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 26, 2022 at 02:38 PM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th12 31, 2022 lúc 07:36 AM
+-- Phiên bản máy phục vụ: 10.4.22-MariaDB
+-- Phiên bản PHP: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `academy`
+-- Cơ sở dữ liệu: `academy`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Cấu trúc bảng cho bảng `category`
 --
 
 CREATE TABLE `category` (
@@ -33,7 +33,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `category`
+-- Đang đổ dữ liệu cho bảng `category`
 --
 
 INSERT INTO `category` (`IDCate`, `Name`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `category` (`IDCate`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chapter`
+-- Cấu trúc bảng cho bảng `chapter`
 --
 
 CREATE TABLE `chapter` (
@@ -57,7 +57,7 @@ CREATE TABLE `chapter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `chapter`
+-- Đang đổ dữ liệu cho bảng `chapter`
 --
 
 INSERT INTO `chapter` (`IDCourse`, `IDChapter`, `Name`) VALUES
@@ -125,7 +125,7 @@ INSERT INTO `chapter` (`IDCourse`, `IDChapter`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `circulativevideo`
+-- Cấu trúc bảng cho bảng `circulativevideo`
 --
 
 CREATE TABLE `circulativevideo` (
@@ -139,7 +139,7 @@ CREATE TABLE `circulativevideo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `circulativevideo`
+-- Đang đổ dữ liệu cho bảng `circulativevideo`
 --
 
 INSERT INTO `circulativevideo` (`IDCourse`, `IDChapter`, `No`, `Name`, `URL`, `Length`, `IsPreview`) VALUES
@@ -192,7 +192,7 @@ INSERT INTO `circulativevideo` (`IDCourse`, `IDChapter`, `No`, `Name`, `URL`, `L
 -- --------------------------------------------------------
 
 --
--- Table structure for table `courses`
+-- Cấu trúc bảng cho bảng `courses`
 --
 
 CREATE TABLE `courses` (
@@ -213,7 +213,7 @@ CREATE TABLE `courses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `courses`
+-- Đang đổ dữ liệu cho bảng `courses`
 --
 
 INSERT INTO `courses` (`ID`, `Name`, `IDCategory`, `Topic`, `Image`, `TinyDesc`, `FullDesc`, `CourseFee`, `IDDiscount`, `IDInstructor`, `IsCompleted`, `CreatedTime`, `ModifiedTime`, `Viewer`) VALUES
@@ -236,7 +236,7 @@ INSERT INTO `courses` (`ID`, `Name`, `IDCategory`, `Topic`, `Image`, `TinyDesc`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `discount`
+-- Cấu trúc bảng cho bảng `discount`
 --
 
 CREATE TABLE `discount` (
@@ -245,7 +245,7 @@ CREATE TABLE `discount` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `discount`
+-- Đang đổ dữ liệu cho bảng `discount`
 --
 
 INSERT INTO `discount` (`ID`, `PercentDiscount`) VALUES
@@ -260,7 +260,7 @@ INSERT INTO `discount` (`ID`, `PercentDiscount`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `participate`
+-- Cấu trúc bảng cho bảng `participate`
 --
 
 CREATE TABLE `participate` (
@@ -271,17 +271,17 @@ CREATE TABLE `participate` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `participate`
+-- Đang đổ dữ liệu cho bảng `participate`
 --
 
 INSERT INTO `participate` (`IDCourse`, `IDStudent`, `Feedback`, `Rating`) VALUES
 (1, 1, 'Bài giảng rất hay', 2),
-(1, 4, 'Quá tệ', 2.3);
+(1, 28, 'Quá tệ', 2.3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `topic`
+-- Cấu trúc bảng cho bảng `topic`
 --
 
 CREATE TABLE `topic` (
@@ -291,7 +291,7 @@ CREATE TABLE `topic` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `topic`
+-- Đang đổ dữ liệu cho bảng `topic`
 --
 
 INSERT INTO `topic` (`IDCate`, `IDTopic`, `Name`) VALUES
@@ -307,7 +307,7 @@ INSERT INTO `topic` (`IDCate`, `IDTopic`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Cấu trúc bảng cho bảng `user`
 --
 
 CREATE TABLE `user` (
@@ -323,7 +323,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='r';
 
 --
--- Dumping data for table `user`
+-- Đang đổ dữ liệu cho bảng `user`
 --
 
 INSERT INTO `user` (`IDUser`, `FullName`, `Email`, `Password`, `Bio`, `CurrentJob`, `Role`, `OTP`, `IDSocial`) VALUES
@@ -335,12 +335,14 @@ INSERT INTO `user` (`IDUser`, `FullName`, `Email`, `Password`, `Bio`, `CurrentJo
 (23, 'Lê Đăng Khoa', 'ledangkhoa1142002@gmail.com', '', '', '', 2, 0, '3592040987690146'),
 (24, 'Khoa Lê Đăng', 'ldkhoa20@clc.fitus.edu.vn', '', '', '', 2, 0, '107425266660814136385'),
 (25, 'Lê Khoa', 'ldkhoa.11402@gmail.com', '$2b$05$q4CiwkF1ubEnVeZLSB.sW.HBbkVD/p90USuPRyexWQiajy6df.6bS', '', '', 2, 0, ''),
-(26, 'Nguyệt Quế', 'quequedang2002@gmail.com', '$2b$05$RwcN5rSMYhevHBsEM.6DU.WA.7p6AUWyBC7FqNbuEr9e7pHiShDQG', '', '', 2, 0, '');
+(26, 'Nguyệt Quế', 'quequedang2002@gmail.com', '$2b$05$RwcN5rSMYhevHBsEM.6DU.WA.7p6AUWyBC7FqNbuEr9e7pHiShDQG', '', '', 2, 0, ''),
+(27, 'Lê Quân - 7599', 'lequan2k2.ql@gmail.com', '', '', '', 2, 0, '104208726902023676394'),
+(28, 'Quân Lê', 'lequan2002.ql@gmail.com', '', '', '', 2, 0, '104074695894483092070');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `watched`
+-- Cấu trúc bảng cho bảng `watched`
 --
 
 CREATE TABLE `watched` (
@@ -350,114 +352,121 @@ CREATE TABLE `watched` (
   `No` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `watched`
+--
+
+INSERT INTO `watched` (`IDStudent`, `IDCourse`, `IDChapter`, `No`) VALUES
+(28, 1, 1, 1),
+(28, 1, 1, 2),
+(28, 1, 1, 3),
+(28, 1, 1, 4);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `watchhistory`
+-- Cấu trúc bảng cho bảng `watchlist`
 --
 
-CREATE TABLE `watchhistory` (
+CREATE TABLE `watchlist` (
   `IDStudent` int(11) NOT NULL,
   `IDCourse` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `category`
+-- Chỉ mục cho bảng `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`IDCate`);
 ALTER TABLE `category` ADD FULLTEXT KEY `Name` (`Name`);
 
-
 --
--- Indexes for table `chapter`
+-- Chỉ mục cho bảng `chapter`
 --
 ALTER TABLE `chapter`
   ADD PRIMARY KEY (`IDCourse`,`IDChapter`);
 
 --
--- Indexes for table `circulativevideo`
+-- Chỉ mục cho bảng `circulativevideo`
 --
 ALTER TABLE `circulativevideo`
   ADD PRIMARY KEY (`IDCourse`,`IDChapter`,`No`);
 
 --
--- Indexes for table `courses`
+-- Chỉ mục cho bảng `courses`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`ID`);
 ALTER TABLE `courses` ADD FULLTEXT KEY `Name` (`Name`,`TinyDesc`,`FullDesc`);
 
-
 --
--- Indexes for table `discount`
+-- Chỉ mục cho bảng `discount`
 --
 ALTER TABLE `discount`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `participate`
+-- Chỉ mục cho bảng `participate`
 --
 ALTER TABLE `participate`
   ADD PRIMARY KEY (`IDCourse`,`IDStudent`);
 
 --
--- Indexes for table `topic`
+-- Chỉ mục cho bảng `topic`
 --
 ALTER TABLE `topic`
   ADD PRIMARY KEY (`IDCate`,`IDTopic`);
 ALTER TABLE `topic` ADD FULLTEXT KEY `Name` (`Name`);
 
-
 --
--- Indexes for table `user`
+-- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`IDUser`);
 
 --
--- Indexes for table `watched`
+-- Chỉ mục cho bảng `watched`
 --
 ALTER TABLE `watched`
   ADD PRIMARY KEY (`IDStudent`,`IDCourse`,`IDChapter`,`No`);
 
 --
--- Indexes for table `watchhistory`
+-- Chỉ mục cho bảng `watchlist`
 --
-ALTER TABLE `watchhistory`
+ALTER TABLE `watchlist`
   ADD PRIMARY KEY (`IDStudent`,`IDCourse`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
   MODIFY `IDCate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `courses`
+-- AUTO_INCREMENT cho bảng `courses`
 --
 ALTER TABLE `courses`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
--- AUTO_INCREMENT for table `discount`
+-- AUTO_INCREMENT cho bảng `discount`
 --
 ALTER TABLE `discount`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `IDUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `IDUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

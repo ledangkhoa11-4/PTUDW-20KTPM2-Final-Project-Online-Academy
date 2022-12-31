@@ -86,6 +86,10 @@
                               type="checkbox"
                               name=""
                               id=""
+                              course={{video.IDCourse}}
+                              chapter={{video.IDChapter}}
+                              no={{video.No}}
+                              onchange="watched(this, event)"
                             /><a
                               href="#"
                               style="text-decoration: none; color: black"
@@ -100,11 +104,17 @@
                       <li class="list-group-item">
                         <div
                           style="display: flex; justify-content:space-between"
-                        ><span class="text"><input
+                        ><span class="text">
+                          <input
                               type="checkbox"
                               name=""
                               id=""
-                            /><a
+                              course={{video.IDCourse}}
+                              chapter={{video.IDChapter}}
+                              no={{video.No}}
+                              onchange="watched(this, event)"
+                            />
+                            <a
                               href="/course/{{video.IDCourse}}?chapterId={{video.IDChapter}}&lectureId={{video.No}}"
                               style="text-decoration: none; color: black"
                             >&nbsp; {{video.No}} {{video.Name}} </a></span>
@@ -124,6 +134,15 @@
         </div>
       {{/each}}
     </div>
-
   </div>
 </div>
+<script>
+  function watched(t, e){
+    if (t.checked){
+      let IDCourse = t.getAttribute(`course`);
+      let IDChapter = t.getAttribute(`chapter`);
+      let No = t.getAttribute(`no`);
+      $.get(`watched?courseId=${IDCourse}&chapterId=${IDChapter}&No=${No}`)
+    }
+  }
+</script>

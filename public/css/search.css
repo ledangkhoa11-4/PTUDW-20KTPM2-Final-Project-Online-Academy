@@ -120,6 +120,9 @@ a:hover{
     .collapse-active{
         display: none;
     }
+    .dumb{
+        position: absolute;
+    }
     .overlay-screen{
         position: fixed;
         top: 0;

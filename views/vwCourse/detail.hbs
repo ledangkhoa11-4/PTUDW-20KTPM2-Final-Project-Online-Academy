@@ -111,14 +111,28 @@
           </div>
           <div class="lecture" id="lecture">
             <div class="card">
-              <div class="card-body">
-                {{#each (lookup ../videos @index) as |video|}}
 
-                <a href="#">{{video.No}} {{video.Name}}</a>
-                <br>
-                <br>
-                {{/each}}
-              </div>
+              {{#each (lookup ../videos @index) as |video|}}
+
+              <li class="list-group-item">
+                <div style="display: flex; justify-content:space-between">
+                  <h6 class="text"><a
+                      href="/course/{{video.IDCourse}}?chapterId={{video.IDChapter}}&lectureId={{video.No}}" 
+                      style="text-decoration: none; color: black; pointer-events: none; cursor: default;"
+                  >&nbsp; {{video.No}}. {{video.Name}} </a></h6>
+                  {{#if video.IsPreview}}
+                  <div class="preview" onclick="showPreview()" style="color: blue; cursor: pointer">Preview</div>
+                  <script>
+                    
+                  </script>
+                  {{/if}}
+                </div>
+
+                <div class="text" style="display: flex;justify-content: flex-end;"><i class="bi bi-clock"></i> &nbsp;
+                  {{convertMinuteToHour video.Length}}</div>
+              </li>
+              {{/each}}
+
             </div>
           </div>
         </div>

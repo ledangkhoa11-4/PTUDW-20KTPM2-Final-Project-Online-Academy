@@ -20,7 +20,8 @@ import userCategoriesRoute from './routes/userCategoriesRoute.js'
 import detailCourseRoute from "./routes/detailCourseRoute.js";
 import moment from 'moment/moment.js';
 import admin_userRoute from './routes/admin-userRoute.js';
-import instructorRoute from './routes/instructorRoute.js'
+import instructorRoute from './routes/instructorRoute.js';
+import userRoute from './routes/userRoute.js';
 const app = express();
 
 
@@ -140,6 +141,7 @@ app.use('/admin',admin_userRoute);
 app.use('/categories',userCategoriesRoute);
 app.use("/course", detailCourseRoute);
 app.use("/instructor", instructorRoute);
+app.use("/user",userRoute);
 
 
 app.use((err,req,res, next)=> {

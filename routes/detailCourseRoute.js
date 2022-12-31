@@ -1,7 +1,8 @@
 import express from "express";
+import middleware from "../middlewares/middleware.js";
 import coursesService from "../services/courses-service.js";
 const Router = express.Router();
-
+Router.use(middleware.isStudent);
 Router.get("/", async (req, res) => {
   const IDcourse = req.query.id || 0;
   const course = await coursesService.getInfoCourse(`${IDcourse}`);
@@ -58,6 +59,17 @@ Router.get("/", async (req, res) => {
     feedback,
   });
 });
+Router.get("/watched", async (req, res) => {
+  const courseId = req.query.courseId || 0;
+  const chapterId = req.query.chapterId || 0;
+  const no = req.query.No || 0;
+  const result = await coursesService.addWatchedVideo(
+    res.locals.auth.IDUser,
+    courseId,
+    chapterId,
+    no
+  );
+});
 Router.get("/:courseId", async (req, res) => {
   const courseId = req.params.courseId;
   const chapterId = req.query.chapterId || 0;
@@ -78,7 +90,7 @@ Router.get("/:courseId", async (req, res) => {
   crrVideo.URL = "https://www.youtube.com/embed/" + crrVideo[0].URL;
   crrVideo.isCrr = true;
   crrVideo.Name = crrVideo[0].Name;
-  console.log(crrVideo);
+  //console.log(crrVideo);
 
   res.render("vwCourse/videoLecture", {
     layout: "main",
@@ -87,5 +99,4 @@ Router.get("/:courseId", async (req, res) => {
     crrVideo,
   });
 });
-
 export default Router;

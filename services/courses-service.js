@@ -188,4 +188,24 @@ export default {
     if (list[0]) return JSON.parse(JSON.stringify(list[0]));
     return null;
   },
+  getParticipant: async (id) => {
+    const list = await db.raw(
+      `SELECT * FROM participate as p where p.IDCourse = ${id}`
+    );
+    if (list[0]) return JSON.parse(JSON.stringify(list[0]));
+    return null;
+  },
+  addWatchedVideo: async (UserId, CourseId, ChapterId, No) => {
+    let result =
+      await db.raw(`INSERT INTO watched (IDStudent,	IDCourse, IDChapter, No)
+    VALUES (${UserId}, ${CourseId}, ${ChapterId}, ${No});`);
+    return result[0];
+  },
+  getWatchedVideoOfStudent: async (UserId, CourseId) => {
+    let list = await db.raw(
+      `select * from watched where IDStudent = ${UserId} and IDCourse = ${CourseId}`
+    );
+    if (list) return JSON.parse(JSON.stringify(list));
+    return null;
+  },
 };

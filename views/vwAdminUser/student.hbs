@@ -1,3 +1,4 @@
+
 <div class="card">
   <div class="card-header">
     Student
@@ -29,7 +30,7 @@
             {{#each this.courses}}
             <tr>
               <th scope="col">{{ID}}</th>
-              <td scope="col">{{Name}}</td>
+              <td scope="col"><a href="http://127.0.0.1:3000/course?id={{ID}}"></a>{{Name}}</td>
               <td>{{formatDate CreatedTime}}</td>
             </tr>
           {{/each}}
@@ -46,4 +47,6 @@
         Delete </button></form>
 </div>
 </form>
+
+
 

@@ -1,3 +1,13 @@
+<link rel='stylesheet' href='/public/css/badge.css' />
+<link rel="stylesheet" href="/public/css/pagination.css">
+<style>
+        /* Initially, hide the extra text that
+            can be revealed with the button */
+        #moretext {
+            /* Display nothing for the element */
+            display: none;
+        }
+    </style>
 <div class="card">
   <div class="card-header">
     Instructor
@@ -46,13 +56,30 @@
           <td>{{formatDate CreatedTime}}</td>
         </tr>
       {{/each}}
-      {{/if}}
-          
+     
+     {{/if}}      
     
   </tbody>
 </table>
+{{#if this.isEmpty}}
+{{else}}
+<div class="page-container">
+                <a class="first-page">
+                <i class="fas fa-angle-double-left"></i>
+                </a>
+                <a class="prev-page">
+                <i class="fas fa-angle-left"></i>
+                </a>
+                <div id="pagination"></div>
+                <a class="next-page">
+                <i class="fas fa-angle-right"></i>
+                </a>
+                <a class="last-page">
+                <i class="fas fa-angle-double-right"></i>
+                </a>
+      </div>
   </div>
-  
+  {{/if}}      
   
   <div class="card-footer text-muted">
     <a name="" id="" class="btn btn-outline-success" href="/admin/user?role=1" role="button">
@@ -64,6 +91,11 @@
   </div>
   </form>
 </div>
+<script src="/public/script/pagination.js">
+
+
+</script>
+
 {{#if this.isAlert}}
     <script>
     Swal.fire({
@@ -74,3 +106,15 @@
 })
     </script>
 {{/if}}
+
+<script>
+    const valuePage = {
+    totalPages: {{this.nPage}},
+    curPage: {{this.page}},
+    truncate: true,
+        numLinksTwoSide: 1,
+        url: `{{url}}`
+    };
+    pagination(valuePage);
+</script>
+

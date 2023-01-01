@@ -20,18 +20,28 @@ Router.get('/instructor', async (req,res)=>{
     const UserId=req.query.id||0;
     const role=req.query.role;
     const instructor= await userService.findUserById(UserId);
-    const courses =await coursesService.findByIDInstructor(UserId);
+    //const courses =await coursesService.findByIDInstructor(UserId);
+    const page = req.query.p || 1;
+    const limit = 5;
+    const offset = (page - 1) * limit;
+    const list=await coursesService.getCourseByPageandUserId(UserId,limit,offset);
+    const totalCourse=await coursesService.getTotalCourseByInstructorID(UserId);
+    let nPage=Math.ceil(totalCourse/limit);
     let isAlert=false;
     if(req.query.alert)
         isAlert=true;
     res.render('vwAdminUser/instructor.hbs',{
         layout: 'admin',
         instructor,
-        courses,
+        courses: list,
         isAlert,
         icon:'error',
         title:'Instructor did not exist',
-        isEmpty: courses.length===0
+        isEmpty: list.length===0,
+        page,
+        nPage,
+        url:`/admin/instructor?id=${UserId}&role=${role}`
+
     });
 
 })
@@ -118,19 +128,23 @@ Router.get('/student', async (req,res)=>{
     const role=req.query.role;
     const student= await userService.findUserById(UserId);
     const courses =await coursesService.findByIDStudent(UserId);
-    let isEmpty=false;
-    if(courses===[]){
-        console.log('cc');
-         isEmpty=true;
-    }
+    
 
     res.render('vwAdminUser/student.hbs',{
         layout:'admin',
         student,
         courses,
-        isEmpty
     })
 
+})
+Router.post('/student/del',async(req,res)=>{
+    const userId=req.query.id||0;
+    
+    
+    
+        const ret=await userService.del(userId);
+        return res.redirect('/admin/user?role=2');
+    
 })
 Router.get('/courses', async (req,res)=>{
 

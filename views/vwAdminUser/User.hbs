@@ -24,14 +24,14 @@
             <tr >
             <td>{{IDUser}}</td>
             <td scope="col">
-                  <a name="" id="" class="btn" href="/admin/{{#ifeq Role 1 }}instructor{{else}}student{{/ifeq}}?id={{IDUser}}&role={{Role}}" role="button">{{#if FullName}}
+                  <a name="" id="" class="btn" href="/admin/{{#ifeq Role 1 }}instructor{{else}}student{{/ifeq}}?id={{IDUser}}&role={{Role}}&p=1" role="button">{{#if FullName}}
                     {{FullName}}
                     {{else}}
                     New Instructor
                   {{/if}}</a>
                 </td>
                 <td>
-                  <a name="" id="" class="btn btn-outline-primary float-right" href="/admin/{{#ifeq Role 1 }}instructor{{else}}student{{/ifeq}}?id={{IDUser}}&role={{Role}}" role="button" >
+                  <a name="" id="" class="btn btn-outline-primary float-right" href="/admin/{{#ifeq Role 1 }}instructor{{else}}student{{/ifeq}}?id={{IDUser}}&role={{Role}}&p=1" role="button" >
                   <i class="fa fa-eye" aria-hidden="true"></i>
                   Details
                   </a>

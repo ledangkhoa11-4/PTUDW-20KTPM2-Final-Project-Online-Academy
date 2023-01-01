@@ -4,7 +4,7 @@
   {{else}}
   <div class="card mb-3">
     <img
-      src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxASEBUPEBIVFRUVFRUVFRUVFRUVFRUVFRcWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIALEBHAMBIgACEQEDEQH/xAAZAAEBAQEBAQAAAAAAAAAAAAAAAQIDBAf/xAAeEAEBAQEAAgIDAAAAAAAAAAAAARECEnFR8CGh4f/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD4csJGpAINY1IDOEjWGAyjRgMo1iYCI1iUGUaQEAAABQAFJACC4AhigImNGAwNVKDIqAKAAsUCRuRJG+YBI1IuLASc34PFqQ/IOdiWN4mAxYWNWJQYRpMBlGrEoMioAqKAsFBFgAYqgJiyGLATxSxrDAYxK3WbAYRqoAsJGgSRVkMBqRvljl24AnLUlVcBjFrSAwjeIDFZrdZsBhGqmAzUqoDKNVkFEaAaiQgKQUBqJigqRogM2VVAYxK2zQc6i1AWN4zy3AMUkUE5deI48u3NB0ipy3OQZw9tAObNdKxQZsZrVTqAxUrTNBlmtYlBmsrUBVjLUBVRYCxYiguLILACUjYMkUkBnpit2MUGKzFqA1HSOfLfINRfZzFyg48124rhzXTnoHo5rpzXDnpuUHRLRLQRCgM1mtM2AzUtWs0ErFarFBKgAKgDcWMytQGljMagEaiUlBZV5rK6DWpp1WbQOqxatrFoM1BAbjpK5StSg681q9OcrcoPPHTliOnIN8uvFY5jfINyialBe2L9/ZagIlDyBnpjqtWs0GazW6xQRFQFgigsUiwFVIsoNUTVgLrVc9UGrUtKlBjpiulYsBmoqAqxI1Ab5b1iNT2DnzHTlzjfIO0ajnzWp1Qa/ozpQES/KAVmlTqglpUZBazVQERUBRFBYqQgNEZXQakajGqDWrIyugolTQWsVbWQZoUBY3IxFB0i4xKu0GJXTmuUblB01rXPV0GtWM6mgtS1NQDUtKzoAgAgAgACoAoAKRAGtEUFWMmg1KgaBUtEBEVAWNRlQalXWYeQMxqVlYDeqxKoNCQANZAKlAEAAQAAAAAFQBQAFQBTEUAEAAAQAURQVWV0GVQBo1AGjUQFEAAAEAAAAAAAAAAAFQAURQAAQAAAAAFEUEABYAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAALAAABagAUACgAgAAAAAAAAAAACxAAAFKgAAAAAAAAD//Z"
+      src="/public/images/courses/{{course.ID}}.jpg"
       class="card-img-top" alt="..." style="max-width: 100%;height: 50vh;" />
 
     <div class="card-body" style="background-color:black;color:white">
@@ -117,13 +117,13 @@
               <li class="list-group-item">
                 <div style="display: flex; justify-content:space-between">
                   <h6 class="text"><a
-                      href="/course/{{video.IDCourse}}?chapterId={{video.IDChapter}}&lectureId={{video.No}}" 
-                      style="text-decoration: none; color: black; pointer-events: none; cursor: default;"
-                  >&nbsp; {{video.No}}. {{video.Name}} </a></h6>
+                      href="/course/{{video.IDCourse}}?chapterId={{video.IDChapter}}&lectureId={{video.No}}"
+                      style="text-decoration: none; color: black; pointer-events: none; cursor: default;">&nbsp;
+                      {{video.No}}. {{video.Name}} </a></h6>
                   {{#if video.IsPreview}}
                   <div class="preview" onclick="showPreview()" style="color: blue; cursor: pointer">Preview</div>
                   <script>
-                    
+
                   </script>
                   {{/if}}
                 </div>
@@ -143,21 +143,49 @@
     <div class="col-4">
       <div class="buy-course">
         <div class="card" style="width: 18rem;">
-          <img src="../../public/images/categories/1/1.jpg" class="card-img-top" alt="...">
+          <img src="/public/images/courses/{{course.ID}}.jpg" class="card-img-top" alt="...">
           <div class="card-body" style="display: flex; justify-content:center; flex-direction: column;">
+            {{#if this.isAuth}}
+            {{#if this.isOwn}}
+            <span class="own" style="font-size: 22px;">You own this course</span>
+            {{else}}
             {{#if course.PercentDiscount}}
-            <span class="old-price ">{{formatCurrency this.course.CourseFee}}</span>
+            <del><span class="old-price ">{{formatCurrency this.course.CourseFee}}</span></del>
             {{/if}}
             <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice
               this.course.PercentDiscount this.course.CourseFee)}}</span>
-
-            <a href="#" class="btn btn-outline-primary">Add to watch list </a>
+            {{/if}}
             <br>
-            <a href="#" class="btn btn-outline-success">Buy now</a>
+            {{#if this.isOnWatchList}}
+            <a href="./course?id={{course.ID}}" class="btn btn-outline-primary" course="{{course.ID}}"
+              onclick="removeWatchList(this)" style="cursor: pointer">Remove from watch list </a>
+            {{else}}
+            <a href="./course?id={{course.ID}}" class="btn btn-outline-primary" course="{{course.ID}}"
+              onclick="addWatchList(this)" style="cursor: pointer">Add to watch list </a>
+            {{/if}}
+            <br>
+            {{#if this.isOwn}}
+            <a href="/course/{{course.ID}}?chapterId=1&lectureId=1" class="btn btn-outline-success">Go to course</a>
+            {{else}}
+            <a href="./course?id={{course.ID}}" class="btn btn-outline-success" course="{{course.ID}}"
+              onclick="buy(this)" style="cursor: pointer">Buy now</a>
+            {{/if}}
+            {{else}}
+            {{#if course.PercentDiscount}}
+            <del><span class="old-price ">{{formatCurrency this.course.CourseFee}}</span></del>
+            {{/if}}
+            <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice
+              this.course.PercentDiscount this.course.CourseFee)}}</span>
+            <a href="./auth/login" class="btn btn-outline-primary">Add to watch list </a>
+            <br>
+            <a href="./auth/login" class="btn btn-outline-success">Buy now</a>
+            {{/if}}
+            <br>
             <p class="card-text">Ensuring refund in 30days</p>
           </div>
         </div>
       </div>
+
       <div class="feedback">
         <div class="container justify-content-center mt-5 border-left border-right">
           <h3>Feedback</h3>
@@ -182,44 +210,60 @@
       </div>
     </div>
   </div>
-  <div class='col ml-5'>
-    <div class="outstanding-course mt-5">
-      <p>Relevent Courses</p>
-    </div>
-    <div class="row">
-      {{#if this.isEmpty}}
-      <p>No data</p>
-      {{else}}
-      {{#each coursesList as |course|}}
-      <div class="col-auto mt-3">
-        <div class="card product-item popover-{{course.ID}}" style="max-width:300px; min-width:300px">
-          <img src="/public/images/courses/{{course.ID}}.jpg" width="250" height="150" style="object-fit: fill;"
-            class="card-img-top" alt="...">
-          <div class="card-body">
-            <a href="/course?id={{course.ID}}">
-              <h5 class="card-title product-title">{{course.Name}}</h5>
-            </a>
-            <span class="text-muted product-category">{{course.TopicName}}</span>
-            <small class="text-muted">Ins: {{course.Instructor}}</small>
-            <div class="rating mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}}
-              rating_count={{course.CountRating}}>
-            </div>
-            <div class="product-price-wrapper mt-3">
-              {{#if course.PercentDiscount}}
-              <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
-              {{/if}}
-              <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice
-                course.PercentDiscount course.CourseFee)}}</span>
-            </div>
+</div>
+<div class='col ml-5'>
+  <div class="outstanding-course mt-5">
+    <p>Relevent Courses</p>
+  </div>
+  <div class="row">
+    {{#if this.isEmpty}}
+    <p>No data</p>
+    {{else}}
+    {{#each coursesList as |course|}}
+    <div class="col-auto mt-3">
+      <div class="card product-item popover-{{course.ID}}" style="max-width:300px; min-width:300px">
+        <img src="/public/images/courses/{{course.ID}}.jpg" width="250" height="150" style="object-fit: fill;"
+          class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="/course?id={{course.ID}}">
+            <h5 class="card-title product-title">{{course.Name}}</h5>
+          </a>
+          <span class="text-muted product-category">{{course.TopicName}}</span>
+          <small class="text-muted">Ins: {{course.Instructor}}</small>
+          <div class="rating mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}}
+            rating_count={{course.CountRating}}>
+          </div>
+          <div class="product-price-wrapper mt-3">
+            {{#if course.PercentDiscount}}
+            <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
+            {{/if}}
+            <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice
+              course.PercentDiscount course.CourseFee)}}</span>
           </div>
         </div>
       </div>
-      {{/each}}
-      {{/if}}
     </div>
-    <div class="page-container">
-      <div id="pagination"></div>
-    </div>
+    {{/each}}
+    {{/if}}
   </div>
-  {{/if}}
+  <div class="page-container">
+    <div id="pagination"></div>
+  </div>
 </div>
+{{/if}}
+</div>
+<script>
+  function buy(t) {
+    let IDCourse = t.getAttribute(`course`);
+    $.get(`/course/buy?courseId=${IDCourse}`)
+
+  }
+  function addWatchList(t) {
+    let IDCourse = t.getAttribute(`course`);
+    $.get(`/course/addWatchList?courseId=${IDCourse}`)
+  }
+  function removeWatchList(t) {
+    let IDCourse = t.getAttribute(`course`);
+    $.get(`/course/removeWatchList?courseId=${IDCourse}`)
+  }
+</script>

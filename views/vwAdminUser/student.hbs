@@ -1,6 +1,7 @@
+
 <div class="card">
   <div class="card-header">
-    Instructor
+    Student
   </div>
     <div class="card-body">
     <h5>Profile</h5>
@@ -26,26 +27,26 @@
           </tr>
         </thead>
         <tbody>
-          {{#if this.isEmpty}}
-            <tr>
-              <td colspan="3"><h4>Student has not purchased any courese</h4></td>
-            </tr>
-            
-          {{else}}
             {{#each this.courses}}
             <tr>
               <th scope="col">{{ID}}</th>
-              <td scope="col">{{Name}}</td>
+              <td scope="col"><a href="http://127.0.0.1:3000/course?id={{ID}}"></a>{{Name}}</td>
               <td>{{formatDate CreatedTime}}</td>
             </tr>
           {{/each}}
-          {{/if}}
         </tbody>
       </table>
 </div>
+<form action="/admin/student/del?id={{this.student.IDUser}}" method="POST">
   <div class="card-footer text-muted">
     <a name="" id="" class="btn btn-outline-success" href="/admin/user?role=2" role="button">
       <i class="fa fa-sign-out" aria-hidden="true"></i>
       Back</a>
+      <button type="submit" name="" id="" class="btn btn-danger mr-4"> 
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+        Delete </button></form>
 </div>
+</form>
+
+
 

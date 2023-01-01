@@ -216,4 +216,12 @@ export default {
     if (list) return JSON.parse(JSON.stringify(list));
     return null;
   },
+  getCourseByPageandUserId: async (UserId, limit,offset)=>{
+    const list= await db("courses").where('IDInstructor',UserId).limit(limit).offset(offset);
+    return list;
+  },
+  getTotalCourseByInstructorID:async (id)=>{
+    const total=await db("courses").where('IDInstructor',id).count({amount:"ID"})
+    return total[0].amount;
+  },
 };

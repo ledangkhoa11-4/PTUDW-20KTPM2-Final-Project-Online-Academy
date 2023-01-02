@@ -3,8 +3,9 @@ import coursesService from '../services/courses-service.js';
 import userService from '../services/user-service.js';
 import bcrypt from 'bcrypt';
 import { match } from 'assert';
-
+import middleware from '../middlewares/middleware.js';
 const Router = express.Router();
+Router.use(middleware.isAdmin);
 Router.get('/user',async(req,res, next)=>{
     const role= req.query.role;
     const list=await userService.getAllUserByRole(role);

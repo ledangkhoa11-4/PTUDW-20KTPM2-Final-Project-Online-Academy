@@ -188,20 +188,20 @@ export default {
     if (list[0]) return JSON.parse(JSON.stringify(list[0]));
     return null;
   },
-  getCourseByPage:async (limit,offset)=>{
-    const list=await db("courses").limit(limit).offset(offset);
+  getCourseByPage: async (limit, offset) => {
+    const list = await db("courses").limit(limit).offset(offset);
     return list;
   },
-  getTotalCourse:async ()=>{
-    const total=await db("courses").count({amount:"ID"})
+  getTotalCourse: async () => {
+    const total = await db("courses").count({ amount: "ID" });
     return total[0].amount;
   },
-  getParticipant: async (id) => {
+  getParticipant: async (courseId, userId) => {
     const list = await db.raw(
-      `SELECT * FROM participate as p where p.IDCourse = ${id}`
+      `SELECT * FROM participate as p where p.IDCourse = ${courseId} and p.IDStudent = ${userId}`
     );
-    if (list[0]) return JSON.parse(JSON.stringify(list[0]));
-    return null;
+    if (list[0].length != 0) return true;
+    return false;
   },
   addWatchedVideo: async (UserId, CourseId, ChapterId, No) => {
     let result =
@@ -216,12 +216,40 @@ export default {
     if (list) return JSON.parse(JSON.stringify(list));
     return null;
   },
-  getCourseByPageandUserId: async (UserId, limit,offset)=>{
-    const list= await db("courses").where('IDInstructor',UserId).limit(limit).offset(offset);
+  getCourseByPageandUserId: async (UserId, limit, offset) => {
+    const list = await db("courses")
+      .where("IDInstructor", UserId)
+      .limit(limit)
+      .offset(offset);
     return list;
   },
-  getTotalCourseByInstructorID:async (id)=>{
-    const total=await db("courses").where('IDInstructor',id).count({amount:"ID"})
+  getTotalCourseByInstructorID: async (id) => {
+    const total = await db("courses")
+      .where("IDInstructor", id)
+      .count({ amount: "ID" });
     return total[0].amount;
+  },
+  addParticipant: async (UserId, CourseId) => {
+    let result = await db.raw(`INSERT INTO participate (IDStudent,	IDCourse)
+    VALUES (${UserId}, ${CourseId});`);
+    return result[0];
+  },
+  addWatchList: async (UserId, CourseId) => {
+    let result = await db.raw(`INSERT INTO watchlist (IDStudent,	IDCourse)
+    VALUES (${UserId}, ${CourseId});`);
+    return result[0];
+  },
+  removeWatchList: async (UserId, CourseId) => {
+    let result = await db.raw(
+      `DELETE FROM watchlist WHERE IDStudent = ${UserId} and IDCourse = ${CourseId};`
+    );
+    return result[0];
+  },
+  isOnWatchList: async (courseId, userId) => {
+    const list = await db.raw(
+      `SELECT * FROM watchlist as p where p.IDCourse = ${courseId} and p.IDStudent = ${userId}`
+    );
+    if (list[0].length != 0) return true;
+    return false;
   },
 };

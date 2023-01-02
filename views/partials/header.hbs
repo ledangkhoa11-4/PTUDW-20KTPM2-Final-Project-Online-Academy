@@ -88,7 +88,7 @@
 {{/unless}}
 {{#if isLogged}}
 <div class="action">
-      <div class="username nav-link dropdown-toggle profile" onclick="menuToggle();">Wellcome, {{auth.FullName}}</div>
+      <div class="username nav-link dropdown-toggle profile" onclick="menuToggle();" style=" width: 204.04px; height: 40px;">Wellcome, {{auth.FullName}}</div>
       <div class="menu">
         <h3>{{auth.FullName}}<br /><span>Role: {{roleToString auth.Role}}</span> <br> <span>{{auth.Email}}</span></h3>
         {{#ifeq auth.Role 2}}
@@ -106,7 +106,7 @@
             <a href="/user/account"><i class="bi bi-person-gear mr-3"></i>Account</a>
           </li>
           <li>
-            <a href="/user/logout"><i class="fa-solid fa-right-from-bracket mr-3"></i>Logout</a>
+            <a href="/auth/logout"><i class="fa-solid fa-right-from-bracket mr-3"></i>Logout</a>
           </li>
         </ul>
         {{else}}
@@ -124,7 +124,7 @@
             <a href="/instructor/account"><i class="bi bi-person-gear mr-3"></i>Account</a>
           </li>
           <li>
-            <a href="/instructor/logout"><i class="fa-solid fa-right-from-bracket mr-3"></i>Logout</a>
+            <a href="/auth/logout"><i class="fa-solid fa-right-from-bracket mr-3"></i>Logout</a>
           </li>
         </ul>
         {{/ifeq}}

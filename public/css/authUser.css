@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.4;
+}
+
+html {
+    font-family: 'Open Sans', sans-serif;
+}
+
+#form_table {
+    display: block;
+    padding: 24px;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 10px 0px;
+    max-width: 550px;
+    margin: 150px auto;
+    border-radius: 3px;
+}
+
+.form__header {
+    text-align: center;
+    margin-bottom: 16px;
+    color: #e52a2a;
+    font-family: "Readex Pro", sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 30px;
+}
+
+.form__description {
+    text-align: center;
+    color: #636d77;
+    display: block;
+}
+
+.spacer {
+    height: 30px;
+}
+
+.form__group {
+    width: 100%;
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.form__group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px
+}
+
+.form__group input {
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline-color: aqua;
+    outline: none;
+}
+
+.form__group input:hover,
+.form__group input:focus {
+    transition: all 0.5s;
+    border: 1px solid rgb(9, 183, 214);
+}
+
+.form__group-message {
+    display: none;
+    font-size: 12px;
+    margin-left: 6px;
+    color: red;
+}
+
+.error input {
+    border: 1px solid red !important;
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.error-icon {
+    position: absolute;
+    display: none;
+    color: red;
+    right: 3%;
+    top: 44%;
+}
+
+.error i,
+.error .form__group-message {
+    display: inline-block;
+    animation: vibrate 0.1s linear 2;
+}
+
+@keyframes vibrate {
+    50% {
+        right: 4.5%;
+    }
+
+}
+
+input[type="submit"] {
+    margin-top: 16px;
+    width: 100%;
+    height: 35px;
+    border-radius: 6px;
+    border: none;
+    background-color: #1e2c47;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+input[type="submit"]:hover {
+    opacity: .85;
+    cursor: pointer;
+}
+
+nav .menu-item {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav .menu-item svg {
+    fill: #0030cf;
+}
+

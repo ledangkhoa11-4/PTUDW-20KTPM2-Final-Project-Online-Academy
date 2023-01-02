@@ -2,7 +2,7 @@ import express from "express";
 import middleware from "../middlewares/middleware.js";
 import coursesService from "../services/courses-service.js";
 const Router = express.Router();
-Router.use(middleware.isStudent);
+
 Router.get("/", async (req, res) => {
   const IDcourse = req.query.id || 0;
   const course = await coursesService.getInfoCourse(`${IDcourse}`);
@@ -50,6 +50,20 @@ Router.get("/", async (req, res) => {
 
   const feedback = await coursesService.getFeedbackByCourse(IDcourse);
   //console.log(feedback);
+  let isOwn = false;
+  let isOnWatchList = false;
+  if (res.locals.auth) {
+    isOwn = await coursesService.getParticipant(
+      IDcourse,
+      res.locals.auth.IDUser
+    );
+    isOnWatchList = await coursesService.isOnWatchList(
+      IDcourse,
+      res.locals.auth.IDUser
+    );
+  }
+  let isAuth = false;
+  if (res.locals.auth) isAuth = true;
   res.render("vwCourse/detail", {
     layout: "main",
     course,
@@ -57,8 +71,12 @@ Router.get("/", async (req, res) => {
     videos,
     coursesList,
     feedback,
+    isOwn,
+    isAuth,
+    isOnWatchList,
   });
 });
+Router.use(middleware.isStudent);
 Router.get("/watched", async (req, res) => {
   const courseId = req.query.courseId || 0;
   const chapterId = req.query.chapterId || 0;
@@ -68,6 +86,27 @@ Router.get("/watched", async (req, res) => {
     courseId,
     chapterId,
     no
+  );
+});
+Router.get("/buy", async (req, res) => {
+  const courseId = req.query.courseId || 0;
+  const result = await coursesService.addParticipant(
+    res.locals.auth.IDUser,
+    courseId
+  );
+});
+Router.get("/addWatchList", async (req, res) => {
+  const courseId = req.query.courseId || 0;
+  const result = await coursesService.addWatchList(
+    res.locals.auth.IDUser,
+    courseId
+  );
+});
+Router.get("/removeWatchList", async (req, res) => {
+  const courseId = req.query.courseId || 0;
+  const result = await coursesService.removeWatchList(
+    res.locals.auth.IDUser,
+    courseId
   );
 });
 Router.get("/:courseId", async (req, res) => {
@@ -99,4 +138,5 @@ Router.get("/:courseId", async (req, res) => {
     crrVideo,
   });
 });
+
 export default Router;

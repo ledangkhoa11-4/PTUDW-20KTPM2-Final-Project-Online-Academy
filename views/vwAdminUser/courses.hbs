@@ -1,3 +1,5 @@
+<link rel='stylesheet' href='/public/css/badge.css' />
+<link rel="stylesheet" href="/public/css/pagination.css">
 <div class="card">
   <div class="card-header">
     All Courses
@@ -25,13 +27,42 @@
               <td>{{formatDate CreatedTime}}</td>
             </tr>
           {{/each}}
+          
           {{/if}}
         </tbody>
       </table>
+ 
+      <div class="page-container">
+                <a class="first-page">
+                <i class="fas fa-angle-double-left"></i>
+                </a>
+                <a class="prev-page">
+                <i class="fas fa-angle-left"></i>
+                </a>
+                <div id="pagination"></div>
+                <a class="next-page">
+                <i class="fas fa-angle-right"></i>
+                </a>
+                <a class="last-page">
+                <i class="fas fa-angle-double-right"></i>
+                </a>
+      </div>
 </div>
   <div class="card-footer text-muted">
     <a name="" id="" class="btn btn-outline-success" href="/admin/user?role=2" role="button">
       <i class="fa fa-sign-out" aria-hidden="true"></i>
       Back</a>
 </div>
+<script src="/public/script/pagination.js">
 
+</script>
+<script>
+    const valuePage = {
+    totalPages: {{this.nPage}},
+    curPage: {{this.page}},
+    truncate: true,
+        numLinksTwoSide: 1,
+        url: `{{url}}`
+    };
+    pagination(valuePage);
+</script>

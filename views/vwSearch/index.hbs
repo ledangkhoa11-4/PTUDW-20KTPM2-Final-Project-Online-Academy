@@ -222,7 +222,8 @@
                 {{#if newestCourse}}
                 <div class='row'>
                     <div class='card mb-3' style="flex:1">
-                        <span class='text-muted product-category'>{{newestCourse.TopicName}}</span>
+                        <a href="/course?id={{newestCourse.ID}}" class="anchor-cover"></a>
+                       <a href="categories/{{newestCourse.IDCate}}?topicID={{newestCourse.IDTopic}}"><span class="text-muted product-category">{{newestCourse.TopicName}}</span></a>
                         <div class='row no-gutters'>
                             <div class='col-md-3 fix-width' style='max-height: 227px'>
                                 <div class="badge-overlay">
@@ -255,7 +256,8 @@
                 {{#if bestRatingCourse}}
                 <div class='row'>
                     <div class='card mb-3' style="flex:1">
-                        <span class='text-muted product-category'>{{bestRatingCourse.TopicName}}</span>
+                        <a href="/course?id={{bestRatingCourse.ID}}" class="anchor-cover"></a>
+                        <a href="categories/{{bestRatingCourse.IDCate}}?topicID={{bestRatingCourse.IDTopic}}"><span class="text-muted product-category">{{bestRatingCourse.TopicName}}</span></a>
                         <div class='row no-gutters'>
                             <div class='col-md-3 fix-width' style='max-height: 227px'>
                                 <div class="badge-overlay">
@@ -288,7 +290,8 @@
                 {{#if bestSellCourse}}
                 <div class='row'>
                     <div class='card mb-3' style="flex:1">
-                        <span class='text-muted product-category'>{{bestSellCourse.TopicName}}</span>
+                        <a href="/course?id={{bestSellCourse.ID}}" class="anchor-cover"></a>
+                        <a href="categories/{{bestSellCourse.IDCate}}?topicID={{bestSellCourse.IDTopic}}"><span class="text-muted product-category">{{bestSellCourse.TopicName}}</span></a>
                         <div class='row no-gutters'>
                             <div class='col-md-3 fix-width' style='max-height: 227px'>
                                 <div class="badge-overlay">
@@ -342,7 +345,7 @@
                             {{#if course.PercentDiscount}}
                                 <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
                             {{/if}}
-                            <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</span>
+                            <span class="new-price float-right" style="font-size: 20px;">{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</span>
                             </div>
                         </div>
                     </div>                    

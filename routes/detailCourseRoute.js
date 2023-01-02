@@ -2,8 +2,6 @@ import express from "express";
 import middleware from "../middlewares/middleware.js";
 import coursesService from "../services/courses-service.js";
 const Router = express.Router();
-Router.use(middleware.isStudent);
-Router.use(middleware.isAdmin);
 Router.get("/", async (req, res) => {
   const IDcourse = req.query.id || 0;
   const course = await coursesService.getInfoCourse(`${IDcourse}`);

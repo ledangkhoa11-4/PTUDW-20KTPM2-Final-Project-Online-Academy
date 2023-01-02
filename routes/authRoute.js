@@ -59,16 +59,16 @@ Router.post("/login",async (req, res, next)=>{
     email: user.email,
     password: user.password
   })
-}, (req,res)=>{
-    if(res.locals.admin.Role===0){
-      passport.authenticate('local',{ successRedirect: '/admin/categories', failureRedirect: '/auth/login?error=1'})
-    }
-    else{
-      passport.authenticate('local',{ successRedirect: '/', failureRedirect: '/auth/login?error=1'})
-    }
+}, passport.authenticate('local',{ failureRedirect: '/auth/login?error=1'}), (req,res)=>{
+ if(res.locals.admin.Role===0){
+    res.redirect("/admin/categories")
+ }
+ else{
+  res.redirect("/");
+ }
 });
 
-//
+
 Router.post('/register',async (req,res, next)=>{
     const user = req.body;
     let isEmailExists = await userService.isEmailExists(user.email); 

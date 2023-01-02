@@ -8,20 +8,26 @@
     <div class="card-body">
     <h5>Profile</h5>
      <div class="form-group row">
-        <label for="fullname" class="col-4 col-form-label ">Full Name: </label> 
-        <div class="col-8">
+        <label for="fullname" class="col-3 col-form-label ">Full Name: </label> 
+        <div class="col-9">
           <p>{{this.instructor.FullName}}</p>
         </div>
       </div>
       <div class="form-group row">
-          <label for="email" class="col-4 col-form-label ">Email:</label> 
-          <div class="col-8">
+          <label for="email" class="col-3 col-form-label ">Email:</label> 
+          <div class="col-9">
             <p>{{this.instructor.Email}}</p>
           </div>
       </div>
+       <div class="form-group row">
+          <label for="email" class="col-3 col-form-label ">Current Job:</label> 
+          <div class="col-9">
+            <p>{{this.instructor.CurrentJob}}</p>
+          </div>
+      </div>
       <div class="form-group row">
-          <label for="bio" class="col-4 col-form-label "> Biograpphy:</label> 
-          <div class="col-8">
+          <label for="bio" class="col-3 col-form-label" > Biograpphy:</label> 
+          <div class="col-9" style=" height:400px; overflow:auto;">
             {{{this.instructor.Bio}}}
           </div>
       </div>
@@ -44,7 +50,7 @@
         {{#each this.courses}}
         <tr>
           <th scope="col">{{ID}}</th>
-          <td scope="col">{{Name}}</td>
+          <td scope="col"><a href="/course?id={{ID}}">{{Name}}</a></td>
           <td>{{formatDate CreatedTime}}</td>
         </tr>
       {{/each}}

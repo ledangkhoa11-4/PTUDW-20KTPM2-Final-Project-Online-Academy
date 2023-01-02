@@ -121,7 +121,7 @@
                       style="text-decoration: none; color: black; pointer-events: none; cursor: default;">&nbsp;
                       {{video.No}}. {{video.Name}} </a></h6>
                   {{#if video.IsPreview}}
-                  <div class="preview" onclick="showPreview()" style="color: blue; cursor: pointer" data-toggle="modal"
+                  <div class="preview" style="color: blue; cursor: pointer" data-toggle="modal"
                     data-target="#exampleModal">Preview</div>
                   <div class="modal fade" id="exampleModal" aria-hidden="true">
 
@@ -140,10 +140,11 @@
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                         </div>
-                        <div class="modal-footer" style="display: flex; flex-direction:row; justify-content: flex-start">
+                        <div class="modal-footer"
+                          style="display: flex; flex-direction:row; justify-content: flex-start">
                           <h5 class="text">
-                     {{video.Name}} </h5>
-                          
+                            {{video.Name}} </h5>
+
                           {{!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
 
                         </div>

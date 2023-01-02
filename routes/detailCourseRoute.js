@@ -130,11 +130,13 @@ Router.get("/:courseId", async (req, res) => {
   crrVideo.Name = crrVideo[0].Name;
   //console.log(crrVideo);
 
+  const course = await coursesService.getInfoCourse(`${courseId}`);
   res.render("vwCourse/videoLecture", {
     layout: "main",
     chapters,
     videos,
     crrVideo,
+    course,
   });
 });
 

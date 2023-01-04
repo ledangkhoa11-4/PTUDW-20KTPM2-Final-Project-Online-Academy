@@ -2,7 +2,6 @@ import express from "express";
 import middleware from "../middlewares/middleware.js";
 import coursesService from "../services/courses-service.js";
 const Router = express.Router();
-
 Router.get("/", async (req, res) => {
   const IDcourse = req.query.id || 0;
   const course = await coursesService.getInfoCourse(`${IDcourse}`);
@@ -131,11 +130,13 @@ Router.get("/:courseId", async (req, res) => {
   crrVideo.Name = crrVideo[0].Name;
   //console.log(crrVideo);
 
+  const course = await coursesService.getInfoCourse(`${courseId}`);
   res.render("vwCourse/videoLecture", {
     layout: "main",
     chapters,
     videos,
     crrVideo,
+    course,
   });
 });
 

@@ -37,7 +37,7 @@ Router.get('/logout',(req,res, next)=>{
 
 Router.post("/login",async (req, res, next)=>{
   const user = req.body;
-
+  
   let userCheck = await userService.getUserByEmail(user.email);
   if (userCheck.length == 0)
       return res.redirect("/auth/login?error=1")
@@ -50,6 +50,8 @@ Router.post("/login",async (req, res, next)=>{
     await userService.verified(user.email, otp);
   }
   const verified = await userService.isVerified(user.email);
+  res.locals.admin=userCheck[0];
+  console.log(res.locals.admin);
   if(verified)
     return next();
   res.locals.temp = user;
@@ -57,8 +59,13 @@ Router.post("/login",async (req, res, next)=>{
     email: user.email,
     password: user.password
   })
-}, passport.authenticate('local',{ failureRedirect: '/auth/login?error=1'}), (req, res)=>{
-  res.redirect("/admin/categories")
+}, passport.authenticate('local',{ failureRedirect: '/auth/login?error=1'}), (req,res)=>{
+ if(res.locals.admin.Role===0){
+    res.redirect("/admin/categories")
+ }
+ else{
+  res.redirect("/");
+ }
 });
 
 

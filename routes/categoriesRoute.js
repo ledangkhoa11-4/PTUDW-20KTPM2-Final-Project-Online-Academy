@@ -2,8 +2,9 @@ import express from 'express'
 import coursesService from '../services/courses-service.js';
 import categoryServices from '../services/category.services.js';
 import multer from 'multer';
+import middleware from '../middlewares/middleware.js';
 const Router = express.Router();
-
+Router.use(middleware.isAdmin);
 Router.get('/categories',async (req,res, next)=>{
     const catList= await categoryServices.getAllCat();
     const length=catList.length;

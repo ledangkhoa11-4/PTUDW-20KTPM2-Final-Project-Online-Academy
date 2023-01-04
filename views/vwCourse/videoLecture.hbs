@@ -1,48 +1,257 @@
 <div class="row" style="margin-top: 7%;">
   <div class="col-8">
     <div style="margin-left: 5%; border-bottom: 1px solid black;">
-      <iframe
-        width="853"
-        height="480"
-        src={{this.crrVideo.URL}}
-        title=""
-        frameborder="0"
+      <iframe width="853" height="480" src={{this.crrVideo.URL}} title="" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
+        allowfullscreen></iframe>
     </div>
-    <nav
-      class="navbar navbar-expand-lg navbar-light bg-light"
-      style="margin-left: 5%;"
-    >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-left: 5%;">
       <a class="navbar-brand" href="#">Overview</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarText"
-        aria-controls="navbarText"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Q&A
-              <span class="sr-only">(current)</span></a>
+
+          <li class="nav-item">
+            <div class="nav-link" style="cursor: pointer" data-toggle="modal" data-target="#exampleModal">Leave a rating
+            </div>
+            <div class="modal fade" id="exampleModal" aria-hidden="true">
+
+              <div class="modal-dialog">
+                <div class="modal-content" style="width: fit-content;">
+                  <style>
+                    .container {
+                      position: relative;
+                      width: 400px;
+                      background: #111;
+                      padding: 20px 30px;
+                      border: 1px solid #444;
+                      border-radius: 5px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-direction: column;
+                    }
+
+                    .container .post {
+                      display: none;
+                    }
+
+                    .container .text {
+                      font-size: 25px;
+                      color: #666;
+                      font-weight: 500;
+                    }
+
+                    .container .edit {
+                      position: absolute;
+                      right: 10px;
+                      top: 5px;
+                      font-size: 16px;
+                      color: #666;
+                      font-weight: 500;
+                      cursor: pointer;
+                    }
+
+                    .container .edit:hover {
+                      text-decoration: underline;
+                    }
+
+                    .container .star-widget input {
+                      display: none;
+                    }
+
+                    .star-widget label {
+                      font-size: 40px;
+                      color: #444;
+                      padding: 10px;
+                      float: right;
+                      transition: all 0.2s ease;
+                    }
+
+                    input:not(:checked)~label:hover,
+                    input:not(:checked)~label:hover~label {
+                      color: #fd4;
+                    }
+
+                    input:checked~label {
+                      color: #fd4;
+                    }
+
+                    input#rate-5:checked~label {
+                      color: #fe7;
+                      text-shadow: 0 0 20px #952;
+                    }
+
+                    #rate-1:checked~form header:before {
+                      content: "I just hate it ";
+                    }
+
+                    #rate-2:checked~form header:before {
+                      content: "I don't like it ";
+                    }
+
+                    #rate-3:checked~form header:before {
+                      content: "It is awesome ";
+                    }
+
+                    #rate-4:checked~form header:before {
+                      content: "I just like it ";
+                    }
+
+                    #rate-5:checked~form header:before {
+                      content: "I just love it ";
+                    }
+
+                    .container form {
+                      display: none;
+                    }
+
+                    input:checked~form {
+                      display: block;
+                    }
+
+                    form header {
+                      width: 100%;
+                      font-size: 25px;
+                      color: #fe7;
+                      font-weight: 500;
+                      margin: 5px 0 20px 0;
+                      text-align: center;
+                      transition: all 0.2s ease;
+                    }
+
+                    form .textarea {
+                      height: 100px;
+                      width: 100%;
+                      overflow: hidden;
+                    }
+
+                    form .textarea textarea {
+                      height: 100%;
+                      width: 100%;
+                      outline: none;
+                      color: #eee;
+                      border: 1px solid #333;
+                      background: #222;
+                      padding: 10px;
+                      font-size: 17px;
+                      resize: none;
+                    }
+
+                    .textarea textarea:focus {
+                      border-color: #444;
+                    }
+
+                    form .btn {
+                      height: 45px;
+                      width: 100%;
+                      margin: 15px 0;
+                    }
+
+                    form .btn button {
+                      height: 100%;
+                      width: 100%;
+                      border: 1px solid #444;
+                      outline: none;
+                      background: #222;
+                      color: #999;
+                      font-size: 17px;
+                      font-weight: 500;
+                      text-transform: uppercase;
+                      cursor: pointer;
+                      transition: all 0.3s ease;
+                    }
+
+                    form .btn button:hover {
+                      background: #1b1b1b;
+                    }
+                  </style>
+                  <div class="container" style="margin: 0;">
+                    <div class="post">
+                      <div class="text">Thanks for rating us!</div>
+                      <div class="edit">EDIT</div>
+                    </div>
+                    <div class="star-widget">
+                      <input type="radio" name="rate" id="rate-5">
+                      <label for="rate-5" class="fas fa-star"></label>
+                      <input type="radio" name="rate" id="rate-4">
+                      <label for="rate-4" class="fas fa-star"></label>
+                      <input type="radio" name="rate" id="rate-3">
+                      <label for="rate-3" class="fas fa-star"></label>
+                      <input type="radio" name="rate" id="rate-2">
+                      <label for="rate-2" class="fas fa-star"></label>
+                      <input type="radio" name="rate" id="rate-1">
+                      <label for="rate-1" class="fas fa-star"></label>
+                      <form method="POST">
+                        <header></header>
+                        <div class="textarea">
+                          <textarea cols="30" placeholder="Describe your experience.."></textarea>
+                        </div>
+                        <div class="btn">
+                          <button type="submit">Post</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <script>
+                    const btn = document.querySelector("button");
+                    const post = document.querySelector(".post");
+                    const widget = document.querySelector(".star-widget");
+                    const editBtn = document.querySelector(".edit");
+                    btn.onclick = () => {
+                      widget.style.display = "none";
+                      post.style.display = "block";
+                      editBtn.onclick = () => {
+                        widget.style.display = "block";
+                        post.style.display = "none";
+                      }
+                      return false;
+                    }
+                  </script>
+                </div>
+              </div>
+            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Notes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Announcements</a>
+            <a class="nav-link" href="#">Your progess</a>
           </li>
         </ul>
 
       </div>
     </nav>
+    <div style="margin-left: 5%; border-bottom: 1px solid black;">
+      <div class="card-body">
+        <div style="display:inline-block; font-weight:bold">
+          <a href="/categories?catID={{this.course.IDCate}}">{{this.course.CatName}}</a>
+          <i class="fa-solid fa-chevron-right"></i>
+          <a href="/categories/{{this.course.IDCate}}?topicID={{this.course.IDTopic}}">{{this.course.TopicName}}</a>
+          <br />
+          <br />
+        </div>
+        <h1 class="card-title">{{this.course.Name}}</h1>
+        <p class="card-text" style="font-size:x-large;">{{this.course.TinyDesc}}</p>
+
+        <p class="card-text" style="font-size:medium;">Instructor:
+          {{this.course.Instructor}}</p>
+
+        <p class="card-text" style="font-size:medium;">Total Lecture:
+          {{this.course.TotalLecture}}
+          lectures
+          <br />
+          Total Length:
+          {{this.course.TotalLength}}
+          hours
+        </p>
+
+        <p class="card-text" style="font-size:medium;">Average rating:
+          {{this.course.AvgRating}}/5</p>
+        <p class="card-text" style="font-size:medium;">Number of rating: 500k+</p>
+        <p class="card-text" style="font-size:medium;">Number of student: 1m+</p>
+        <p class="card-text"><small class="text-muted">Last modify:
+            {{this.course.ModifiedTime}}mm/dd/yyyy</small></p>
+
+      </div>
+    </div>
   </div>
   <div class="col-4" style="border-left: 1px solid black;">
     <h3><i class="fa fa-book" aria-hidden="true"></i>
@@ -50,96 +259,63 @@
 
     <div class="accordion" id="accordionExample">
       {{#each this.chapters}}
-        <div class="card">
-          <div class="card-header" id="heading1" style="padding-left:0">
-            <h2 class="mb-0">
-              <button
-                class="btn btn-link btn-block text-left"
-                type="button"
-                data-toggle="collapse"
-                data-target="#collapse{{IDChapter}}"
-                aria-expanded="true"
-                aria-controls="collapse{{IDChapter}}"
-                style="text-decoration: none;"
-              >
-                <h5 style="color: black;">{{Name}}</h5>
-              </button>
-            </h2>
-          </div>
+      <div class="card">
+        <div class="card-header" id="heading1" style="padding-left:0">
+          <h2 class="mb-0">
+            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+              data-target="#collapse{{IDChapter}}" aria-expanded="true" aria-controls="collapse{{IDChapter}}"
+              style="text-decoration: none;">
+              <h5 style="color: black;">{{Name}}</h5>
+            </button>
+          </h2>
+        </div>
 
-          <div
-            id="collapse{{IDChapter}}"
-            class="collapse show"
-            aria-labelledby="heading{{IDChapter}}"
-            data-parent="#accordionExample"
-          >
-            <div class="card-body" style="padding: 0;">
-              <div class="card">
-                <form action="">
-                  <ul class="list-group list-group-flush">
-                     {{#each (lookup ../videos @index) as |video|}}
-                      {{#if (isMatch ../../this.crrVideo.Name video.Name)}}
-                      <li class="list-group-item list-group-item-dark">
-                        <div
-                          style="display: flex; justify-content:space-between"
-                        ><span class="text"><input
-                              type="checkbox"
-                              name=""
-                              id=""
-                              course={{video.IDCourse}}
-                              chapter={{video.IDChapter}}
-                              no={{video.No}}
-                              onchange="watched(this, event)"
-                            /><a
-                              href="#"
-                              style="text-decoration: none; color: black"
-                            >&nbsp; {{video.No}} {{video.Name}} </a></span>
-                        </div>
-                        <br>
-                        <div
-                            class="text" style="display: flex;justify-content: flex-end;"
-                          ><i class="bi bi-clock"></i> &nbsp; {{convertMinuteToHour video.Length}}</div>
-                      </li>
-                      {{else}}
-                      <li class="list-group-item">
-                        <div
-                          style="display: flex; justify-content:space-between"
-                        ><span class="text">
-                          
-                          <input
-                              type="checkbox"
-                              name=""
-                              id=""
-                              course={{video.IDCourse}}
-                              chapter={{video.IDChapter}}
-                              no={{video.No}}
-                              onchange="watched(this, event)"
-                            />
-                            <a
-                              href="/course/{{video.IDCourse}}?chapterId={{video.IDChapter}}&lectureId={{video.No}}"
-                              style="text-decoration: none; color: black"
-                            >&nbsp; {{video.No}} {{video.Name}} </a></span>
-                        </div>
-                        <br>
-                        <div
-                            class="text" style="display: flex;justify-content: flex-end;"
-                          ><i class="bi bi-clock"></i> &nbsp; {{convertMinuteToHour video.Length}}</div>
-                      </li>
-                    {{/if}}
-                    {{/each}}
-                  </ul>
-                </form>
-              </div>
+        <div id="collapse{{IDChapter}}" class="collapse show" aria-labelledby="heading{{IDChapter}}"
+          data-parent="#accordionExample">
+          <div class="card-body" style="padding: 0;">
+            <div class="card">
+              <form action="">
+                <ul class="list-group list-group-flush">
+                  {{#each (lookup ../videos @index) as |video|}}
+                  {{#if (isMatch ../../this.crrVideo.Name video.Name)}}
+                  <li class="list-group-item list-group-item-dark">
+                    <div style="display: flex; justify-content:space-between"><span class="text"><input type="checkbox"
+                          name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}} no={{video.No}}
+                          onchange="watched(this, event)" /><a href="#"
+                          style="text-decoration: none; color: black">&nbsp; {{video.No}} {{video.Name}} </a></span>
+                    </div>
+                    <br>
+                    <div class="text" style="display: flex;justify-content: flex-end;"><i class="bi bi-clock"></i>
+                      &nbsp; {{convertMinuteToHour video.Length}}</div>
+                  </li>
+                  {{else}}
+                  <li class="list-group-item">
+                    <div style="display: flex; justify-content:space-between"><span class="text">
+
+                        <input type="checkbox" name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}}
+                          no={{video.No}} onchange="watched(this, event)" />
+                        <a href="/course/{{video.IDCourse}}?chapterId={{video.IDChapter}}&lectureId={{video.No}}"
+                          style="text-decoration: none; color: black">&nbsp; {{video.No}} {{video.Name}} </a></span>
+                    </div>
+                    <br>
+                    <div class="text" style="display: flex;justify-content: flex-end;"><i class="bi bi-clock"></i>
+                      &nbsp; {{convertMinuteToHour video.Length}}</div>
+                  </li>
+                  {{/if}}
+                  {{/each}}
+                </ul>
+              </form>
             </div>
           </div>
         </div>
+      </div>
       {{/each}}
     </div>
   </div>
 </div>
 <script>
-  function watched(t, e){
-    if (t.checked){
+  function watched(t, e) {
+    if (t.checked) {
       let IDCourse = t.getAttribute(`course`);
       let IDChapter = t.getAttribute(`chapter`);
       let No = t.getAttribute(`no`);

@@ -57,7 +57,9 @@ Router.post("/login",async (req, res, next)=>{
     email: user.email,
     password: user.password
   })
-}, passport.authenticate('local',{ successRedirect: '/', failureRedirect: '/auth/login?error=1'}));
+}, passport.authenticate('local',{ failureRedirect: '/auth/login?error=1'}), (req, res)=>{
+  res.redirect("/admin/categories")
+});
 
 
 Router.post('/register',async (req,res, next)=>{

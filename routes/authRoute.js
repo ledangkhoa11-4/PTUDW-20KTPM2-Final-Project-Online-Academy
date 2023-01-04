@@ -51,7 +51,6 @@ Router.post("/login",async (req, res, next)=>{
   }
   const verified = await userService.isVerified(user.email);
   res.locals.admin=userCheck[0];
-  console.log(res.locals.admin);
   if(verified)
     return next();
   res.locals.temp = user;
@@ -144,4 +143,11 @@ Router.get('/google/callback',
     res.redirect('/');
   });
 
+
+  Router.post('/check-valid-pass', async (req, res)=>{
+    const password = req.body.password;
+    const user = await userService.findUserById(res.locals.auth.IDUser);
+    let isValid = await bcrypt.compare(password, user.Password);
+    res.json({isValid});
+  });
 export default Router;

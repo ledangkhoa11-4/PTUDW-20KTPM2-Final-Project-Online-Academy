@@ -88,7 +88,9 @@
 {{/unless}}
 {{#if isLogged}}
 <div class="action">
-      <div class="username nav-link dropdown-toggle profile" onclick="menuToggle();" style=" width: 204.04px; height: 40px;">Wellcome, {{auth.FullName}}</div>
+      <div class="username nav-link dropdown-toggle profile d-flex justify-content-center align-items-center" onclick="menuToggle();" style=" width: 204.04px; height: 40px;">
+        Wellcome, {{auth.FullName}}
+        </div>
       <div class="menu">
         <h3>{{auth.FullName}}<br /><span>Role: {{roleToString auth.Role}}</span> <br> <span>{{auth.Email}}</span></h3>
         {{#ifeq auth.Role 2}}

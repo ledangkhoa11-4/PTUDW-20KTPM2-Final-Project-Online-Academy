@@ -1,7 +1,7 @@
 import express from 'express'
 import middleware from '../middlewares/middleware.js';
 import userService from '../services/user-service.js';
-
+import bcrypt from 'bcrypt'
 
 
 const Router = express.Router();
@@ -24,6 +24,19 @@ Router.get('/account', async (req,res,next) =>{
     const infos = await userService.getInfo(res.locals.auth.IDUser || 0);
     res.render('vwUser/account',{
         layout: 'test'
+    })
+})
+
+Router.post('/change-name', async(req,res,next) => {
+    const newName = req.body.name;
+    const resultChange = await userService.changeName(res.locals.auth.IDUser, newName);
+    req.cookies.user.FullName = newName;
+    res.cookie("user", req.cookies.user);
+    return res.render('vwUser/account',{
+        layout: 'test',
+        isAlert: true,
+        icon: 'success',
+        title: 'Name changed successfully.',
     })
 })
 

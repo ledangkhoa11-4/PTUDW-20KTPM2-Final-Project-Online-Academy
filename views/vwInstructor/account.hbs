@@ -58,7 +58,7 @@
 								<span class="form__group-message email-message"></span>
 							</div>
 							<div class="form-group ">
-								<label for="password">Confirm new password</label>
+								<label for="confirm-password">Confirm new password</label>
 								<input id="confirm-password" class="confirm-password" type="password" autocomplete="new-password">
 								<span class="form__group-message email-message"></span>
 							</div>
@@ -159,6 +159,9 @@
 			'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
 		],
 	}); 
+	$('#exampleModalCenter').on('hidden.bs.modal', function () {
+		document.querySelector(".form-2").reset();
+})
 </script>
 {{/section}}
 <style>

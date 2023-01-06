@@ -77,5 +77,9 @@ export default{
     changePassword: async(IDUser, newPassword)=>{
         const result= await db('user').where({IDUser}).update({Password: newPassword});
         return result[0]
+    },
+    changeName: async(IDUser, newName)=>{
+        const result = await db('user').where({IDUser}).update({FullName: newName});
+        return result[0]
     }
 }

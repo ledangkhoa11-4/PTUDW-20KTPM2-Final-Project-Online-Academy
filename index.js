@@ -107,7 +107,6 @@ app.set('view engine', 'hbs');
 app.set('views', './views');
 
 
-
 //res.local
 app.use(async (req, res, next) => {
   const cateList = await categoryServices.getAllCat();

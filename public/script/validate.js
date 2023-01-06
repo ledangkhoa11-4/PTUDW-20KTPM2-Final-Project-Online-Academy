@@ -6,7 +6,7 @@ function Validator(formObj) {
             let message = fn(inputElement.value)
             if (message) {
                 inputElement.parentNode.classList.add("error")
-                inputElement.parentNode.querySelector(`${formObj.error_message}`).innerText = message
+                inputElement.parentNode.querySelector(`${formObj.error_message}`).innerText = message; 
                 return false;
             }
         }
@@ -52,7 +52,6 @@ function Validator(formObj) {
 
         }
     }
-
 }
 Validator.isRequire = function (selector) {
     return {

@@ -208,6 +208,10 @@
         <div class="card" style="width: 18rem;">
           <img src="/public/images/courses/{{course.ID}}.jpg" class="card-img-top" alt="...">
           <div class="card-body" style="display: flex; justify-content:center; flex-direction: column;">
+            {{#ifeq auth.IDUser course.IDInstructor}}
+                <a href="/instructor/edit/{{course.ID}}" class="btn btn-outline-info mt-3"
+                style="cursor: pointer">Edit this course &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
+                {{else}}
             {{#if this.isAuth}}
             {{#if this.isOwn}}
             <span class="own" style="font-size: 22px;">You own this course</span>
@@ -230,13 +234,8 @@
             {{#if this.isOwn}}
             <a href="/course/{{course.ID}}?chapterId=1&lectureId=1" class="btn btn-outline-success">Go to course &nbsp;<i class="bi bi-book"></i></a>
             {{else}}
-              {{#ifeq auth.IDUser course.IDInstructor}}
-                <a href="/instructor/edit/{{course.ID}}" class="btn btn-outline-info"
-                style="cursor: pointer">Edit this course &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
-                {{else}}
             <a href="./course?id={{course.ID}}" class="btn btn-outline-success" course="{{course.ID}}"
               onclick="buy(this)" style="cursor: pointer">Buy now &nbsp;<i class="bi bi-cart"></i></a>
-              {{/ifeq}}
             {{/if}}
             {{else}}
             {{#if course.PercentDiscount}}
@@ -248,8 +247,13 @@
             <br>
             <a href="./auth/login" class="btn btn-outline-success">Buy now &nbsp;<i class="bi bi-cart"></i></a>
             {{/if}}
+
+            {{/ifeq}}
             <br>
-            <p class="card-text">Ensuring refund in 30days</p>
+            <span class="card-text"><i class="fa-solid fa-rotate-right mr-1"></i> Ensuring refund in 30 days</span>
+            <span class="card-text"><i class="fa-solid fa-infinity mr-1"></i> Full lifetime access</span>
+
+            
           </div>
         </div>
       </div>
@@ -382,3 +386,9 @@ $('.slick-4').slick({
    renderRating('.rating2')
    </script>
 
+<style>
+  span.card-text{
+    font-size: 14px;
+    color:#333;
+  }
+</style>

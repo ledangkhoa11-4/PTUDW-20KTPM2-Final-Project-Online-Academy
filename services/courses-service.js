@@ -189,7 +189,11 @@ export default {
     return null;
   },
   getCourseByPage: async (limit, offset) => {
-    const list = await db("courses").limit(limit).offset(offset);
+    const list = await db("courses")
+    .select("courses.*", "user.FullName")
+    .leftJoin("user","user.IDUser","=","courses.IDInstructor")
+    .limit(limit).
+    offset(offset);
     return list;
   },
   getTotalCourse: async () => {

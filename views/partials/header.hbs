@@ -111,23 +111,31 @@
           </li>
         </ul>
         {{else}}
-        <ul>
-          <li>
-            <a href="/instructor/profile"> <i class="fa-solid fa-id-card-clip mr-3"></i>My profile</a>
-          </li>
-          <li>
-            <a href="/instructor/my-courses"><i class="bi bi-list-task mr-3"></i>My courses</a>
-          </li>
-          <li>
-            <a href="/instructor/create-course"><i class="bi bi-file-earmark-plus mr-3"></i>Create new courses</a>
-          </li>
-          <li>
-            <a href="/instructor/account"><i class="bi bi-person-gear mr-3"></i>Account</a>
-          </li>
-          <li>
-            <a href="/auth/logout"><i class="fa-solid fa-right-from-bracket mr-3"></i>Logout</a>
-          </li>
-        </ul>
+            {{#ifeq auth.Role 1}}
+                <ul>
+                <li>
+                    <a href="/instructor/profile"> <i class="fa-solid fa-id-card-clip mr-3"></i>My profile</a>
+                </li>
+                <li>
+                    <a href="/instructor/my-courses"><i class="bi bi-list-task mr-3"></i>My courses</a>
+                </li>
+                <li>
+                    <a href="/instructor/create-course"><i class="bi bi-file-earmark-plus mr-3"></i>Create new courses</a>
+                </li>
+                <li>
+                    <a href="/instructor/account"><i class="bi bi-person-gear mr-3"></i>Account</a>
+                </li>
+                <li>
+                    <a href="/auth/logout"><i class="fa-solid fa-right-from-bracket mr-3"></i>Logout</a>
+                </li>
+                </ul>
+                {{else}}
+                <ul>
+                    <li>
+                         <a href="/auth/logout"><i class="fa-solid fa-right-from-bracket mr-3"></i>Logout</a>
+                    </li>
+                </ul>
+            {{/ifeq}}
         {{/ifeq}}
       </div>
     </div>

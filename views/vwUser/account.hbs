@@ -84,6 +84,43 @@
 	</div>
 </div>
 
+{{!-- ModalEmail --}}
+<div class="modal fade" id="exampleModalCenterEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+	aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Change Email</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="change-email" method="POST" class="form-2">
+					<div class="container-fluid">
+						<div class="grid" style="  grid-gap: 0px; grid-template-columns: 1fr;">
+							<div class="form-group ">
+								<label for="cur-email">Current email</label>
+								<input id="cur-email" class="cur-email" value="{{auth.Email}}" type="text" autocomplete="new-email" disabled>
+								<span class="form__group-message email-message"></span>
+							</div>
+							<div class="form-group ">
+								<label for="new-email">New email</label>
+								<input id="new-email" class="new-email" type="text"  name="email" autocomplete="new-email">
+								<span class="form__group-message email-message"></span>
+							</div>
+						</div>
+						<div class="button-container">
+							<button class="button" type="submit">Apply Change</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
 
 
 <!-- ModalPassword -->
@@ -103,12 +140,12 @@
 						<div class="grid" style="  grid-gap: 0px; grid-template-columns: 1fr;">
 							<div class="form-group ">
 								<label for="cur-password">Current password</label>
-								<input id="cur-password" class="password" type="password" autocomplete="new-password">
+								<input id="cur-password" class="cur-password" type="password" autocomplete="new-password">
 								<span class="form__group-message email-message"></span>
 							</div>
 							<div class="form-group ">
-								<label for="password">New password</label>
-								<input id="password" class="password new-pass" type="password"  name="password" autocomplete="new-password">
+								<label for="new-password">New password</label>
+								<input id="new-password" class="new-password" type="password"  name="password" autocomplete="new-password">
 								<span class="form__group-message email-message"></span>
 							</div>
 							<div class="form-group ">
@@ -131,7 +168,106 @@
 <script src="/public/script/validateUser.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-	ValidatorName(".form-1")
+	ValidatorName({
+		form:".form-1",
+		error_message: ".form__group-message",
+		onSubmit: function (data) {
+			let newName = document.querySelector("#new-name").value;
+			let id = {{auth.IDUser}};
+			$.post("/auth/check-current-name",
+				{
+					name: newName,
+					id: id
+				},
+				function(data, status){
+					if(data.exists == true){
+						Swal.fire({
+							width: 600,
+							icon:`error`,
+							title: `You have entered your current name!`,
+							showConfirmButton: false,
+							timer: 2500
+						})
+					}
+					else{
+						document.querySelector(".form-1").submit()
+					}				
+			});
+		}
+	})
+	ValidatorEmail({
+		form: ".form-2",
+		error_message: ".form__group-message",
+		onSubmit: function (data) {
+			let newEmail = document.querySelector("#new-email").value;
+			if(!isEmail(newEmail)){
+				Swal.fire({
+					width: 600,
+					icon:`error`,
+					title: `Email format not correct!`,
+					showConfirmButton: false,
+					timer: 2500
+				})
+			}
+			else{
+				if(newEmail.localeCompare(document.querySelector("#cur-email").value) === 0){
+					Swal.fire({
+									width: 600,
+									icon:`error`,
+									title: `You have entered your current Email!`,
+									showConfirmButton: false,
+									timer: 2500
+								})
+				}
+				else{
+					$.post("/auth/check-exists-email",
+							{
+								email: newEmail
+							},
+							function(data, status){
+								if(data.exists == true){
+									Swal.fire({
+										width: 600,
+										icon:`error`,
+										title: `Email already exists!`,
+										showConfirmButton: false,
+										timer: 2500
+									})
+								}else{
+									document.querySelector(".form-2").submit()
+								}				
+							});
+				}
+			}
+		}
+	})
+	ValidatorPassword({
+		form:".form-3",
+		error_message: ".form__group-message",
+		onSubmit: function (data) {
+			let curPass = document.querySelector("#cur-password").value;
+			console.log(curPass);
+			$.post("/auth/check-valid-pass",
+					{
+						password: curPass
+					},
+					function(data, status){
+						if(data.isValid == true){
+							Swal.fire({
+								width: 600,
+								icon:`error`,
+								title: `Your current password not correct. Please type again!`,
+								showConfirmButton: false,
+								timer: 2500
+							})
+						}else{
+							document.querySelector(".form-3").submit()
+						}				
+					});
+		}
+		
+	}) 
+
 </script>
 {{#if isAlert}}
 <script>

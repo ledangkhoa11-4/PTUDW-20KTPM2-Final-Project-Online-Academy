@@ -105,7 +105,7 @@ background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
             {{#if this.showFilter}}
               <div class="row">
                 <div class="just-padding mt-3" style="flex: 1;">
-                  <div class="card-header"> Filter</div>
+                  <div class="card-header"> Filter Categories</div>
                     <div class="list-group list-group-root well">
                         {{#each category as |cat|}}        
                             <a href="/admin/courses?catId={{cat.IDCate}}&p=1" class="list-group-item {{#if cat.active}}active-side{{/if}}"><b>{{cat.Name}}</b></a>
@@ -125,10 +125,10 @@ background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
           
             <div class="row">
                 <div class="just-padding mt-3" style="flex: 1;">
-                  <div class="card-header"> Filter</div>
+                  <div class="card-header"> Filter Instructor</div>
                     <div class="list-group list-group-root well">
-                        {{#each this.instructor as |cat|}}        
-                            <a href="/admin/courses?instructor={{IDUser}}&p=1" class="list-group-item {{#if cat.active}}active-side{{/if}}"><b>{{cat.FullName}}</b></a>
+                        {{#each this.instructor as |ins|}}        
+                            <a href="/admin/courses?instructor={{IDUser}}&p=1" class="list-group-item {{#if ins.active}}active-side{{/if}}"><b>{{ins.FullName}}</b></a>
                             
               
                         {{/each}}

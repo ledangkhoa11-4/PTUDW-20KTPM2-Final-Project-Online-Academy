@@ -16,6 +16,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Full Name</th>
+            <th scope="col">Status</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -30,6 +31,14 @@
                     New Instructor
                   {{/if}}</a>
                 </td>
+                 <td scope="col" class="d-flex">
+                
+                {{#if disable}}
+                  <button type="submit" disabled class="btn btn-outline-danger justify-content-center"> Disable</button>
+                {{else}}
+                <button type="submit" disabled class="btn btn-outline-success justify-content-center "> Enable</button>
+                 
+              {{/if}}</td>
                 <td>
                   <a name="" id="" class="btn btn-outline-primary float-right" href="/admin/{{#ifeq Role 1 }}instructor{{else}}student{{/ifeq}}?id={{IDUser}}&role={{Role}}&p=1" role="button" >
                   <i class="fa fa-eye" aria-hidden="true"></i>

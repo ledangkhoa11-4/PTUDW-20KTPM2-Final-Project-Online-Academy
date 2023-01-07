@@ -121,8 +121,7 @@ app.use(async (req, res, next) => {
     res.locals.isLogged = true;
     res.locals.auth = req.cookies.user;
   }
-  if (req.session.passport) {
-    req.session.passport.user
+  if (req.session.passport && req.session.passport.user.status != "disabled") {
     res.locals.isLogged = true;
     res.locals.auth = req.session.passport.user;
     res.cookie("user", req.session.passport.user);

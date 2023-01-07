@@ -94,6 +94,7 @@ Router.post('/instructor/add', async (req,res)=>{
         const result = await userService.addUser({
         
             Email: instructor.username,
+            FullName: 'New instructor',
             Password: hashedPassword,
             Role: role,
             OTP: 0
@@ -136,8 +137,7 @@ Router.post('/user/disable',async(req,res)=>{
     else{
         const ret=await userService.disabledUser(userId,0)
     }
-    res.redirect('back')
-        return res.redirect('/admin/user?role=2');
+    res.redirect('back');
     
 })
 Router.get('/courses', async (req,res)=>{
@@ -147,7 +147,7 @@ const limit = 10;
 const offset = (page - 1) * limit;
 const instructorID=req.query.instructor||0;
 const catId=req.query.catId||0;
-const topicId=req.query.topicId||0
+const topicId=req.query.topicId||0;
 let list;
 let totalCourse;
 let url;
@@ -176,7 +176,11 @@ if(instructorID!==0){
 
 const category=await categoryServices.getAllCat();
 const instructor=await userService.getAllUserByRole(1);
-console.log(instructor);
+for(let i=0;i<instructor.length;i++){
+    if(instructor[i].IDUser==instructorID){
+        instructor[i].active=true;
+    }
+}
 let topics = [];
   for(let i = 0; i< category.length;i++){
     const topic = await categoryServices.getTopicByCat(category[i].IDCate);
@@ -200,7 +204,7 @@ res.render('vwAdminUser/courses',{
     layout:'admin',
     showFilter:true,
     list,
-    isEmpty: list.lenght===0,
+    isEmpty: list.length===0,
     nPage,
     topics,
     page,
@@ -214,7 +218,6 @@ Router.post('/course/disabled', async(req,res)=>{
     const ID=req.query.id
     if(status==='disable'){
         const ret=await coursesService.disabledCourse(ID,1);
-        console.log("cc");
     }
     else{
         const ret=await coursesService.disabledCourse(ID,0)

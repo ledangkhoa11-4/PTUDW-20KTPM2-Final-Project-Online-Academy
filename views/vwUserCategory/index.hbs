@@ -6,9 +6,8 @@
     <div class="overlay-screen hidden-overlay"></div>
     <div class='row'>
         <div class='col-4 side' style="max-width: 350px">
-            <div class="row">
-                <div class="row result-count dumb ml-3"> 
-                    <div class="col">{{nResults}} courses for {{name}}</div>
+            <div class="row" style="justify-content: flex-end;">
+                <div class="row result-count dumb ml-3" style="justify-content: flex-end;"> 
                     <div class="col-auto" style="text-align: right;"><a style="z-index: 999;" id="btn-collapse" href="#"><i class="bi bi-x-lg" style="font-size: 24px"></i></a></div>
                 </div>
             </div>
@@ -34,7 +33,7 @@
         <div class="col-auto " style="text-align: right;"><a class="hidden" style="z-index: 999;" id="btn-open" href="#"><i class="bi bi-list" style="font-size: 24px; color: black;"></i></a></div>
         <div class='col ml-5'>
             <div class="outstanding-course mt-5">
-                <p>Relevent Courses</p>
+                <p>{{name}}-themed Courses</p>
             </div>
             <div class="row">
                 {{#if this.isEmpty}}
@@ -48,9 +47,8 @@
                             style="object-fit: fill;" class="card-img-top" alt="...">
                             </a>
                         <div class="card-body">
-                           
                             <h5 class="card-title product-title"> <a href="/course?id={{course.ID}}">{{course.Name}}</a></h5>
-                            <span class="text-muted product-category">{{course.TopicName}}</span>
+                            <a href="/categories/{{course.IDCate}}?topicID={{course.IDTopic}}"><span class="text-muted product-category">{{course.TopicName}}</span></a>
                             <small class="text-muted">Ins: {{course.Instructor}}</small>
                             <div class="rating mt-1" rating_score={{#if
                                 course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}}

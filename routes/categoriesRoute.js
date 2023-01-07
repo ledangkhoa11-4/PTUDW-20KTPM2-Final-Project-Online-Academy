@@ -40,7 +40,6 @@ Router.post('/categories/patch', async (req,res)=>{
 Router.post('/categories/del', async (req,res)=>{
     const catId=req.body.IDCate;
     let  isAlert=await categoryServices.isCatexistCourses(catId);
-    console.log(isAlert);
     if (isAlert){
         res.redirect(`/admin/categories/edit?id=${catId}&alert=1`);
     }
@@ -71,7 +70,6 @@ Router.get('/categories/topic',async (req,res, next)=>{
 Router.get('/categories/topic/add', async (req,res)=>{
     const catId=req.query.catid||0;
     let isAlert=false;
-    console.log(req.query.alert);
     if(req.query.alert) isAlert=true;
     res.render('vwCategory/addTopic',{
         layout:'admin',
@@ -143,7 +141,6 @@ Router.post('/categories/topic/del', async(req,res)=>{
     const catId=req.body.IDCate||0;
     const topicId=req.body.IDTopic||0;
     const isAlert=await categoryServices.isTopicexistCourses(catId,topicId);
-    console.log(isAlert);
     if(isAlert){
         res.redirect(`/admin/categories/topic/edit?id=${topicId}&catid=${catId}&alert=1`);
     }

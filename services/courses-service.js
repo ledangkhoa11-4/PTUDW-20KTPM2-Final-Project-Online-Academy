@@ -5,6 +5,7 @@ export default {
     const list = await db.raw(
       `Select c.ID, COUNT(c.ID), AVG(p.Rating) 
             FROM courses c LEFT JOIN participate p on c.ID = p.IDCourse
+            WHERE c.disable = 0
             GROUP by c.ID
             ORDER by SUM(p.Rating) desc, COUNT(c.ID) desc
             LIMIT ${limit} OFFSET 0`
@@ -14,14 +15,14 @@ export default {
   },
   getTopView: async (limit) => {
     const list = await db.raw(
-      `SELECT c.ID from courses c ORDER BY c.Viewer DESC LIMIT ${limit} OFFSET 0`
+      `SELECT c.ID from courses c WHERE c.disable = 0 ORDER BY c.Viewer DESC LIMIT ${limit} OFFSET 0`
     );
     if (list) return list[0];
     return null;
   },
   getTopNewest: async (limit) => {
     const list = await db.raw(
-      `SELECT c.ID from courses c ORDER BY c.CreatedTime DESC LIMIT ${limit} OFFSET 0`
+      `SELECT c.ID from courses c WHERE c.disable = 0 ORDER BY c.CreatedTime DESC LIMIT ${limit} OFFSET 0`
     );
     if (list) return list[0];
     return null;
@@ -77,7 +78,7 @@ export default {
    */
   getInfoCourse: async (IDCourse) => {
     let info1 =
-      await db.raw(`Select c.ID, cat.IDCate as IDCate, t.IDTopic as IDTopic , c.ModifiedTime ,c.Name as Name, c.TinyDesc, c.FullDesc, c.CourseFee, d.PercentDiscount,  cat.Name as CatName, t.Name as TopicName, u.FullName as Instructor, c.IsCompleted, AVG(p.Rating) as AvgRating, COUNT(p.Rating) as CountRating, c.CreatedTime
+      await db.raw(`Select c.ID, cat.IDCate as IDCate, t.IDTopic as IDTopic , c.ModifiedTime ,c.Name as Name, c.TinyDesc, c.FullDesc, c.CourseFee, d.PercentDiscount,  cat.Name as CatName, t.Name as TopicName,u.IDUser as IDInstructor, u.FullName as Instructor, c.IsCompleted, AVG(p.Rating) as AvgRating, COUNT(p.Rating) as CountRating, c.CreatedTime
         From courses c LEFT JOIN category cat on c.IDCategory = cat.IDCate LEFT JOIN topic t ON t.IDTopic = c.Topic and t.IDCate = cat.IDCate LEFT JOIN participate p ON c.ID = p.IDCourse LEFT JOIN user u ON c.IDInstructor = u.IDUser Left Join discount d on d.ID = c.IDDiscount
         WHERE c.ID = '${IDCourse}'
         GROUP by c.ID, c.Name, cat.IDCate, cat.Name, c.TinyDesc, c.FullDesc, t.IDTopic, t.Name, u.FullName, c.ModifiedTime`);
@@ -155,7 +156,8 @@ export default {
         "TinyDesc",
         "CourseFee",
         "IsCompleted",
-        "PercentDiscount"
+        "PercentDiscount",
+        "disable"
       );
     return result;
   },

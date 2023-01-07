@@ -6,7 +6,7 @@
   <p>No Data</p>
   {{else}}
   <div class="card mb-3">
-    <div class="bgimg" style="display: flex; justify-content:center; background-image:">
+    <div class="bgimg" style="display: flex; justify-content:center; height: 45vh">
       <style>
         .bgimg {
           background-image: url("https://thietbiketnoi.com/wp-content/uploads/2020/01/tong-hop-hinh-nen-background-vector-designer-dep-do-phan-giai-fhd-2k-4k-moi-nhat-2-1024x683.jpg");
@@ -208,6 +208,10 @@
         <div class="card" style="width: 18rem;">
           <img src="/public/images/courses/{{course.ID}}.jpg" class="card-img-top" alt="...">
           <div class="card-body" style="display: flex; justify-content:center; flex-direction: column;">
+            {{#ifeq auth.IDUser course.IDInstructor}}
+                <a href="/instructor/edit/{{course.ID}}" class="btn btn-outline-info mt-3"
+                style="cursor: pointer">Edit this course &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
+                {{else}}
             {{#if this.isAuth}}
             {{#if this.isOwn}}
             <span class="own" style="font-size: 22px;">You own this course</span>
@@ -243,8 +247,13 @@
             <br>
             <a href="./auth/login" class="btn btn-outline-success">Buy now &nbsp;<i class="bi bi-cart"></i></a>
             {{/if}}
+
+            {{/ifeq}}
             <br>
-            <p class="card-text">Ensuring refund in 30days</p>
+            <span class="card-text"><i class="fa-solid fa-rotate-right mr-1"></i> Ensuring refund in 30 days</span>
+            <span class="card-text"><i class="fa-solid fa-infinity mr-1"></i> Full lifetime access</span>
+
+            
           </div>
         </div>
       </div>
@@ -287,7 +296,7 @@
     <div class="card-deck slick-4">
 
       {{#each coursesList as |course|}}
-      <div class="card product-item popover-{{course.ID}}" style="position: relative">
+      <div class="card product-item popover-{{course.ID}}" style="position: relative; max-width: 300px">
         <a href="/course?id={{course.ID}}" class="anchor-cover"></a>
         <img src="/public/images/courses/{{course.ID}}.jpg" height="170"
           class="card-img-top" alt="...">
@@ -295,7 +304,7 @@
           <h5 class="card-title product-title" style="min-height:38px">{{course.Name}}</h5>
           <a href="categories/{{course.IDCate}}?topicID={{course.IDTopic}}"><span class="text-muted product-category">{{course.TopicName}}</span></a>
           <small class="text-muted">{{#if course.Instructor}}{{course.Instructor}}{{else}}Undefined{{/if}}</small>
-          <div class="rating2 mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{CountRating}}> {{!-- chỉ cần thêm attribute như thế này thì script
+          <div class="rating rating2 mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{CountRating}}> {{!-- chỉ cần thêm attribute như thế này thì script
             sẽ tự render rating --}}
           </div>
           <div class="product-price-wrapper mt-3">
@@ -377,3 +386,9 @@ $('.slick-4').slick({
    renderRating('.rating2')
    </script>
 
+<style>
+  span.card-text{
+    font-size: 14px;
+    color:#333;
+  }
+</style>

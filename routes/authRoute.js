@@ -17,14 +17,25 @@ var transporter = nodemailer.createTransport({
 
 const Router = express.Router();
 Router.get('/register',async (req,res, next)=>{
-
     res.render('vwAuth/register');  
-    
 })
 Router.get('/login',(req,res, next)=>{
     let isAlert = req.query.error;
+    let alertTitle = {isAlert: false,};
+    if(isAlert == 1){
+      alertTitle = {
+        isAlert: true,
+        msg: "Username or Password incorrect. Please type again!"
+      }
+    }
+    if(isAlert == 2){
+      alertTitle = {
+        isAlert: true,
+        msg: "Your account was suspended. Please contact to admin!"
+      }
+    }
     res.render('vwAuth/login',{
-      isAlert
+      alertTitle
     });
 })
 Router.get('/logout',(req,res, next)=>{
@@ -59,6 +70,9 @@ Router.post("/login",async (req, res, next)=>{
     password: user.password
   })
 }, passport.authenticate('local',{ failureRedirect: '/auth/login?error=1'}), (req,res)=>{
+  if(req.session.passport.user.status == "disabled"){
+    return res.redirect('/auth/login?error=2');
+  }
  if(res.locals.admin.Role===0){
     res.redirect("/admin/categories")
  }

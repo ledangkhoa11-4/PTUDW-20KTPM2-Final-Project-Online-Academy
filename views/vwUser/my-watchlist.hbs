@@ -1,81 +1,57 @@
-<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css">
-<div class="container-fluid">
 
-<table id="table" 
-			 data-toggle="table"
-			 data-search="true"
-			 data-filter-control="true" 
-			 data-toolbar="#toolbar">
-	<thead>
-		<tr style="text-align: center">
-			<th data-sortable="true">Course name</th>
-			<th data-sortable="true">Tiny description</th>
-			<th data-sortable="true">Course fee</th>
-			<th data-sortable="true">Delete from watchlist</th>            
-		</tr>
-	</thead>
-	<tbody>
-		{{#each listCourse as |course|}}
-			<tr>
-				
-				<td><a href="/course?id={{course.ID}}" type="button" style="font-size: 20px; color:blue">{{course.Name}}</a></td>
-				<td >{{course.TinyDesc}}</td>
-				<td>{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</td>
-				
-					<th style="text-align: center;">
-						<form action="delete-watchlist" method="POST" class="form-1">
-							<input type="text" name="id" value="{{course.ID}}" style="display: none;">
-							<button class="button" style="border:none; background: none; font-size: 20px" type="submit">
-								<i class="fa-solid fa-trash"></i>
-							</button>
-						</form>
-					</th>
-			</tr>
-		{{/each}}	
-	</tbody>
-</table>
-</div>
 
-<style>
-    .ellipsis-1{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 1 !important;
-    -webkit-box-orient: vertical;
-    word-wrap: normal;
-}
-    th{
-        font-family: "Gentleman";
-    }
-    .container {
-	width: 1024px;
-	padding: 2em;
-}
 
-.bold-blue {
-	font-weight: bold;
-	color: #0277BD;
-}
-</style>
 
-{{#section 'script'}}
-<script src="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.js"></script>
+<link rel='stylesheet' href='/public/css/home.css' />
+<link rel='stylesheet' href='/public/css/search.css' />
+<link rel='stylesheet' href='/public/css/badge.css' />
+<link rel="stylesheet" href="/public/css/pagination.css">
+
+<div class="container">
+                <div class="row">
+                {{#each listCourse as |course|}}
+                <div class="col-auto mt-3">
+                    <div class="card product-item popover-{{course.ID}}" style="max-width:250px; min-width:250px" >
+						<a href="/course?id={{course.ID}}">
+							<img src="/public/images/courses/{{course.ID}}.jpg" width="250" height="150" style="object-fit: fill;"
+								class="card-img-top" alt="...">
+						</a>
+                        <div class="card-body">
+							<a href="/course?id={{course.ID}}">
+								<h5 class="card-title product-title" style="min-height:38px">{{course.Name}}</h5>
+
+								<a href="/categories/{{course.IDCate}}?topicID={{course.IDTopic}}"><span class="text-muted product-category">{{course.TopicName}}</span></a>
+								<small class="text-muted">Instructor: {{course.Instructor}}</small>
+								<div class="rating mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{course.CountRating}}>
+								</div>
+							</a>
+							<form action="delete-watchlist" method="POST" class="form-1" style="display: flex;justify-content: space-between">
+								<input type="text" name="id" value="{{course.ID}}" style="display: none;">
+								<button class="button hovertest" 
+									style="border:none; background: none; font-size: 20px;
+									 display: flex; margin-top: 1rem!important; justify-content: flex-end" type="submit">
+									<span class="delete" style="font-size: 17px;">Delete<i class="fa-solid fa-trash"></i></span>
+								</button>
+								<div class="product-price-wrapper mt-3">
+                            		{{#if course.PercentDiscount}}
+                               	 		<span class="old-price ">{{formatCurrency course.CourseFee}}</span>
+                           			{{/if}}
+                            			<span class="new-price float-right" style="font-size: 20px;">{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</span>
+                            	</div>
+							</form>
+                            {{!-- <div class="product-price-wrapper mt-3">
+                            {{#if course.PercentDiscount}}
+                                <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
+                            {{/if}}
+                            <span class="new-price float-right" style="font-size: 20px;">{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</span>
+                            </div> --}}
+                        </div>
+                    </div>                    
+                </div>
+                {{/each}}
+                </div>
+</div> 
+<script src="/public/script/rating.js"></script>
 <script>
-    //exporte les données sélectionnées
-var $table = $('#table');
-    $(function () {
-        $('#toolbar').find('select').change(function () {
-            $table.bootstrapTable('refreshOptions', {
-                exportDataType: $(this).val()
-            });
-        });
-    })
-
-		var trBoldBlue = $("table");
-
-	$(trBoldBlue).on("click", "tr", function (){
-			$(this).toggleClass("bold-blue");
-	});
+	renderRating(".rating")
 </script>
-{{/section}}

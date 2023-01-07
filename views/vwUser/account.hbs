@@ -38,10 +38,6 @@
 			</div>
 
 		</div>
-
-		<div class="button-container">
-			<button class="button" type="submit"><i class="bi bi-pencil mr-2"></i>Change</button>
-		</div>
 	</div>
 
 </div>
@@ -246,7 +242,6 @@
 		error_message: ".form__group-message",
 		onSubmit: function (data) {
 			let curPass = document.querySelector("#cur-password").value;
-			console.log(curPass);
 			$.post("/auth/check-valid-pass",
 					{
 						password: curPass

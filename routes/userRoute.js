@@ -1,6 +1,7 @@
 import express from 'express'
 import middleware from '../middlewares/middleware.js';
 import userService from '../services/user-service.js';
+import coursesService from '../services/courses-service.js';
 import bcrypt from 'bcrypt'
 
 
@@ -40,31 +41,16 @@ Router.post('/change-name', async(req,res,next) => {
 
 Router.post('/change-email',async (req, res, next)=>{
     const newEmail = req.body.email;
-    if(newEmail == res.locals.auth.Email)
-         return res.render('vwUser/account',{
-             layout: 'test', 
-             isAlert: true,
-             icon: 'info',
-             title: 'You have entered your current Email!',
-         })
-    const isExists = await userService.isEmailExists(newEmail);
-    if(isExists)
-         return res.render('vwUser/account',{
-             layout: 'test', 
-             isAlert: true,
-             icon: 'error',
-             title: 'Email already exists!',
-         })
-     const resultChange = await userService.changeEmail(res.locals.auth.IDUser,newEmail);
-     req.cookies.user.Email = newEmail;
-     if(req.session.passport) req.session.passport.user.Email = newEmail;
-     res.cookie("user", req.cookies.user);
-     return res.render('vwUser/account',{
-         layout: 'test', 
-         isAlert: true,
-         icon: 'success',
-         title: 'Email changed successfully.',
-     })
+    const resultChange = await userService.changeEmail(res.locals.auth.IDUser,newEmail);
+    req.cookies.user.Email = newEmail;
+    if(req.session.passport) req.session.passport.user.Email = newEmail;
+    res.cookie("user", req.cookies.user);
+    return res.render('vwUser/account',{
+        layout: 'test', 
+        isAlert: true,
+        icon: 'success',
+        title: 'Email changed successfully.',
+    })
  })
 
  Router.post('/change-password',async (req, res, next)=>{
@@ -77,6 +63,28 @@ Router.post('/change-email',async (req, res, next)=>{
          icon: 'success',
          title: 'Password changed successfully.',
      })
-  })
+  }),
+  Router.get('/my-learning',async (req,res)=>{
+    const listID = await coursesService.getCoursesByStudent(res.locals.auth.IDUser);
+    let listCourse = [];
+    for(let i = 0; i< listID.length;i++){
+        const info = await coursesService.getInfoCourse(listID[i].ID);
+        info.finish = listID[i].finish;
+        listCourse.push(info);
+
+    }
+    res.render('vwUser/my-learning',{layout: 'test', listCourse})
+})
+
+Router.get('/my-watchlist',async (req,res)=>{
+    const listCourse = await coursesService.getCoursesWatchlistByStudent(res.locals.auth.IDUser);
+    res.render('vwUser/my-watchlist',{layout: 'test', listCourse})
+})
+
+Router.post('/delete-watchlist', async (req,res,next) => {
+    const courseID = req.body.id;
+    const resultChange = coursesService.removeWatchList(res.locals.auth.IDUser,courseID)
+    return res.redirect('/user/my-watchlist');
+})
 
 export default Router;

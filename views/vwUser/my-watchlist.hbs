@@ -1,0 +1,81 @@
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css">
+<div class="container-fluid">
+
+<table id="table" 
+			 data-toggle="table"
+			 data-search="true"
+			 data-filter-control="true" 
+			 data-toolbar="#toolbar">
+	<thead>
+		<tr style="text-align: center">
+			<th data-sortable="true">Course name</th>
+			<th data-sortable="true">Tiny description</th>
+			<th data-sortable="true">Course fee</th>
+			<th data-sortable="true">Delete from watchlist</th>            
+		</tr>
+	</thead>
+	<tbody>
+		{{#each listCourse as |course|}}
+			<tr>
+				
+				<td><a href="/course?id={{course.ID}}" type="button" style="font-size: 20px; color:blue">{{course.Name}}</a></td>
+				<td >{{course.TinyDesc}}</td>
+				<td>{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</td>
+				
+					<th style="text-align: center;">
+						<form action="delete-watchlist" method="POST" class="form-1">
+							<input type="text" name="id" value="{{course.ID}}" style="display: none;">
+							<button class="button" style="border:none; background: none; font-size: 20px" type="submit">
+								<i class="fa-solid fa-trash"></i>
+							</button>
+						</form>
+					</th>
+			</tr>
+		{{/each}}	
+	</tbody>
+</table>
+</div>
+
+<style>
+    .ellipsis-1{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1 !important;
+    -webkit-box-orient: vertical;
+    word-wrap: normal;
+}
+    th{
+        font-family: "Gentleman";
+    }
+    .container {
+	width: 1024px;
+	padding: 2em;
+}
+
+.bold-blue {
+	font-weight: bold;
+	color: #0277BD;
+}
+</style>
+
+{{#section 'script'}}
+<script src="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.js"></script>
+<script>
+    //exporte les données sélectionnées
+var $table = $('#table');
+    $(function () {
+        $('#toolbar').find('select').change(function () {
+            $table.bootstrapTable('refreshOptions', {
+                exportDataType: $(this).val()
+            });
+        });
+    })
+
+		var trBoldBlue = $("table");
+
+	$(trBoldBlue).on("click", "tr", function (){
+			$(this).toggleClass("bold-blue");
+	});
+</script>
+{{/section}}

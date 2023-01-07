@@ -28,6 +28,7 @@ Router.post('/change-name', async(req,res,next) => {
     const newName = req.body.name;
     const resultChange = await userService.changeName(res.locals.auth.IDUser, newName);
     req.cookies.user.FullName = newName;
+    if(req.session.passport) req.session.passport.user = newName;
     res.cookie("user", req.cookies.user);
     return res.render('vwUser/account',{
         layout: 'test',
@@ -55,7 +56,8 @@ Router.post('/change-email',async (req, res, next)=>{
              title: 'Email already exists!',
          })
      const resultChange = await userService.changeEmail(res.locals.auth.IDUser,newEmail);
-     req.cookies.user.Email = newEmail
+     req.cookies.user.Email = newEmail;
+     if(req.session.passport) req.session.passport.user.Email = newEmail;
      res.cookie("user", req.cookies.user);
      return res.render('vwUser/account',{
          layout: 'test', 

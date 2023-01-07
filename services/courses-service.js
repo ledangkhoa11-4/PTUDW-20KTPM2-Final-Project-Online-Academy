@@ -77,10 +77,10 @@ export default {
    */
   getInfoCourse: async (IDCourse) => {
     let info1 =
-      await db.raw(`Select c.ID, cat.IDCate as IDCate, t.IDTopic as IDTopic , c.Name as Name, c.TinyDesc, c.FullDesc, c.CourseFee, d.PercentDiscount,  cat.Name as CatName, t.Name as TopicName, u.FullName as Instructor, c.IsCompleted, AVG(p.Rating) as AvgRating, COUNT(p.Rating) as CountRating, c.CreatedTime
+      await db.raw(`Select c.ID, cat.IDCate as IDCate, t.IDTopic as IDTopic , c.ModifiedTime ,c.Name as Name, c.TinyDesc, c.FullDesc, c.CourseFee, d.PercentDiscount,  cat.Name as CatName, t.Name as TopicName, u.FullName as Instructor, c.IsCompleted, AVG(p.Rating) as AvgRating, COUNT(p.Rating) as CountRating, c.CreatedTime
         From courses c LEFT JOIN category cat on c.IDCategory = cat.IDCate LEFT JOIN topic t ON t.IDTopic = c.Topic and t.IDCate = cat.IDCate LEFT JOIN participate p ON c.ID = p.IDCourse LEFT JOIN user u ON c.IDInstructor = u.IDUser Left Join discount d on d.ID = c.IDDiscount
         WHERE c.ID = '${IDCourse}'
-        GROUP by c.ID, c.Name, cat.IDCate, cat.Name, c.TinyDesc, c.FullDesc, t.IDTopic, t.Name, u.FullName`);
+        GROUP by c.ID, c.Name, cat.IDCate, cat.Name, c.TinyDesc, c.FullDesc, t.IDTopic, t.Name, u.FullName, c.ModifiedTime`);
 
     let info2 =
       await db.raw(`Select count(video.No) as TotalLecture, sum(video.Length) as TotalLength 
@@ -174,9 +174,9 @@ export default {
       .where({ ID });
     return result[0];
   },
-  getFeedbackByCourse: async (id) => {
+  getFeedbackByCourse: async (id, limit, offset) => {
     const list = await db.raw(
-      `SELECT * FROM participate as p JOIN user as u Where p.IDStudent = u.IDUser and u.Role = 2 and p.IDCourse = '${id}';`
+      `SELECT * FROM participate as p JOIN user as u Where p.IDStudent = u.IDUser and u.Role = 2 and p.Feedback IS NOT NULL and p.IDCourse = '${id} limit ${limit} offset ${offset}';`
     );
     if (list[0]) return JSON.parse(JSON.stringify(list[0]));
     return null;
@@ -190,10 +190,10 @@ export default {
   },
   getCourseByPage: async (limit, offset) => {
     const list = await db("courses")
-    .select("courses.*", "user.FullName")
-    .leftJoin("user","user.IDUser","=","courses.IDInstructor")
-    .limit(limit).
-    offset(offset);
+      .select("courses.*", "user.FullName")
+      .leftJoin("user", "user.IDUser", "=", "courses.IDInstructor")
+      .limit(limit)
+      .offset(offset);
     return list;
   },
   getCourseByPageAndCatID: async(catId,limit,offset)=>{
@@ -274,6 +274,61 @@ export default {
     );
     if (list[0].length != 0) return true;
     return false;
+  },
+  addViewer: async (courseId) => {
+    let result = await db.raw(
+      `update courses set Viewer = Viewer + 1 where ID = ${courseId}`
+    );
+    return result[0];
+  },
+  getNumberParticipant: async (courseId) => {
+    const list = await db.raw(
+      `SELECT COUNT(*) as num FROM participate as p where p.IDCourse = ${courseId}`
+    );
+
+    if (list[0].length != 0) return JSON.parse(JSON.stringify(list[0]));
+    return null;
+  },
+  addFeedback: async (courseId, userId, feedback) => {
+    let result = await db.raw(
+      `update participate set Feedback = '${feedback}' where IDCourse = ${courseId} and IDStudent = ${userId}`
+    );
+    return result[0];
+  },
+  addRating: async (courseId, userId, star) => {
+    let result = await db.raw(
+      `update participate set Rating = ${star} where IDCourse = ${courseId} and IDStudent = ${userId}`
+    );
+    return result[0];
+  },
+  getAllVideoOfChapterByStudent: async (IDUser, IDCourse, IDChapter) => {
+    const list =
+      await db.raw(`Select v.* , EXISTS(Select * from watched w where w.IDStudent = u.IDUser and v.IDCourse = w.IDCourse and v.IDChapter = w.IDChapter and w.No = v.No) as isWatched
+    From circulativevideo v LEFT JOIN participate p on p.IDCourse = v.IDCourse LEFT JOIN user u on u.IDUser = p.IDStudent
+    WHERE u.IDUser = ${IDUser} and p.IDCourse = ${IDCourse} and v.IDChapter = ${IDChapter};`);
+    if (list[0].length != 0) return JSON.parse(JSON.stringify(list[0]));
+    return null;
+  },
+  removeWatchedVideo: async (UserId, CourseId, ChapterId, No) => {
+    let result = await db.raw(
+      `DELETE FROM watched WHERE IDStudent = ${UserId} and IDCourse = ${CourseId} and IDChapter = ${ChapterId} and No = ${No};`
+    );
+    return result[0];
+  },
+  getCourseByPageAndCatID: async(catId,limit,offset)=>{
+    const list = await db("courses")
+    .select("courses.*", "user.FullName")
+    .leftJoin("user",
+    function() {
+      this
+        
+        .on('user.IDUser', '=', 'courses.IDInstructor')
+        
+    })
+    .where('courses.IDCategory', '=', catId )
+    .limit(limit)
+    .offset(offset);
+    return list;
   },
   getCourseByPageAndCatIDAndTopicID: async(catId,topicId,limit,offset)=>{
     const list = await db("courses")

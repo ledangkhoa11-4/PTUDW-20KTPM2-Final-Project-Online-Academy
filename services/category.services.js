@@ -65,18 +65,24 @@ export default{
         return db('topic').where('IDTopic', topicId).andWhere( 'IDCate', catId).update(topic);
     },
     isCatexistCourses:async (catId)=>{
-        let check=0;
+        let check;
         const ret=await db('courses').where('IDCategory',catId);
-        if(ret){
+        if(ret.length===0){
+            check=0;
+        }
+        else{
             check=1;
         }
         return check;
     },
     isTopicexistCourses:async (catId,topicId)=>{
-        let check=0;
+        let check;
         const ret=await db('courses').where('Topic', topicId).andWhere( 'IDCategory', catId);
         if(ret.length>0){
-            check=1
+            check=1;
+        }
+        else{
+            check=0;
         }
         return  check;
     }

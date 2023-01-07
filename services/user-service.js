@@ -81,5 +81,7 @@ export default{
     changeName: async(IDUser, newName)=>{
         const result = await db('user').where({IDUser}).update({FullName: newName});
         return result[0]
-    }
+    },
+    disabledUser: (IDUser, status)=>{
+        return db.raw(`Update user set disable=${status} where user.IDUser=${IDUser}`);    }
 }

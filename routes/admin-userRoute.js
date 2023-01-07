@@ -1,6 +1,7 @@
 import express from 'express'
 import coursesService from '../services/courses-service.js';
 import userService from '../services/user-service.js';
+import categoryServices from '../services/category.services.js';
 import bcrypt from 'bcrypt';
 import { match } from 'assert';
 import middleware from '../middlewares/middleware.js';
@@ -109,19 +110,7 @@ Router.post('/instructor/add', async (req,res)=>{
     
     
 })
-Router.post('/instructor/del',async(req,res)=>{
-    const userId=req.query.id||0;
-    
-    
-    const isExist=await userService.isExist(userId);
-    if(!isExist){
-        res.redirect('/admin/instructor?id=${userId}&alert=1');
-    }
-    else{
-        const ret=await userService.del(userId);
-        return res.redirect('/admin/user?role=1')
-    }
-})
+
 
 //Student
 Router.get('/student', async (req,res)=>{
@@ -138,12 +127,16 @@ Router.get('/student', async (req,res)=>{
     })
 
 })
-Router.post('/student/del',async(req,res)=>{
+Router.post('/user/disable',async(req,res)=>{
     const userId=req.query.id||0;
-    
-    
-    
-        const ret=await userService.del(userId);
+    const status=req.body.status;
+    if(status==='disable'){
+        const ret=await userService.disabledUser(userId,1);
+    }
+    else{
+        const ret=await userService.disabledUser(userId,0)
+    }
+    res.redirect('back')
         return res.redirect('/admin/user?role=2');
     
 })
@@ -152,16 +145,80 @@ Router.get('/courses', async (req,res)=>{
 const page = req.query.p || 1;
 const limit = 10;
 const offset = (page - 1) * limit;
-const list=await coursesService.getCourseByPage(limit,offset);
-const totalCourse=await coursesService.getTotalCourse();
+const instructorID=req.query.instructor||0;
+const catId=req.query.catId||0;
+const topicId=req.query.topicId||0
+let list;
+let totalCourse;
+let url;
+if(catId===0){
+     list=await coursesService.getCourseByPage(limit,offset);
+     totalCourse=await coursesService.getTotalCourse();
+     url='/admin/courses?';
+}else{
+    if(topicId===0){
+     list=await coursesService.getCourseByPageAndCatID(catId,limit,offset);
+     totalCourse=await coursesService.getTotalCourseByCatId(catId);
+     url=`/admin/courses?catId=${catId}`;
+    }
+    else{
+        list=await coursesService.getCourseByPageAndCatIDAndTopicID(catId,topicId,limit,offset);
+        totalCourse=await coursesService.getTotalCourseByTopicID(catId,topicId)
+        url=`/admin/courses?catId=${catId}&topic=${topicId}`
+    }
+}
+if(instructorID!==0){
+    list=await coursesService.getCourseByPageAndInstructorID(instructorID,limit,offset);
+    totalCourse=await coursesService.getTotalCourseByInstructorID(instructorID);
+    url=`/admin/courses?instructor=${instructorID}`
+}
+
+
+const category=await categoryServices.getAllCat();
+const instructor=await userService.getAllUserByRole(1);
+console.log(instructor);
+let topics = [];
+  for(let i = 0; i< category.length;i++){
+    const topic = await categoryServices.getTopicByCat(category[i].IDCate);
+    if(category[i].IDCate==catId){
+        category[i].active=true;
+    }
+    
+    for(let j=0;j<topic.length;j++){
+        if(topic[j].IDTopic==topicId){
+        topic[j].active=true;
+    }
+    }
+   // console.log(topic);
+    topics.push(topic)
+  }
+  
+
+
 let nPage=Math.ceil(totalCourse/limit);
 res.render('vwAdminUser/courses',{
     layout:'admin',
+    showFilter:true,
     list,
     isEmpty: list.lenght===0,
     nPage,
+    topics,
     page,
-    url:'/admin/courses?'
+    url,
+    category,
+    instructor
 })
+})
+Router.post('/course/disabled', async(req,res)=>{
+    const status=req.body.status;
+    const ID=req.query.id
+    if(status==='disable'){
+        const ret=await coursesService.disabledCourse(ID,1);
+        console.log("cc");
+    }
+    else{
+        const ret=await coursesService.disabledCourse(ID,0)
+    }
+    res.redirect('back')
 })
 export default Router;

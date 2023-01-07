@@ -196,8 +196,27 @@ export default {
     offset(offset);
     return list;
   },
+  getCourseByPageAndCatID: async(catId,limit,offset)=>{
+    const list = await db("courses")
+    .select("courses.*", "user.FullName")
+    .leftJoin("user",
+    function() {
+      this
+        
+        .on('user.IDUser', '=', 'courses.IDInstructor')
+        
+    })
+    .where('courses.IDCategory', '=', catId )
+    .limit(limit)
+    .offset(offset);
+    return list;
+  },
   getTotalCourse: async () => {
     const total = await db("courses").count({ amount: "ID" });
+    return total[0].amount;
+  },
+  getTotalCourseByCatId: async (CatId) => {
+    const total = await db("courses").where("IDCategory",CatId).count({ amount: "ID" });
     return total[0].amount;
   },
   getParticipant: async (courseId, userId) => {
@@ -256,4 +275,38 @@ export default {
     if (list[0].length != 0) return true;
     return false;
   },
+  getCourseByPageAndCatIDAndTopicID: async(catId,topicId,limit,offset)=>{
+    const list = await db("courses")
+    .select("courses.*", "user.FullName")
+    .leftJoin("user",
+    function() {
+      this
+        
+        .on('user.IDUser', '=', 'courses.IDInstructor')
+        
+    })
+    .where('courses.IDCategory', '=', catId )
+    .andWhere('courses.Topic',topicId)
+    .limit(limit)
+    .offset(offset);
+    return list;
+  },
+  getTotalCourseByTopicID: async (catId,topicId)=>{
+    const total = await db("courses").where("IDCategory",catId).andWhere("Topic",topicId).count({ amount: "ID" });
+    return total[0].amount; 
+  },
+  disabledCourse:(ID,status)=>{
+    return db.raw(`Update courses set disable=${status} where courses.ID=${ID}`);
+  },
+  getCourseByPageAndInstructorID:async(intructorID,limit,offset)=>{
+    const list=await db("courses").select("courses.*", "user.FullName")
+    .leftJoin("user",
+    function() {
+      this
+        
+        .on('user.IDUser', '=', 'courses.IDInstructor')
+        
+    }).where("IDInstructor",intructorID).limit(limit).offset(offset);
+    return list;
+  }
 };

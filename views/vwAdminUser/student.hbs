@@ -24,27 +24,42 @@
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Created Time</th>
+            <th scope="col">Disabled</th>
           </tr>
         </thead>
         <tbody>
             {{#each this.courses}}
             <tr>
               <th scope="col">{{ID}}</th>
-              <td scope="col"><a href="http://127.0.0.1:3000/course?id={{ID}}"></a>{{Name}}</td>
+              <td scope="col"><a href="/course?id={{ID}}">{{Name}}</a></td>
               <td>{{formatDate CreatedTime}}</td>
+              <td>
+               {{#if disable}}
+                  <button type="submit" disabled class="btn btn-outline-success justify-content-center "> Enable</button>
+                {{else}}
+                 <button type="submit" disabled class="btn btn-outline-danger justify-content-center"> Disable</button>
+              {{/if}}</td>
             </tr>
           {{/each}}
         </tbody>
       </table>
 </div>
-<form action="/admin/student/del?id={{this.student.IDUser}}" method="POST">
+<form action="/admin/user/disable?id={{this.student.IDUser}}" method="POST">
   <div class="card-footer text-muted">
     <a name="" id="" class="btn btn-outline-success" href="/admin/user?role=2" role="button">
       <i class="fa fa-sign-out" aria-hidden="true"></i>
       Back</a>
-      <button type="submit" name="" id="" class="btn btn-danger mr-4"> 
-        <i class="fa fa-trash-o" aria-hidden="true"></i>
-        Delete </button></form>
+      {{#if this.student.disable}}
+      <button type="submit" name="status" value="enable" id="" class="btn btn-success mr-4"> 
+        <i class="fa fa-check-circle" aria-hidden="true"></i>
+        Enable
+         </button>
+      {{else}}
+      <button type="submit" name="status" value="disable" id="" class="btn btn-danger mr-4"> 
+        <i class="fa fa-ban" aria-hidden="true"></i>
+        Disable
+         </button>  
+      {{/if}}
 </div>
 </form>
 

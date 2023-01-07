@@ -39,7 +39,8 @@ Router.post('/categories/patch', async (req,res)=>{
 })
 Router.post('/categories/del', async (req,res)=>{
     const catId=req.body.IDCate;
-    var  isAlert=await categoryServices.isCatexistCourses(catId);
+    let  isAlert=await categoryServices.isCatexistCourses(catId);
+    console.log(isAlert);
     if (isAlert){
         res.redirect(`/admin/categories/edit?id=${catId}&alert=1`);
     }
@@ -87,8 +88,6 @@ Router.post('/categories/topic/add',  (req,res)=>{
             const topicId=req.body.IDTopic||0;
             const isExist=await categoryServices.findTopic(topicId,catID);
            if(isExist) {
-            console.log('cc');
-            //cb(null, './cut/cc');
             return res.redirect(`/admin/categories/topic/add?catid=${catID}&alert=1`)
            }
            else{
@@ -144,6 +143,7 @@ Router.post('/categories/topic/del', async(req,res)=>{
     const catId=req.body.IDCate||0;
     const topicId=req.body.IDTopic||0;
     const isAlert=await categoryServices.isTopicexistCourses(catId,topicId);
+    console.log(isAlert);
     if(isAlert){
         res.redirect(`/admin/categories/topic/edit?id=${topicId}&catid=${catId}&alert=1`);
     }

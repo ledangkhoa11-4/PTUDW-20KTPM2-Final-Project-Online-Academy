@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 31, 2022 lúc 07:36 AM
--- Phiên bản máy phục vụ: 10.4.22-MariaDB
--- Phiên bản PHP: 7.4.27
+-- Host: 127.0.0.1
+-- Generation Time: Jan 07, 2023 at 03:50 AM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `academy`
+-- Database: `academy`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `category`
+-- Table structure for table `category`
 --
 
 CREATE TABLE `category` (
@@ -33,7 +33,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `category`
+-- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`IDCate`, `Name`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `category` (`IDCate`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chapter`
+-- Table structure for table `chapter`
 --
 
 CREATE TABLE `chapter` (
@@ -57,7 +57,7 @@ CREATE TABLE `chapter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `chapter`
+-- Dumping data for table `chapter`
 --
 
 INSERT INTO `chapter` (`IDCourse`, `IDChapter`, `Name`) VALUES
@@ -125,7 +125,7 @@ INSERT INTO `chapter` (`IDCourse`, `IDChapter`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `circulativevideo`
+-- Table structure for table `circulativevideo`
 --
 
 CREATE TABLE `circulativevideo` (
@@ -139,7 +139,7 @@ CREATE TABLE `circulativevideo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `circulativevideo`
+-- Dumping data for table `circulativevideo`
 --
 
 INSERT INTO `circulativevideo` (`IDCourse`, `IDChapter`, `No`, `Name`, `URL`, `Length`, `IsPreview`) VALUES
@@ -192,7 +192,7 @@ INSERT INTO `circulativevideo` (`IDCourse`, `IDChapter`, `No`, `Name`, `URL`, `L
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `courses`
+-- Table structure for table `courses`
 --
 
 CREATE TABLE `courses` (
@@ -209,34 +209,35 @@ CREATE TABLE `courses` (
   `IsCompleted` tinyint(1) NOT NULL,
   `CreatedTime` date NOT NULL DEFAULT current_timestamp(),
   `ModifiedTime` date NOT NULL DEFAULT current_timestamp(),
-  `Viewer` int(11) NOT NULL
+  `Viewer` int(11) NOT NULL,
+  `disable` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `courses`
+-- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`ID`, `Name`, `IDCategory`, `Topic`, `Image`, `TinyDesc`, `FullDesc`, `CourseFee`, `IDDiscount`, `IDInstructor`, `IsCompleted`, `CreatedTime`, `ModifiedTime`, `Viewer`) VALUES
-(1, 'HTML CSS from Zero to Hero', 1, '1', '', 'Learn modern HTML5, CSS3 and web design by building a stunning website for your portfolio! Includes flexbox and CSS Grid', '<ul>\r\n<li>Become a modern and confident HTML and CSS developer, no prior knowledge needed!</li>\r\n<li>Design and build a stunning real-world project for your portfolio from scratch</li>\r\n<li>Modern, semantic and accessible HTML5</li>\r\n<li>Modern CSS (previous CSS3), including flexbox and CSS Grid for layout</li>\r\n<li>Important CSS concepts such as the box model, positioning schemes, inheritance, solving selector conflicts, etc.</li>\r\n<li>A web design framework with easy-to-use rules and guidelines to design eye-catching websites</li>\r\n<li>How to plan, sketch, design, build, test, and optimize a professional website</li>\r\n<li>How to make websites work on every possible mobile device (responsive design)</li>\r\n<li>How to use common components and layout patterns for professional website design and development</li>\r\n<li>Developer skills such as reading documentation, debugging, and using professional tools</li>\r\n<li>How to find and use free design assets such as images, fonts, and icons</li>\r\n<li>Practice your skills with 10+ challenges (solutions included)</li>\r\n</ul>', 500000, 1, 2, 1, '2022-12-10', '2022-12-26', 50),
-(2, 'React Native - The Practical Guide [2023]', 1, '1', '', 'Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux', '<ul>\r\n<li>Learn how to use ReactJS to build real native mobile apps for iOS and Android</li>\r\n<li>Develop cross-platform (iOS and Android) mobile apps without knowing Swift, ObjectiveC or Java/ Android</li>\r\n<li>Explore React Native basics and advanced features!</li>\r\n<li>Learn how to use key mobile app features like Google maps or the device camera</li>\r\n<li>Create real-world native apps using React Native</li>\r\n<li>Make truly reusable components that look great</li>\r\n<li>Understand the terminology and concepts of Redux</li>\r\n<li>Prototype and deploy your own applications to the Apple and Google Play Stores</li>\r\n<li>Get up to speed with React design principles and methodologies</li>\r\n<li>Discover mobile design patterns used by experienced engineers</li>\r\n</ul>', 500000, 4, 2, 0, '2022-12-10', '2022-12-10', 0),
-(3, 'Complete C# Unity Game Developer 2D', 1, '2', '', 'Learn Unity in C# & Code Your First Five 2D Video Games for Web, Mac & PC. The Tutorials Cover Tilemap', '<ul>\r\n<li>Learn C#, a powerful modern language, from scratch. No prior programming experience is necessary.</li>\r\n<li>Become excellent at using the Unity game engine.</li>\r\n<li>Build a solid foundation for game design and game development that will help you build your own games.</li>\r\n<li>Learn how object oriented programming works in practice.</li>\r\n<li>Create playable game projects - good for your portfolio, or just for your own sense of achievement.</li>\r\n<li>Transfer your knowledge from this course to .NET, other languages, and more.</li>\r\n<li>Develop highly transferable coding problem solving skills.</li>\r\n<li>Be part of an amazing and supportive community of people similar to you.</li>\r\n</ul>', 1280000, 7, 2, 0, '2022-12-10', '2022-12-10', 0),
-(4, 'Visual Effects for Games in Unity - Beginner To In', 1, '2', '', 'By the end of this course you will have started your own portfolio as a Triple-A Visual Effects artist for Games.', '<ul>\r\n<li>Learn how to create effects for games with Unity.</li>\r\n<li>Fundamental concepts about Visual Effects.</li>\r\n<li>Creating Textures, Meshes and Shaders for Game VFX.</li>\r\n<li>How to structure AAA Visual Effects.</li>\r\n</ul>', 800000, 6, 2, 0, '2022-12-10', '2022-12-10', 0),
-(5, 'Master Microsoft Word Beginner to Advanced', 3, '1', '', 'Master the most popular Word Processing tool, Microsoft Word. Microsoft Word 2010, Word 2013, Word 2016, Word 2019', '<ul>\r\n<li>You will learn how to take full advantage of Microsoft Word</li>\r\n<li>Begin with the basics of creating Microsoft Word documents</li>\r\n<li>Various techniques to create dynamic layouts</li>\r\n<li>Preparing documents for printing and exporting</li>\r\n<li>Format documents effectively using Microsoft Word Styles</li>\r\n<li>Control page formatting and flow with sections and page breaks</li>\r\n<li>Create and Manage Table Layouts</li>\r\n<li>Work with Tab Stops to Align Content Properly</li>\r\n<li>Perform Mail Merges to create Mailing Labels and Form Letters</li>\r\n<li>Build and Deliver Word Forms</li>\r\n<li>Manage Templates</li>\r\n<li>Track and Accept/Reject Changes to a Document</li>\r\n</ul>', 0, 4, 2, 0, '2022-12-10', '2022-12-10', 0),
-(6, 'Unreal Engine 5 C++ The Ultimate Game Developer Co', 1, '2', '', 'Learn Unreal Engine 5 C++ Programming by Creating an Action-RPG Style Open World Game!', '<h2>What you\'ll learn</h2>\r\n<ul>\r\n    <li>How to code games in Unreal Engine 5</li>\r\n    <li>An RPG action game with a third-person character</li>\r\n    <li>Combat with swords and other melee weapons</li>\r\n    <li>Creation of enemies that attack the player</li>\r\n    <li>Health bars and player stats</li>\r\n    <li>Unreal Engine 5\'s Open World system</li>\r\n    <li>Level design and creation of realistic scenes with Quixel Megascans</li>\r\n    <li>Motion Warping, Unreal Engine 5\'s new system for customized root motion animations</li>\r\n    <li>Particle effects like blood splatter and weapon trails</li>\r\n    <li>Unreal Engine 5\'s new MetaSounds system and high-quality sounds in game</li>\r\n    <li>Best coding practices for coding games in Unreal Engine 5</li>\r\n    <li>Use of data structures and algorithms for games</li>\r\n    <li>Design patterns used in Unreal Engine</li>\r\n    <li>Creation of multiple types of enemies, from humanoids wielding weapons to monsters and other creatures</li>\r\n    <li>Importing entire dungeon levels into our Open World map with Packed Level Instances</li>\r\n</ul>\r\n', 1699900, 0, 2, 0, '2022-12-11', '2022-12-11', 0),
-(7, 'Java Swing (GUI) Programming: From Beginner to Exp', 1, '2', '', 'Learn how to create desktop and Internet GUI Java programs and take your Java programming to the next level.', '<ul>\r\n<li>Learn how to write GUI (graphical user interface) applications in Java</li>\r\n<li>Discover how to create database applications</li>\r\n<li>Understand the Java Swing framework</li>\r\n</ul>', 499000, 4, 2, 0, '2022-12-11', '2022-12-11', 0),
-(8, 'The Complete 2020 Fullstack Web Developer Course', 1, '1', '', 'Learn HTML5, CSS3, JavaScript, Python, Wagtail CMS, PHP & MySQL from scratch!', '<ul>\r\n<li>Updated for 2020</li>\r\n<li>Learn HTML5, CSS3, Vanilla JS (ES6+), Python, Wagtail CMS, PHP and MySQL all from scratch</li>\r\n<li>Learn Python from beginner to advanced</li>\r\n<li>Learn JavaScript (ES6+)</li>\r\n<li>Wagtail Pythons top Content Management System (Like WordPress, but better)</li>\r\n<li>Get a free CSS3 eBook</li>\r\n<li>Lots of projects, big and small!</li>\r\n<li>Learn Git and Github</li>\r\n<li>Create a portfolio page and launch it</li>\r\n<li>Learn JavaScript from scratch</li>\r\n<li>Learn PHP for server code execution</li>\r\n<li>Learn MySQL for saving data (databases)</li>\r\n<li>Build a Login/Registration/Members-only website, just like Facebook</li>\r\n<li>How to get a job as a web developer</li>\r\n<li>Learn the LAMP Stack: Linux, Apache, PHP and MySQL</li>\r\n</ul>', 2199000, 4, 2, 0, '2022-12-11', '2022-12-11', 0),
-(9, 'Adobe Photoshop', 2, '2', '', 'Xử lý ảnh trong photoshop', '<ul class=\"i8Z77e\">\r\n<li class=\"TrT0Xe\">S&aacute;ng tạo kh&ocirc;ng giới hạn. ...</li>\r\n<li class=\"TrT0Xe\">Bạn c&oacute; thể s&aacute;ng tạo theo c&aacute;ch của m&igrave;nh. ...</li>\r\n<li class=\"TrT0Xe\">Bạn c&oacute; thể phục chế lại <strong>những</strong> bức h&igrave;nh cũ kỹ ...</li>\r\n<li class=\"TrT0Xe\">Biến đổi m&agrave;u (blend, retouch m&agrave;u) bức ảnh. ...</li>\r\n<li class=\"TrT0Xe\">Sửa lỗi h&igrave;nh ảnh. ...</li>\r\n<li class=\"TrT0Xe\">S&aacute;ng tạo t&aacute;c phẩm nghệ thuật từ chữ ...</li>\r\n<li class=\"TrT0Xe\">Thiết kế &aacute;o, đồ trang sức, lưu niệm để b&aacute;n. ...</li>\r\n<li class=\"TrT0Xe\">Thiết kế quảng c&aacute;o.</li>\r\n</ul>', 500000, 1, 2, 0, '2022-12-12', '2022-12-12', 0),
-(10, 'Adobe Illustrator', 2, '2', '', 'Tạo mẫu in ấn với Adobe Illustrator', '<ul>\r\n<li>Thiết kế logo, name card, bộ ấn phẩm văn ph&ograve;ng</li>\r\n<li>Thiết kế lịch thiệp</li>\r\n<li>Thiết kế catalogue, brochure, nh&atilde;n b&igrave;a CD</li>\r\n<li>Thiết kế Poster, standee</li>\r\n<li>Thiết kế bao b&igrave;, t&uacute;i x&aacute;ch</li>\r\n<li>Thiết kế cho c&aacute;c quảng c&aacute;o thương mại điện tử&hellip;</li>\r\n<li>Ho&agrave;n tất file thiết kế&hellip;</li>\r\n</ul>', 0, 4, 2, 0, '2022-12-12', '2022-12-12', 0),
-(11, 'Adobe Indesign', 2, '2', '', 'Xuất bản – In ấn Adobe Indesign', '<ul>\r\n<li>Bạn có thể dàn trang sách báo. Bạn có thể làm sách báo, ấn phẩm điện tử.</li>\r\n<li>Bạn cũng có thể làm được những sản phẩm mà thường làm bằng illustrator. Ví dụ, poster, tờ gấp, baner, thực đơn, và sử dụng vẽ minh họa bình thường như illustrator.</li>\r\n<li>Sau khi học xong về Indesign bạn hoàn toàn có thể làm tại các xưởng in, tòa soạn báo, chế bản in…. Tất nhiên mức thu nhập nếu bạn làm tốt cũng không phải là nhỏ.</li>\r\n</ul>', 0, 0, 2, 0, '2022-12-12', '2022-12-12', 0),
-(12, 'Adobe After Effect', 2, '2', '', 'After Effect là gì? Đây là một phần mềm đồ hoạ được tạo ra với mục đích xử lý hiệu ứng video, và làm chuyển động số. After Effect còn được gọi là AE hay phần mềm đồ hoạ động.', '<ul>\r\n<li>Có thể khi nói đến dựng phim bạn sẽ nghĩ ngay đến camtasia, hay premiere. Bạn đọc những dòng trên thì bạn thấy AE cũng tương tự. Khoan đã AE không như bạn nghĩ, Cả After Effect và Premiere đều do Adobe nghiên cứu và phát triển. Không lý nào chúng lại giống nhau. Thật vậy AE làm được rất nhiều điều mà các phần mềm khác không thể làm được</li>\r\n<li>After Effect trên khả năng tạo hiệu ứng hình ảnh xuất sắc, nhanh và vô cùng mượt. Khả năng sử lý thành phần 3D, cho phép kiểm soát chiều sâu, bóng, phản xạ của nhiều đối tượng trong video. AE cho phép tạo Tạo đường viền chuẩn, Dò tia, ép text và khối. Khả năng tương thích và xử lý chuyển động cho đối tượng được tạo bởi Illustrator tuyệt vời.</li>\r\n</ul>', 0, 0, 2, 0, '2022-12-12', '2022-12-12', 0),
-(13, 'Figma', 2, '2', '', 'Khóa học Figma từ căn bản đến thực chiến', '<ul>\r\n<li>Thuần thục cách sử dụng công cụ; hiểu rõ ngôn ngữ thiết kế; thấu hiểu tư duy bài bản</li>\r\n<li>Tự tạo ra những thiết kế Website/App cực chất, sẵn sàng để trở thành một Designer ở các Agency chuyên xây dựng website.</li>\r\n<li>Tự tin thực hiện hoá ý tưởng của mình trên các thiết kế</li>\r\n<li>Tự tin thực hiện hoá ý tưởng của mình trên các thiết kế\r\n</li>\r\n<li>Đặc biệt, quà tặng Ebook Figma Design Notebook được gửi tặng ngay sau khóa học, được biên soạn với kiến thức bổ sung, được hệ thống lại và cập nhật từng đợt, đảm bảo chưa bao giờ bị lỗi nhịp với thời đạ</li>\r\n</ul>', 0, 0, 2, 0, '2022-12-12', '2022-12-12', 0),
-(14, 'Options Trading Basics (3-Course Bundle)', 4, '1', '', 'A bundle combines 1) Intro to Call and Put Options 2) Time decay, Implied Volatility, Greeks 3) Call and Puts Live trades', '<ul>\r\n<li>Master the basic nuts and bolts of Options trading</li>\r\n<li>Understand the theory and mathematics behind Options</li>\r\n<li>What are the factors that affect Options pricing</li>\r\n<li>How are Options different than Stocks</li>\r\n<li>How you can use Options even if you invest in Stocks and create superior Combo strategies</li>\r\n<li>Anyone interested in learning about Options trading</li>\r\n<li>Live trades using Thinkorswim platform</li>\r\n<li>Art of adjusting Single Options strategies</li>\r\n</ul>', 999000, 0, 2, 0, '2022-12-14', '2022-12-14', 0),
-(15, 'Cryptocurrency Fundamentals: Buy, Sell, Trade Cryp', 4, '2', '', 'Quickly learn how to use, buy, sell and trade Cryptocurrency in this top rated video course and accompanying PDF Guide.', '<ul>\r\n<li> Have a strong understanding of what cryptocurrency is and how different types of cryptocurrency work.\r\n</li>\r\n<li>\r\nHave a solid, working knowledge in order to discuss and use cryptocurrency safely and effectively in everyday situations.\r\n</li>\r\n</ul>', 899000, 0, 2, 0, '2022-12-14', '2022-12-14', 0);
+INSERT INTO `courses` (`ID`, `Name`, `IDCategory`, `Topic`, `Image`, `TinyDesc`, `FullDesc`, `CourseFee`, `IDDiscount`, `IDInstructor`, `IsCompleted`, `CreatedTime`, `ModifiedTime`, `Viewer`, `disable`) VALUES
+(1, 'HTML CSS from Zero to Hero', 1, '1', '', 'Learn modern HTML5, CSS3 and web design by building a stunning website for your portfolio! Includes flexbox and CSS Grid', '<ul>\r\n<li>Become a modern and confident HTML and CSS developer, no prior knowledge needed!</li>\r\n<li>Design and build a stunning real-world project for your portfolio from scratch</li>\r\n<li>Modern, semantic and accessible HTML5</li>\r\n<li>Modern CSS (previous CSS3), including flexbox and CSS Grid for layout</li>\r\n<li>Important CSS concepts such as the box model, positioning schemes, inheritance, solving selector conflicts, etc.</li>\r\n<li>A web design framework with easy-to-use rules and guidelines to design eye-catching websites</li>\r\n<li>How to plan, sketch, design, build, test, and optimize a professional website</li>\r\n<li>How to make websites work on every possible mobile device (responsive design)</li>\r\n<li>How to use common components and layout patterns for professional website design and development</li>\r\n<li>Developer skills such as reading documentation, debugging, and using professional tools</li>\r\n<li>How to find and use free design assets such as images, fonts, and icons</li>\r\n<li>Practice your skills with 10+ challenges (solutions included)</li>\r\n</ul>', 500000, 1, 2, 1, '2022-12-10', '2022-12-26', 50, 0),
+(2, 'React Native - The Practical Guide [2023]', 1, '1', '', 'Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux', '<ul>\r\n<li>Learn how to use ReactJS to build real native mobile apps for iOS and Android</li>\r\n<li>Develop cross-platform (iOS and Android) mobile apps without knowing Swift, ObjectiveC or Java/ Android</li>\r\n<li>Explore React Native basics and advanced features!</li>\r\n<li>Learn how to use key mobile app features like Google maps or the device camera</li>\r\n<li>Create real-world native apps using React Native</li>\r\n<li>Make truly reusable components that look great</li>\r\n<li>Understand the terminology and concepts of Redux</li>\r\n<li>Prototype and deploy your own applications to the Apple and Google Play Stores</li>\r\n<li>Get up to speed with React design principles and methodologies</li>\r\n<li>Discover mobile design patterns used by experienced engineers</li>\r\n</ul>', 500000, 4, 2, 0, '2022-12-10', '2022-12-10', 0, 0),
+(3, 'Complete C# Unity Game Developer 2D', 1, '2', '', 'Learn Unity in C# & Code Your First Five 2D Video Games for Web, Mac & PC. The Tutorials Cover Tilemap', '<ul>\r\n<li>Learn C#, a powerful modern language, from scratch. No prior programming experience is necessary.</li>\r\n<li>Become excellent at using the Unity game engine.</li>\r\n<li>Build a solid foundation for game design and game development that will help you build your own games.</li>\r\n<li>Learn how object oriented programming works in practice.</li>\r\n<li>Create playable game projects - good for your portfolio, or just for your own sense of achievement.</li>\r\n<li>Transfer your knowledge from this course to .NET, other languages, and more.</li>\r\n<li>Develop highly transferable coding problem solving skills.</li>\r\n<li>Be part of an amazing and supportive community of people similar to you.</li>\r\n</ul>', 1280000, 7, 2, 0, '2022-12-10', '2022-12-10', 0, 0),
+(4, 'Visual Effects for Games in Unity - Beginner To In', 1, '2', '', 'By the end of this course you will have started your own portfolio as a Triple-A Visual Effects artist for Games.', '<ul>\r\n<li>Learn how to create effects for games with Unity.</li>\r\n<li>Fundamental concepts about Visual Effects.</li>\r\n<li>Creating Textures, Meshes and Shaders for Game VFX.</li>\r\n<li>How to structure AAA Visual Effects.</li>\r\n</ul>', 800000, 6, 2, 0, '2022-12-10', '2022-12-10', 0, 0),
+(5, 'Master Microsoft Word Beginner to Advanced', 3, '1', '', 'Master the most popular Word Processing tool, Microsoft Word. Microsoft Word 2010, Word 2013, Word 2016, Word 2019', '<ul>\r\n<li>You will learn how to take full advantage of Microsoft Word</li>\r\n<li>Begin with the basics of creating Microsoft Word documents</li>\r\n<li>Various techniques to create dynamic layouts</li>\r\n<li>Preparing documents for printing and exporting</li>\r\n<li>Format documents effectively using Microsoft Word Styles</li>\r\n<li>Control page formatting and flow with sections and page breaks</li>\r\n<li>Create and Manage Table Layouts</li>\r\n<li>Work with Tab Stops to Align Content Properly</li>\r\n<li>Perform Mail Merges to create Mailing Labels and Form Letters</li>\r\n<li>Build and Deliver Word Forms</li>\r\n<li>Manage Templates</li>\r\n<li>Track and Accept/Reject Changes to a Document</li>\r\n</ul>', 0, 4, 2, 0, '2022-12-10', '2022-12-10', 0, 0),
+(6, 'Unreal Engine 5 C++ The Ultimate Game Developer Co', 1, '2', '', 'Learn Unreal Engine 5 C++ Programming by Creating an Action-RPG Style Open World Game!', '<h2>What you\'ll learn</h2>\r\n<ul>\r\n    <li>How to code games in Unreal Engine 5</li>\r\n    <li>An RPG action game with a third-person character</li>\r\n    <li>Combat with swords and other melee weapons</li>\r\n    <li>Creation of enemies that attack the player</li>\r\n    <li>Health bars and player stats</li>\r\n    <li>Unreal Engine 5\'s Open World system</li>\r\n    <li>Level design and creation of realistic scenes with Quixel Megascans</li>\r\n    <li>Motion Warping, Unreal Engine 5\'s new system for customized root motion animations</li>\r\n    <li>Particle effects like blood splatter and weapon trails</li>\r\n    <li>Unreal Engine 5\'s new MetaSounds system and high-quality sounds in game</li>\r\n    <li>Best coding practices for coding games in Unreal Engine 5</li>\r\n    <li>Use of data structures and algorithms for games</li>\r\n    <li>Design patterns used in Unreal Engine</li>\r\n    <li>Creation of multiple types of enemies, from humanoids wielding weapons to monsters and other creatures</li>\r\n    <li>Importing entire dungeon levels into our Open World map with Packed Level Instances</li>\r\n</ul>\r\n', 1699900, 0, 2, 0, '2022-12-11', '2022-12-11', 0, 0),
+(7, 'Java Swing (GUI) Programming: From Beginner to Exp', 1, '2', '', 'Learn how to create desktop and Internet GUI Java programs and take your Java programming to the next level.', '<ul>\r\n<li>Learn how to write GUI (graphical user interface) applications in Java</li>\r\n<li>Discover how to create database applications</li>\r\n<li>Understand the Java Swing framework</li>\r\n</ul>', 499000, 4, 2, 0, '2022-12-11', '2022-12-11', 0, 0),
+(8, 'The Complete 2020 Fullstack Web Developer Course', 1, '1', '', 'Learn HTML5, CSS3, JavaScript, Python, Wagtail CMS, PHP & MySQL from scratch!', '<ul>\r\n<li>Updated for 2020</li>\r\n<li>Learn HTML5, CSS3, Vanilla JS (ES6+), Python, Wagtail CMS, PHP and MySQL all from scratch</li>\r\n<li>Learn Python from beginner to advanced</li>\r\n<li>Learn JavaScript (ES6+)</li>\r\n<li>Wagtail Pythons top Content Management System (Like WordPress, but better)</li>\r\n<li>Get a free CSS3 eBook</li>\r\n<li>Lots of projects, big and small!</li>\r\n<li>Learn Git and Github</li>\r\n<li>Create a portfolio page and launch it</li>\r\n<li>Learn JavaScript from scratch</li>\r\n<li>Learn PHP for server code execution</li>\r\n<li>Learn MySQL for saving data (databases)</li>\r\n<li>Build a Login/Registration/Members-only website, just like Facebook</li>\r\n<li>How to get a job as a web developer</li>\r\n<li>Learn the LAMP Stack: Linux, Apache, PHP and MySQL</li>\r\n</ul>', 2199000, 4, 2, 0, '2022-12-11', '2022-12-11', 0, 0),
+(9, 'Adobe Photoshop', 2, '2', '', 'Xử lý ảnh trong photoshop', '<ul class=\"i8Z77e\">\r\n<li class=\"TrT0Xe\">S&aacute;ng tạo kh&ocirc;ng giới hạn. ...</li>\r\n<li class=\"TrT0Xe\">Bạn c&oacute; thể s&aacute;ng tạo theo c&aacute;ch của m&igrave;nh. ...</li>\r\n<li class=\"TrT0Xe\">Bạn c&oacute; thể phục chế lại <strong>những</strong> bức h&igrave;nh cũ kỹ ...</li>\r\n<li class=\"TrT0Xe\">Biến đổi m&agrave;u (blend, retouch m&agrave;u) bức ảnh. ...</li>\r\n<li class=\"TrT0Xe\">Sửa lỗi h&igrave;nh ảnh. ...</li>\r\n<li class=\"TrT0Xe\">S&aacute;ng tạo t&aacute;c phẩm nghệ thuật từ chữ ...</li>\r\n<li class=\"TrT0Xe\">Thiết kế &aacute;o, đồ trang sức, lưu niệm để b&aacute;n. ...</li>\r\n<li class=\"TrT0Xe\">Thiết kế quảng c&aacute;o.</li>\r\n</ul>', 500000, 1, 2, 0, '2022-12-12', '2022-12-12', 0, 0),
+(10, 'Adobe Illustrator', 2, '2', '', 'Tạo mẫu in ấn với Adobe Illustrator', '<ul>\r\n<li>Thiết kế logo, name card, bộ ấn phẩm văn ph&ograve;ng</li>\r\n<li>Thiết kế lịch thiệp</li>\r\n<li>Thiết kế catalogue, brochure, nh&atilde;n b&igrave;a CD</li>\r\n<li>Thiết kế Poster, standee</li>\r\n<li>Thiết kế bao b&igrave;, t&uacute;i x&aacute;ch</li>\r\n<li>Thiết kế cho c&aacute;c quảng c&aacute;o thương mại điện tử&hellip;</li>\r\n<li>Ho&agrave;n tất file thiết kế&hellip;</li>\r\n</ul>', 0, 4, 2, 0, '2022-12-12', '2022-12-12', 0, 0),
+(11, 'Adobe Indesign', 2, '2', '', 'Xuất bản – In ấn Adobe Indesign', '<ul>\r\n<li>Bạn có thể dàn trang sách báo. Bạn có thể làm sách báo, ấn phẩm điện tử.</li>\r\n<li>Bạn cũng có thể làm được những sản phẩm mà thường làm bằng illustrator. Ví dụ, poster, tờ gấp, baner, thực đơn, và sử dụng vẽ minh họa bình thường như illustrator.</li>\r\n<li>Sau khi học xong về Indesign bạn hoàn toàn có thể làm tại các xưởng in, tòa soạn báo, chế bản in…. Tất nhiên mức thu nhập nếu bạn làm tốt cũng không phải là nhỏ.</li>\r\n</ul>', 0, 0, 2, 0, '2022-12-12', '2022-12-12', 0, 0),
+(12, 'Adobe After Effect', 2, '2', '', 'After Effect là gì? Đây là một phần mềm đồ hoạ được tạo ra với mục đích xử lý hiệu ứng video, và làm chuyển động số. After Effect còn được gọi là AE hay phần mềm đồ hoạ động.', '<ul>\r\n<li>Có thể khi nói đến dựng phim bạn sẽ nghĩ ngay đến camtasia, hay premiere. Bạn đọc những dòng trên thì bạn thấy AE cũng tương tự. Khoan đã AE không như bạn nghĩ, Cả After Effect và Premiere đều do Adobe nghiên cứu và phát triển. Không lý nào chúng lại giống nhau. Thật vậy AE làm được rất nhiều điều mà các phần mềm khác không thể làm được</li>\r\n<li>After Effect trên khả năng tạo hiệu ứng hình ảnh xuất sắc, nhanh và vô cùng mượt. Khả năng sử lý thành phần 3D, cho phép kiểm soát chiều sâu, bóng, phản xạ của nhiều đối tượng trong video. AE cho phép tạo Tạo đường viền chuẩn, Dò tia, ép text và khối. Khả năng tương thích và xử lý chuyển động cho đối tượng được tạo bởi Illustrator tuyệt vời.</li>\r\n</ul>', 0, 0, 2, 0, '2022-12-12', '2022-12-12', 0, 0),
+(13, 'Figma', 2, '2', '', 'Khóa học Figma từ căn bản đến thực chiến', '<ul>\r\n<li>Thuần thục cách sử dụng công cụ; hiểu rõ ngôn ngữ thiết kế; thấu hiểu tư duy bài bản</li>\r\n<li>Tự tạo ra những thiết kế Website/App cực chất, sẵn sàng để trở thành một Designer ở các Agency chuyên xây dựng website.</li>\r\n<li>Tự tin thực hiện hoá ý tưởng của mình trên các thiết kế</li>\r\n<li>Tự tin thực hiện hoá ý tưởng của mình trên các thiết kế\r\n</li>\r\n<li>Đặc biệt, quà tặng Ebook Figma Design Notebook được gửi tặng ngay sau khóa học, được biên soạn với kiến thức bổ sung, được hệ thống lại và cập nhật từng đợt, đảm bảo chưa bao giờ bị lỗi nhịp với thời đạ</li>\r\n</ul>', 0, 0, 2, 0, '2022-12-12', '2022-12-12', 0, 0),
+(14, 'Options Trading Basics (3-Course Bundle)', 4, '1', '', 'A bundle combines 1) Intro to Call and Put Options 2) Time decay, Implied Volatility, Greeks 3) Call and Puts Live trades', '<ul>\r\n<li>Master the basic nuts and bolts of Options trading</li>\r\n<li>Understand the theory and mathematics behind Options</li>\r\n<li>What are the factors that affect Options pricing</li>\r\n<li>How are Options different than Stocks</li>\r\n<li>How you can use Options even if you invest in Stocks and create superior Combo strategies</li>\r\n<li>Anyone interested in learning about Options trading</li>\r\n<li>Live trades using Thinkorswim platform</li>\r\n<li>Art of adjusting Single Options strategies</li>\r\n</ul>', 999000, 0, 2, 0, '2022-12-14', '2022-12-14', 0, 0),
+(15, 'Cryptocurrency Fundamentals: Buy, Sell, Trade Cryp', 4, '2', '', 'Quickly learn how to use, buy, sell and trade Cryptocurrency in this top rated video course and accompanying PDF Guide.', '<ul>\r\n<li> Have a strong understanding of what cryptocurrency is and how different types of cryptocurrency work.\r\n</li>\r\n<li>\r\nHave a solid, working knowledge in order to discuss and use cryptocurrency safely and effectively in everyday situations.\r\n</li>\r\n</ul>', 899000, 0, 2, 0, '2022-12-14', '2022-12-14', 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `discount`
+-- Table structure for table `discount`
 --
 
 CREATE TABLE `discount` (
@@ -245,7 +246,7 @@ CREATE TABLE `discount` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `discount`
+-- Dumping data for table `discount`
 --
 
 INSERT INTO `discount` (`ID`, `PercentDiscount`) VALUES
@@ -260,28 +261,29 @@ INSERT INTO `discount` (`ID`, `PercentDiscount`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `participate`
+-- Table structure for table `participate`
 --
 
 CREATE TABLE `participate` (
   `IDCourse` int(11) NOT NULL,
   `IDStudent` int(11) NOT NULL,
   `Feedback` text NOT NULL,
-  `Rating` double NOT NULL
+  `Rating` double NOT NULL,
+  `finish` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `participate`
+-- Dumping data for table `participate`
 --
 
-INSERT INTO `participate` (`IDCourse`, `IDStudent`, `Feedback`, `Rating`) VALUES
-(1, 1, 'Bài giảng rất hay', 2),
-(1, 28, 'Quá tệ', 2.3);
+INSERT INTO `participate` (`IDCourse`, `IDStudent`, `Feedback`, `Rating`, `finish`) VALUES
+(1, 1, 'Bài giảng rất hay', 2, 0),
+(1, 28, 'Quá tệ', 2.3, 0);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `topic`
+-- Table structure for table `topic`
 --
 
 CREATE TABLE `topic` (
@@ -291,7 +293,7 @@ CREATE TABLE `topic` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `topic`
+-- Dumping data for table `topic`
 --
 
 INSERT INTO `topic` (`IDCate`, `IDTopic`, `Name`) VALUES
@@ -307,7 +309,7 @@ INSERT INTO `topic` (`IDCate`, `IDTopic`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -323,7 +325,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='r';
 
 --
--- Đang đổ dữ liệu cho bảng `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`IDUser`, `FullName`, `Email`, `Password`, `Bio`, `CurrentJob`, `Role`, `OTP`, `IDSocial`) VALUES
@@ -332,7 +334,7 @@ INSERT INTO `user` (`IDUser`, `FullName`, `Email`, `Password`, `Bio`, `CurrentJo
 (4, 'Nguyễn Như Phước', 'phuocnhu@gmail.com', '', '', '', 2, 0, ''),
 (20, 'Dương', 'duong2162002@gmail.com', '$2b$05$BV2FwWafCgH0l6H2.XL4..xu7SipKthxRs.fiIPTpQwJ3FiY7KVtG', '', '', 2, 0, ''),
 (21, 'Phước', 'nguyennhuphuoc2002@gmail.com', '$2b$05$ZtDs1mJgJrr0wAYQpBDg3eGYJUU8bgfJ/bG.Gxdf4C5JMxO010.1C', '', '', 2, 0, ''),
-(23, 'Lê Đăng Khoa', 'ledangkhoa1142002@gmail.com', '', '', '', 2, 0, '3592040987690146'),
+(23, 'Lê Đăng Khoa', 'ledangkhoa1142002@gmail.com', '$2b$05$CxdANM829gs67aE6ALCLlu/CgI2TiJldJYOSGc9RzQJn99hdPExwS', '', '', 2, 0, ''),
 (24, 'Khoa Lê Đăng', 'ldkhoa20@clc.fitus.edu.vn', '', '', '', 2, 0, '107425266660814136385'),
 (25, 'Lê Khoa', 'ldkhoa.11402@gmail.com', '$2b$05$q4CiwkF1ubEnVeZLSB.sW.HBbkVD/p90USuPRyexWQiajy6df.6bS', '', '', 2, 0, ''),
 (26, 'Nguyệt Quế', 'quequedang2002@gmail.com', '$2b$05$RwcN5rSMYhevHBsEM.6DU.WA.7p6AUWyBC7FqNbuEr9e7pHiShDQG', '', '', 2, 0, ''),
@@ -342,7 +344,7 @@ INSERT INTO `user` (`IDUser`, `FullName`, `Email`, `Password`, `Bio`, `CurrentJo
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `watched`
+-- Table structure for table `watched`
 --
 
 CREATE TABLE `watched` (
@@ -353,7 +355,7 @@ CREATE TABLE `watched` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `watched`
+-- Dumping data for table `watched`
 --
 
 INSERT INTO `watched` (`IDStudent`, `IDCourse`, `IDChapter`, `No`) VALUES
@@ -365,7 +367,7 @@ INSERT INTO `watched` (`IDStudent`, `IDCourse`, `IDChapter`, `No`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `watchlist`
+-- Table structure for table `watchlist`
 --
 
 CREATE TABLE `watchlist` (
@@ -374,99 +376,99 @@ CREATE TABLE `watchlist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `category`
+-- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`IDCate`);
 ALTER TABLE `category` ADD FULLTEXT KEY `Name` (`Name`);
 
 --
--- Chỉ mục cho bảng `chapter`
+-- Indexes for table `chapter`
 --
 ALTER TABLE `chapter`
   ADD PRIMARY KEY (`IDCourse`,`IDChapter`);
 
 --
--- Chỉ mục cho bảng `circulativevideo`
+-- Indexes for table `circulativevideo`
 --
 ALTER TABLE `circulativevideo`
   ADD PRIMARY KEY (`IDCourse`,`IDChapter`,`No`);
 
 --
--- Chỉ mục cho bảng `courses`
+-- Indexes for table `courses`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`ID`);
 ALTER TABLE `courses` ADD FULLTEXT KEY `Name` (`Name`,`TinyDesc`,`FullDesc`);
 
 --
--- Chỉ mục cho bảng `discount`
+-- Indexes for table `discount`
 --
 ALTER TABLE `discount`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Chỉ mục cho bảng `participate`
+-- Indexes for table `participate`
 --
 ALTER TABLE `participate`
   ADD PRIMARY KEY (`IDCourse`,`IDStudent`);
 
 --
--- Chỉ mục cho bảng `topic`
+-- Indexes for table `topic`
 --
 ALTER TABLE `topic`
   ADD PRIMARY KEY (`IDCate`,`IDTopic`);
 ALTER TABLE `topic` ADD FULLTEXT KEY `Name` (`Name`);
 
 --
--- Chỉ mục cho bảng `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`IDUser`);
 
 --
--- Chỉ mục cho bảng `watched`
+-- Indexes for table `watched`
 --
 ALTER TABLE `watched`
   ADD PRIMARY KEY (`IDStudent`,`IDCourse`,`IDChapter`,`No`);
 
 --
--- Chỉ mục cho bảng `watchlist`
+-- Indexes for table `watchlist`
 --
 ALTER TABLE `watchlist`
   ADD PRIMARY KEY (`IDStudent`,`IDCourse`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `category`
+-- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `IDCate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `courses`
+-- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
--- AUTO_INCREMENT cho bảng `discount`
+-- AUTO_INCREMENT for table `discount`
 --
 ALTER TABLE `discount`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT cho bảng `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `IDUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `IDUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

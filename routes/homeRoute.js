@@ -23,8 +23,7 @@ Router.get('/',async (req,res, next)=>{
         const info = await fn.getInfoCourse(idListNewest[i].ID);
         listNewest.push(info);
     }
-
-    const topCateList = await categoryServices.getMostTopicLearned(4);
+    const topCateList = await categoryServices.getMostTopicLearned(5);
     res.render('home',{
         popular,topViewer,listNewest,topCateList
     });

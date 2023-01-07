@@ -81,5 +81,10 @@ export default{
     changeName: async(IDUser, newName)=>{
         const result = await db('user').where({IDUser}).update({FullName: newName});
         return result[0]
+    },
+    isNameExists: async(IDUser, name) => {
+        const curName = await db.raw(`Select FullName From user where IDUser LIKE '${IDUser}'`);
+        if(curName[0][0].FullName.localeCompare(name) === 0) return true;
+        return false;            
     }
 }

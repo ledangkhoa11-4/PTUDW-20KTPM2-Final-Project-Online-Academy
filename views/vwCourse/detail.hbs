@@ -24,24 +24,21 @@
       <h1 class="card-title">{{this.course.Name}}</h1>
       <p class="card-text" style="font-size:x-large;">{{this.course.TinyDesc}}</p>
 
-      <p class="card-text" style="font-size:medium;">Instructor:
-        {{this.course.Instructor}}</p>
-
       <p class="card-text" style="font-size:medium;">Total Lecture:
         {{this.course.TotalLecture}}
         lectures
-        <br />
+      </p>
+      <p class="card-text" style="font-size:medium;">
         Total Length:
-        {{this.course.TotalLength}}
-        hours
+        {{convertMinuteToHour this.course.TotalLength}}
       </p>
 
       <p class="card-text" style="font-size:medium;">Average rating:
         {{this.course.AvgRating}}/5</p>
-      <p class="card-text" style="font-size:medium;">Number of rating: 500k+</p>
-      <p class="card-text" style="font-size:medium;">Number of student: 1m+</p>
+      <p class="card-text" style="font-size:medium;">Number of rating: {{this.course.CountRating}}</p>
+      <p class="card-text" style="font-size:medium;">Number of student: {{this.numOfStudent}}</p>
       <p class="card-text"><small class="text-muted">Last modify:
-          {{this.course.ModifiedTime}}mm/dd/yyyy</small></p>
+          {{this.course.ModifiedTime}}</small></p>
 
     </div>
 
@@ -174,7 +171,9 @@
       </div>
     </div>
     <div class="col-4">
-      {{#ifeq auth.Role 2}}
+      {{#ifeq auth.Role 0}}
+
+        {{else}}
         <div class="buy-course">
             <div class="card" style="width: 18rem;">
               <img src="/public/images/courses/{{course.ID}}.jpg" class="card-img-top" alt="...">
@@ -219,7 +218,7 @@
               </div>
             </div>
           </div>
-      {{else}}
+      
       
     {{/ifeq}}
      

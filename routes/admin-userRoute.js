@@ -181,7 +181,6 @@ for(let i=0;i<instructor.length;i++){
         instructor[i].active=true;
     }
 }
-console.log(instructor);
 let topics = [];
   for(let i = 0; i< category.length;i++){
     const topic = await categoryServices.getTopicByCat(category[i].IDCate);
@@ -219,7 +218,6 @@ Router.post('/course/disabled', async(req,res)=>{
     const ID=req.query.id
     if(status==='disable'){
         const ret=await coursesService.disabledCourse(ID,1);
-        console.log("cc");
     }
     else{
         const ret=await coursesService.disabledCourse(ID,0)

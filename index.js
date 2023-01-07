@@ -81,7 +81,7 @@ app.engine('hbs', engine({
             return text === "des"
         },
         formatDate(date){
-          return moment(date).format('LLLL');
+          return moment(date).format('LL');
         },
         ifeq: function(a, b, options){
           if (a === b) {

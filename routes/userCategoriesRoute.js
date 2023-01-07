@@ -16,7 +16,7 @@ Router.use( async(req, res, next)=>{
   next();
 })
 Router.get("/", async (req, res, next) => {
-  const id = req.query.catID;
+  const id = req.query.catID || 1;
   const page = req.query.p || 1;
   const limit = 2;
   const offset = (page - 1) * limit;

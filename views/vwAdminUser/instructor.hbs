@@ -38,7 +38,7 @@
       <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Created Time</th>
-            <th scope="col">Disabled</th>
+            <th scope="col">Status</th>
     </tr>
   </thead>
   <tbody>
@@ -60,9 +60,10 @@
               <td scope="col" class="d-flex">
                 
                 {{#if disable}}
-                  <button type="submit" disabled class="btn btn-outline-success justify-content-center "> Enable</button>
+                <button type="submit" disabled class="btn btn-outline-danger justify-content-center"> Disable</button>
+                  
                 {{else}}
-                 <button type="submit" disabled class="btn btn-outline-danger justify-content-center"> Disable</button>
+                 <button type="submit" disabled class="btn btn-outline-success justify-content-center "> Enable</button>
               {{/if}}</td>
 
                

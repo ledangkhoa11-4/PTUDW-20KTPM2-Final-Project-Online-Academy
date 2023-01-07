@@ -138,9 +138,16 @@ Router.post('/check-valid-pass', async (req, res)=>{
     let isValid = await bcrypt.compare(password, user.Password);
     res.json({isValid});
   });
-  Router.post('/check-exists-email', async (req, res)=>{
-    const email = req.body.email;
-    let exists = await userService.isEmailExists(email); 
-    res.json({exists});
-  });
+Router.post('/check-exists-email', async (req, res)=>{
+  const email = req.body.email;
+  let exists = await userService.isEmailExists(email); 
+  res.json({exists});
+});
+Router.post('/check-current-name', async (req, res) =>{
+  const name = req.body.name;
+  console.log(name);
+  let exists = await userService.isNameExists(req.body.id, name);
+  console.log(exists);
+  res.json({exists});
+})
 export default Router;

@@ -29,7 +29,7 @@
 
 
     <div class="collapse navbar-collapse bg-light ml-4" id="navbarSupportedContent">
-        <div class="multilevel-dropdown ml-5">
+        <div class="multilevel-dropdown ml-3">
             <button type="button" class="btn" style="border: 1px solid #ccc; border-radius: 12px">
                 <i class="bi bi-list-nested mr-2"></i>
                 <b> Categories List</b>
@@ -93,7 +93,7 @@
       <div class="menu">
         <h3>{{auth.FullName}}<br /><span>Role: {{roleToString auth.Role}}</span> <br> <span>{{auth.Email}}</span></h3>
         {{#ifeq auth.Role 2}}
-        <ul>
+        <ul style="padding-left: 10px;">
           <li>
             <a href="/user/my-learning"><i class="bi bi-list-task mr-3"></i>My learning</a>
           </li>
@@ -109,7 +109,7 @@
         </ul>
         {{else}}
             {{#ifeq auth.Role 1}}
-                <ul>
+                <ul style="padding-left: 10px;">
                 <li>
                     <a href="/instructor/profile"> <i class="fa-solid fa-id-card-clip mr-3"></i>My profile</a>
                 </li>
@@ -127,7 +127,19 @@
                 </li>
                 </ul>
                 {{else}}
-                <ul>
+                <ul style="padding-left: 10px;">
+                    <li>
+                        <a href="/admin/categories"><img class="mr-3" width="20px" src="https://cdn-icons-png.flaticon.com/512/2857/2857293.png" alt="" srcset=""> Categories List</a>
+                    </li>
+                    <li>
+                        <a href="/admin/courses"><i class="fa-solid fa-lines-leaning mr-3"></i> Courses List</a>
+                    </li>
+                    <li>
+                        <a href="/admin/user?role=1"><i class="fa-solid fa-person-chalkboard mr-3"></i>Instructors List</a>
+                    </li>
+                     <li>
+                        <a href="/admin/user?role=2"><i class="fa-solid fa-chalkboard-user mr-3"></i>Students List</a>
+                    </li>
                     <li>
                          <a href="/auth/logout"><i class="fa-solid fa-right-from-bracket mr-3"></i>Logout</a>
                     </li>

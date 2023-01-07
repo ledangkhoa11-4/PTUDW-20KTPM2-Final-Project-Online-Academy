@@ -1,5 +1,21 @@
 <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css">
-<div class="container-fluid">
+<style>
+	.search{
+		width: 320px;
+	}
+	input[type='search']{
+		    padding-left: 18px;
+    border-radius: 20px;
+	}
+	.disabled{
+		   background-color: rgba(236, 240, 241, 0.5);
+   pointer-events: none;
+	}
+	.disabled *{
+		opacity: 0.8;
+	}
+</style>
+<div class="container-fluid" style="margin-bottom: 100px;">
 
 <table id="table" 
 			 data-toggle="table"
@@ -12,19 +28,29 @@
 			<th data-sortable="true">Tiny description</th>
 			<th data-sortable="true">Course fee</th>
 			<th data-sortable="true">Is completed</th>
-			<th data-sortable="true">Action</th>
+			<th >Action</th>
             
 		</tr>
 	</thead>
 	<tbody>
 		{{#each listCourse as |course|}}
-            <tr>
-			<td>{{course.Name}}</td>
+		{{#if course.disable}}
+		<tr class="disabled" title="This course has been banned by Administrator">
+			<td style="width: 30%" title="Direct to course"> {{course.Name}} </td>
+			<td colspan="4" style="text-align: center; font-weight: bold">This course has been banned by Administrator</td>
+			
+		</tr>
+		{{else}}
+		<tr>
+			<td style="width: 30%" title="Direct to course"><a style="color: #0309bd;" href="/course?id={{course.ID}}">{{course.Name}}</a> </td>
 			<td >{{course.TinyDesc}}</td>
 			<td>{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</td>
 			<td>{{#if course.IsCompleted}}Completed{{else}}Not Completed{{/if}}</td>
             <th style="text-align: center;"><a href="/instructor/edit/{{course.ID}}" type="button"><i class="fa-solid fa-file-pen"></i></a></th>
 		</tr>
+		{{/if}}
+
+        
         {{/each}}
 		
 	</tbody>

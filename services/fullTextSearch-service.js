@@ -5,7 +5,7 @@ export default{
     searchByName: async(key, order1, order2, limit, offset)=>{
         const list = await db.raw(`SELECT c.ID, IFNULL(dis.PercentDiscount, 0) as actualDiscount
         FROM courses c LEFT JOIN participate p on c.ID = p.IDCourse LEFT JOIN discount dis on c.IDDiscount = dis.ID
-        WHERE MATCH (c.Name, c.FullDesc, c.TinyDesc) AGAINST ('${key}' IN BOOLEAN MODE)
+        WHERE (MATCH (c.Name, c.FullDesc, c.TinyDesc) AGAINST ('${key}' IN BOOLEAN MODE)) and c.disable = 0
         GROUP BY c.ID
         ORDER BY ${order1}, ${order2}
         LIMIT ${limit} OFFSET ${offset}`)
@@ -16,7 +16,7 @@ export default{
     searchByCat: async(key, order1, order2, limit, offset)=>{
         const list = await db.raw(`SELECT c.ID,  IFNULL(dis.PercentDiscount, 0) as actualDiscount
         FROM courses c LEFT JOIN participate p on c.ID = p.IDCourse LEFT JOIN category cat on cat.IDCate = c.IDCategory LEFT JOIN topic t on c.Topic = t.IDTopic AND t.IDCate = cat.IDCate LEFT JOIN discount dis on c.IDDiscount = dis.ID
-        WHERE MATCH (cat.Name) AGAINST ('${key}' IN BOOLEAN MODE) OR MATCH (t.Name) AGAINST ('${key}' IN BOOLEAN MODE)
+        WHERE (MATCH (cat.Name) AGAINST ('${key}' IN BOOLEAN MODE) OR MATCH (t.Name) AGAINST ('${key}' IN BOOLEAN MODE)) and c.disable = 0
         GROUP BY c.ID
         ORDER BY ${order1}, ${order2}
         LIMIT ${limit} OFFSET ${offset}`)
@@ -27,9 +27,10 @@ export default{
     searchBothNameAndCat: async(key, order1, order2, limit, offset)=>{
         const list = await db.raw(`SELECT c.ID, IFNULL(dis.PercentDiscount, 0) as actualDiscount
         FROM courses c LEFT JOIN participate p on c.ID = p.IDCourse LEFT JOIN category cat on cat.IDCate = c.IDCategory LEFT JOIN topic t on c.Topic = t.IDTopic AND t.IDCate = cat.IDCate LEFT JOIN discount dis on c.IDDiscount = dis.ID
-        WHERE MATCH (c.Name, c.FullDesc, c.TinyDesc) AGAINST ('${key}' IN BOOLEAN MODE)
+        WHERE (MATCH (c.Name, c.FullDesc, c.TinyDesc) AGAINST ('${key}' IN BOOLEAN MODE) 
         OR MATCH (cat.Name) AGAINST ('${key}' IN BOOLEAN MODE)
-        OR MATCH (t.Name) AGAINST ('${key}' IN BOOLEAN MODE)
+        OR MATCH (t.Name) AGAINST ('${key}' IN BOOLEAN MODE))
+        AND c.disable = 0
         GROUP BY c.ID
         ORDER BY ${order1}, ${order2}
         LIMIT ${limit} OFFSET ${offset}`)
@@ -40,7 +41,7 @@ export default{
     countSearchByName: async(key)=>{
         const list = await db.raw(`Select Count(*) as cnt From(SELECT c.ID
         FROM courses c LEFT JOIN participate p on c.ID = p.IDCourse LEFT JOIN discount dis on c.IDDiscount = dis.ID
-        WHERE MATCH (c.Name, c.FullDesc, c.TinyDesc) AGAINST ('${key}' IN BOOLEAN MODE)
+        WHERE (MATCH (c.Name, c.FullDesc, c.TinyDesc) AGAINST ('${key}' IN BOOLEAN MODE)) and c.disable = 0
         GROUP BY c.ID) as tb`)
         if(list)
             return list[0][0];
@@ -49,7 +50,7 @@ export default{
     countSearchByCat: async(key)=>{
         const list = await db.raw(`Select COUNT(*) as cnt From(SELECT c.ID
         FROM courses c LEFT JOIN participate p on c.ID = p.IDCourse LEFT JOIN category cat on cat.IDCate = c.IDCategory LEFT JOIN topic t on c.Topic = t.IDTopic AND t.IDCate = cat.IDCate LEFT JOIN discount dis on c.IDDiscount = dis.ID
-        WHERE MATCH (cat.Name) AGAINST ('${key}' IN BOOLEAN MODE) OR MATCH (t.Name) AGAINST ('${key}' IN BOOLEAN MODE)
+        WHERE (MATCH (cat.Name) AGAINST ('${key}' IN BOOLEAN MODE) OR MATCH (t.Name) AGAINST ('${key}' IN BOOLEAN MODE)) and c.disable = 0
         GROUP BY c.ID) as tb`)
         if(list)
             return list[0][0];
@@ -58,9 +59,10 @@ export default{
     countSearchBothNameAndCat: async(key)=>{
         const list = await db.raw(`Select Count(*) as cnt From (SELECT c.ID
         FROM courses c LEFT JOIN participate p on c.ID = p.IDCourse LEFT JOIN category cat on cat.IDCate = c.IDCategory LEFT JOIN topic t on c.Topic = t.IDTopic AND t.IDCate = cat.IDCate LEFT JOIN discount dis on c.IDDiscount = dis.ID
-        WHERE MATCH (c.Name, c.FullDesc, c.TinyDesc) AGAINST ('${key}' IN BOOLEAN MODE)
+        WHERE (MATCH (c.Name, c.FullDesc, c.TinyDesc) AGAINST ('${key}' IN BOOLEAN MODE)
         OR MATCH (cat.Name) AGAINST ('${key}' IN BOOLEAN MODE)
-        OR MATCH (t.Name) AGAINST ('${key}' IN BOOLEAN MODE)
+        OR MATCH (t.Name) AGAINST ('${key}' IN BOOLEAN MODE))
+        AND c.disable = 0
         GROUP BY c.ID) as tb`)
         if(list)
             return list[0][0];

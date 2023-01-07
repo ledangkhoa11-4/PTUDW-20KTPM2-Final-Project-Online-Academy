@@ -37,6 +37,7 @@
 
     <p>Not a member? <a href="/auth/register">Register now </a> <i class="bi bi-arrow-right"></i></p>
     <input type="submit" value="Login">
+    <a href="">{{alertTitle.msg}}</a>
 </form>
 <script src="/public/script/validate.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -58,11 +59,12 @@
         })
 
 </script>
-{{#if isAlert}}
-    <script>
+{{#if alertTitle.isAlert}}
+<script>
     Swal.fire({
+    width: 600,
   icon: 'error',
-  title: 'Your email or password incorrect!',
+  title: '{{alertTitle.msg}}',
   showConfirmButton: false,
   timer: 2500
 }).then(result=>{

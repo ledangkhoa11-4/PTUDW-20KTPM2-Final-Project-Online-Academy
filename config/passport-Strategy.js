@@ -37,7 +37,9 @@ export default function (passport, strategy){
       }
       process.nextTick(async function () {
         const user = await userService.getUserByEmail(email);
-        
+        if(user[0].disable == 1){
+          return done(null, {status: 'disabled'});
+        }
         // user chưa tồn tại -> Tạo user mới
         if(user.length == 0){
           const result = await userService.addUser(userDat)
@@ -60,6 +62,9 @@ export default function (passport, strategy){
     let user = await userService.getUserByEmail(email);
     if (user.length == 0)
       return done(null, false);
+    if(user[0].disable == 1){
+      return done(null, {status: 'disabled'});
+    }
     const hashedPassword = user[0].Password;
     const verify = await bcrypt.compare(password, hashedPassword);
     if(verify){
@@ -92,6 +97,9 @@ export default function (passport, strategy){
       }
       process.nextTick(async function () {
         const user = await userService.getUserByEmail(email);
+        if(user[0].disable == 1){
+          return done(null, {status: 'disabled'});
+        }
         // user chưa tồn tại -> Tạo user mới
         if(user.length == 0){
           const result = await userService.addUser(userDat)

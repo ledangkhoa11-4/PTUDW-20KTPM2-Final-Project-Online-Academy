@@ -68,7 +68,7 @@ Router.get("/:catID", async (req, res, next) => {
   );
   // console.log(list);
   const temp = await coursesService.getCourseIDByTopic(catID, topicID);
-  const name = await coursesService.getCourseNameByCat(catID);
+  let name = await coursesService.getCourseNameByCat(catID);
   const count = temp.length;
   let nPage = Math.floor(count / limit);
   if (count % limit > 0) nPage++;
@@ -85,6 +85,7 @@ Router.get("/:catID", async (req, res, next) => {
       let topicNum = res.locals.allTopics[i].length;
       for(let j = 0; j < topicNum; j++){
         if(res.locals.allTopics[i][j].IDTopic == topicID){
+          name = res.locals.allTopics[i][j].Name
           res.locals.allTopics[i][j].active = true;
           break;
         }

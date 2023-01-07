@@ -282,4 +282,18 @@ export default {
     );
     return result[0];
   },
+  getAllVideoOfChapterByStudent: async (IDUser, IDCourse, IDChapter) => {
+    const list =
+      await db.raw(`Select v.* , EXISTS(Select * from watched w where w.IDStudent = u.IDUser and v.IDCourse = w.IDCourse and v.IDChapter = w.IDChapter and w.No = v.No) as isWatched
+    From circulativevideo v LEFT JOIN participate p on p.IDCourse = v.IDCourse LEFT JOIN user u on u.IDUser = p.IDStudent
+    WHERE u.IDUser = ${IDUser} and p.IDCourse = ${IDCourse} and v.IDChapter = ${IDChapter};`);
+    if (list[0].length != 0) return JSON.parse(JSON.stringify(list[0]));
+    return null;
+  },
+  removeWatchedVideo: async (UserId, CourseId, ChapterId, No) => {
+    let result = await db.raw(
+      `DELETE FROM watched WHERE IDStudent = ${UserId} and IDCourse = ${CourseId} and IDChapter = ${ChapterId} and No = ${No};`
+    );
+    return result[0];
+  },
 };

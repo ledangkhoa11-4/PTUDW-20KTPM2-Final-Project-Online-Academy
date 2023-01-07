@@ -12,7 +12,7 @@
         <ul class="navbar-nav mr-auto">
 
           <li class="nav-item">
-            <div class="nav-link" style="cursor: pointer" data-toggle="modal" data-target="#exampleModal">Leave a rating
+            <div class="nav-link" style="cursor: pointer; font-size:large" data-toggle="modal" data-target="#exampleModal">Leave a rating
             </div>
             <div class="modal fade" id="exampleModal" aria-hidden="true">
 
@@ -224,42 +224,41 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Your progess</a>
+            <div class="nav-link" style="cursor: pointer; font-size:large" data-toggle="modal" data-target="#exampleModal2">Leave a rating
+            </div>
+            <div class="modal fade" id="exampleModal2" aria-hidden="true">
+
+              <div class="modal-dialog">
+                <div class="modal-content" style="width: fit-content;">
+          
+                  
+                </div>
+              </div>
+            </div>
           </li>
         </ul>
 
       </div>
     </nav>
     <div style="margin-left: 5%; border-bottom: 1px solid black;">
-      <div class="card-body">
-        <div style="display:inline-block; font-weight:bold">
-          <a href="/categories?catID={{this.course.IDCate}}">{{this.course.CatName}}</a>
-          <i class="fa-solid fa-chevron-right"></i>
-          <a href="/categories/{{this.course.IDCate}}?topicID={{this.course.IDTopic}}">{{this.course.TopicName}}</a>
-          <br />
-          <br />
-        </div>
+      <div class="card-body" style="padding-left: 0; padding-top: 0">
+        
         <h1 class="card-title">{{this.course.Name}}</h1>
-        <p class="card-text" style="font-size:x-large;">{{this.course.TinyDesc}}</p>
-
-        <p class="card-text" style="font-size:medium;">Instructor:
-          {{this.course.Instructor}}</p>
-
         <p class="card-text" style="font-size:medium;">Total Lecture:
           {{this.course.TotalLecture}}
           lectures
-          <br />
+        </p>
+        <p class="card-text" style="font-size:medium;">
           Total Length:
-          {{this.course.TotalLength}}
-          hours
+          {{convertMinuteToHour this.course.TotalLength}}
         </p>
 
         <p class="card-text" style="font-size:medium;">Average rating:
-          {{this.course.AvgRating}}/5</p>
-        <p class="card-text" style="font-size:medium;">Number of rating: 500k+</p>
-        <p class="card-text" style="font-size:medium;">Number of student: 1m+</p>
+          {{this.course.AvgRating}} <i class="fa fa-star" aria-hidden="true"></i>/5 <i class="fa fa-star" aria-hidden="true"></i></p>
+        <p class="card-text" style="font-size:medium;">Number of rating: {{this.course.CountRating}}</p>
+        <p class="card-text" style="font-size:medium;">Number of student: {{this.numOfStudent}}</p>
         <p class="card-text"><small class="text-muted">Last modify:
-            {{this.course.ModifiedTime}}mm/dd/yyyy</small></p>
+            {{this.course.ModifiedTime}}</small></p>
 
       </div>
     </div>
@@ -290,9 +289,19 @@
                   {{#each (lookup ../videos @index) as |video|}}
                   {{#if (isMatch ../../this.crrVideo.Name video.Name)}}
                   <li class="list-group-item list-group-item-dark">
-                    <div style="display: flex; justify-content:space-between"><span class="text"><input type="checkbox"
+                    <div style="display: flex; justify-content:space-between"><span class="text">
+                     <script> console.log({{video.isWatched}})</script>
+                      {{#if video.isWatched}}
+                      <input type="checkbox"
                           name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}} no={{video.No}}
-                          onchange="watched(this, event)" /><a href="#"
+                          onchange="watched(this, event)" checked/>
+                      {{else}}
+                      <input type="checkbox"
+                          name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}} no={{video.No}}
+                          onchange="watched(this, event)" />
+                          {{/if}}
+                          
+                          <a href="#"
                           style="text-decoration: none; color: black">&nbsp; {{video.No}} {{video.Name}} </a></span>
                     </div>
                     <br>
@@ -303,8 +312,15 @@
                   <li class="list-group-item">
                     <div style="display: flex; justify-content:space-between"><span class="text">
 
-                        <input type="checkbox" name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}}
-                          no={{video.No}} onchange="watched(this, event)" />
+                        {{#if video.isWatched}}
+                      <input type="checkbox"
+                          name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}} no={{video.No}}
+                          onchange="watched(this, event)" checked/>
+                      {{else}}
+                      <input type="checkbox"
+                          name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}} no={{video.No}}
+                          onchange="watched(this, event)" />
+                          {{/if}}
                         <a href="/course/{{video.IDCourse}}?chapterId={{video.IDChapter}}&lectureId={{video.No}}"
                           style="text-decoration: none; color: black">&nbsp; {{video.No}} {{video.Name}} </a></span>
                     </div>
@@ -331,6 +347,12 @@
       let IDChapter = t.getAttribute(`chapter`);
       let No = t.getAttribute(`no`);
       $.get(`watched?courseId=${IDCourse}&chapterId=${IDChapter}&No=${No}`)
+    }
+    else{
+      let IDCourse = t.getAttribute(`course`);
+      let IDChapter = t.getAttribute(`chapter`);
+      let No = t.getAttribute(`no`);
+      $.get(`removeWatched?courseId=${IDCourse}&chapterId=${IDChapter}&No=${No}`)
     }
   }
 </script>

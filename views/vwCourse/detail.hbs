@@ -37,7 +37,7 @@
         </p>
 
         <p class="card-text" style="font-size:medium;">Average rating:
-          {{this.course.AvgRating}}/5</p>
+          {{this.course.AvgRating}} <i class="fa fa-star" aria-hidden="true"></i>/5 <i class="fa fa-star" aria-hidden="true"></i></p>
         <p class="card-text" style="font-size:medium;">Number of rating: {{this.course.CountRating}}</p>
         <p class="card-text" style="font-size:medium;">Number of student: {{this.numOfStudent}}</p>
         <p class="card-text"><small class="text-muted">Last modify:
@@ -269,7 +269,7 @@
               <div class="rating mt-1" rating_score={{#if Rating}}{{Rating}}{{else}}0{{/if}} rating_count={{Rating}}>
               </div>
 
-              <script> renderRating('.rating')</script>
+
             </div>
           </div>
           {{/each}}
@@ -313,6 +313,7 @@
 {{/if}}
 </div>
 <script src="/public/script/rating.js"></script>
+<script> renderRating('.rating')</script>
 {{#section 'script'}}
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script>

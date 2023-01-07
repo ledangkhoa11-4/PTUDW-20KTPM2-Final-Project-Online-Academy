@@ -98,6 +98,17 @@ Router.get("/watched", async (req, res) => {
     no
   );
 });
+Router.get("/removeWatched", async (req, res) => {
+  const courseId = req.query.courseId || 0;
+  const chapterId = req.query.chapterId || 0;
+  const no = req.query.No || 0;
+  const result = await coursesService.removeWatchedVideo(
+    res.locals.auth.IDUser,
+    courseId,
+    chapterId,
+    no
+  );
+});
 Router.get("/buy", async (req, res) => {
   const courseId = req.query.courseId || 0;
   const result = await coursesService.addParticipant(
@@ -146,7 +157,8 @@ Router.get("/:courseId", async (req, res) => {
   const videos = [];
 
   for (let i = 0; i < chapters.length; i++) {
-    let videoOfChapter = await coursesService.getAllVideosByChapter(
+    let videoOfChapter = await coursesService.getAllVideoOfChapterByStudent(
+      res.locals.auth.IDUser,
       chapters[i].IDCourse,
       chapters[i].IDChapter
     );

@@ -2,6 +2,7 @@ function renderRating(selector) {
   let ratingDivs = document.querySelectorAll(selector);
   Array.from(ratingDivs).forEach((div) => {
     let score = div.attributes.rating_score.value;
+    score = parseFloat(score).toPrecision(2);
     let roundScore = Math.round(div.attributes.rating_score.value * 2) / 2;
     let count = div.attributes.rating_count.value;
     let html = `<small class="rating-score mr-2">${score}</small>`;

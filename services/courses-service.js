@@ -256,4 +256,14 @@ export default {
     if (list[0].length != 0) return true;
     return false;
   },
+  getCoursesByStudent: async (IDStudent) => {
+    const result = await db.raw(`SELECT c.ID, p.finish FROM participate p LEFT JOIN courses c on p.IDCourse = c.ID LEFT JOIN discount d on c.IDDiscount = d.ID 
+    where p.IDStudent = '${IDStudent}';`);
+    return result[0];
+  },
+  getCoursesWatchlistByStudent: async (IDStudent) => {
+    const result = await db.raw(`SELECT courses.Name, courses.TinyDesc, courses.CourseFee,courses.ID, discount.PercentDiscount FROM watchlist LEFT JOIN courses ON watchlist.IDCourse = courses.ID LEFT JOIN discount ON discount.ID = courses.IDDiscount
+    WHERE watchlist.IDStudent = '${IDStudent}';`);
+    return result[0];
+  }
 };

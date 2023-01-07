@@ -12,7 +12,8 @@
         <ul class="navbar-nav mr-auto">
 
           <li class="nav-item">
-            <div class="nav-link" style="cursor: pointer; font-size:large" data-toggle="modal" data-target="#exampleModal">Leave a rating
+            <div class="nav-link" style="cursor: pointer; font-size:large" data-toggle="modal"
+              data-target="#exampleModal">Leave a rating
             </div>
             <div class="modal fade" id="exampleModal" aria-hidden="true">
 
@@ -195,43 +196,156 @@
                   </div>
                   <script>
                     function feedback(e) {
-                          //e.preventDefault();
-                          var star = document.querySelector('input:checked[type="radio"]').value;
-                          var fb = document.querySelector('#feedback').value;
-                          var courseId = {{this.course.ID}};
-                          console.log(star);
-                        $.post(`/course/feedback`, {
-                          star,
-                          fb,
-                          courseId,
-                        }, function (data) {
-                          const btn = document.querySelector("button");
-                          const post = document.querySelector(".post");
-                          const widget = document.querySelector(".star-widget");
-                          const editBtn = document.querySelector(".edit");
+                      //e.preventDefault();
+                      var star = document.querySelector('input:checked[type="radio"]').value;
+                      var fb = document.querySelector('#feedback').value;
+                      var courseId = {{ this.course.ID }};
+                    console.log(star);
+                    $.post(`/course/feedback`, {
+                      star,
+                      fb,
+                      courseId,
+                    }, function (data) {
+                      const btn = document.querySelector("button");
+                      const post = document.querySelector(".post");
+                      const widget = document.querySelector(".star-widget");
+                      const editBtn = document.querySelector(".edit");
 
-                          widget.style.display = "none";
-                          post.style.display = "block";
-                          editBtn.onclick = () => {
-                            widget.style.display = "block";
-                            post.style.display = "none";
-                          }
-                        })
-                        }
+                      widget.style.display = "none";
+                      post.style.display = "block";
+                      editBtn.onclick = () => {
+                        widget.style.display = "block";
+                        post.style.display = "none";
+                      }
+                    })
+                    }
                   </script>
                 </div>
               </div>
             </div>
           </li>
           <li class="nav-item">
-            <div class="nav-link" style="cursor: pointer; font-size:large" data-toggle="modal" data-target="#exampleModal2">Leave a rating
+            <div class="nav-link" style="cursor: pointer; font-size:large" data-toggle="modal"
+              data-target="#exampleModal2">My progress
             </div>
             <div class="modal fade" id="exampleModal2" aria-hidden="true">
 
               <div class="modal-dialog">
-                <div class="modal-content" style="width: fit-content;">
-          
-                  
+                <div class="modal-content"
+                  style="height: fit-content;width:fit-content ;background-color: #111; display: flex; justify-content:center">
+
+                  <style>
+                    .box {
+
+                      width: 300px;
+                      height: 400px;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      position: relative;
+                      flex-direction: column;
+                      box-shadow: 0 30px 60px rgba(0, 0, 0, .4);
+                      transition: transform .2s;
+                    }
+
+                    
+                    .box .percent {
+                      width: 150px;
+                      height: 150px;
+                      position: relative;
+                    }
+
+                    .box .percent svg {
+                      width: 150px;
+                      height: 150px;
+                      position: relative;
+                    }
+
+                    .box .percent svg circle {
+                      width: 150px;
+                      height: 150px;
+                      fill: none;
+                      stroke-width: 10;
+                      stroke: #000;
+                      transform: translate(5px, 5px);
+                      stroke-dasharray: 440;
+                      stroke-dashoffset: 440;
+                      stroke-linecap: round;
+                    }
+
+                    .box .percent svg circle:nth-child(1) {
+                      stroke-dashoffset: 0;
+                      stroke: #f3f3f3;
+                    }
+
+                    .box .percent svg circle:nth-child(2) {
+                      stroke-dashoffset: calc(440 - (440 * {{this.progress}}) / 100);
+                      stroke: #03a9f4;
+                    }
+
+                    .box .percent .num {
+                      top: 0;
+                      left: 0;
+                      width: 100%;
+                      height: 100%;
+                      display: flex;
+                      justify-content: center;
+                      flex-direction: column;
+                      align-items: center;
+                      position: absolute;
+                      color: #999;
+                    }
+
+                    .box .percent .num h2 {
+                      font-size: 48px;
+                    }
+
+                    .box .percent .num h2 span {
+                      font-size: 24px;
+                    }
+
+                    .box .text {
+                      padding 10px 0 0;
+                      color: #999;
+                      font-weight: 700;
+                      letter-spacing: 1px;
+                      margin: 5%;
+                    }
+                  </style>
+                  {{#if isFinish}}
+                  <div class="box">
+                    <div class="percent">
+                      <svg>
+                        <circle cx="70" cy="70" r="70"></circle>
+                        <circle cx="70" cy="70" r="70"></circle>
+                      </svg>
+                      <div class="num">
+                        <h2 style="color: #fd4;"><i class="fa fa-trophy" aria-hidden="true"></i></h2>
+                        <h5>Finished</h5>
+                      </div>
+                    </div>
+                    <h3 style="color: #fd4; margin:5%"><i class="bi bi-activity"></i>{{this.progress}}%<i class="bi bi-activity"></i>
+                    </h3>
+                    <h2 class="text" style="color: #fd4;"><i class="bi bi-stars"></i> My Progress <i class="bi bi-stars"></i></h2>
+                  </div>
+                  {{else}}
+                  <div class="box">
+                    <div class="percent">
+                      <svg>
+                        <circle cx="70" cy="70" r="70"></circle>
+                        <circle cx="70" cy="70" r="70"></circle>
+                      </svg>
+                      <div class="num">
+                        <h2 style="color: ##999;"><i class="fa fa-trophy" aria-hidden="true"></i></h2>
+                        <h5>Unfinished</h5>
+                      </div>
+                    </div>
+                    <h3 style="color: #999; margin:5%"><i class="bi bi-activity"></i>{{this.progress}}%<i class="bi bi-activity"></i>
+                    </h3>
+                    <h2 class="text"><i class="bi bi-stars"></i> My Progress <i class="bi bi-stars"></i></h2>
+                  </div>
+                  {{/if}}
+
                 </div>
               </div>
             </div>
@@ -242,7 +356,7 @@
     </nav>
     <div style="margin-left: 5%; border-bottom: 1px solid black;">
       <div class="card-body" style="padding-left: 0; padding-top: 0">
-        
+
         <h1 class="card-title">{{this.course.Name}}</h1>
         <p class="card-text" style="font-size:medium;">Total Lecture:
           {{this.course.TotalLecture}}
@@ -254,7 +368,8 @@
         </p>
 
         <p class="card-text" style="font-size:medium;">Average rating:
-          {{this.course.AvgRating}} <i class="fa fa-star" aria-hidden="true"></i>/5 <i class="fa fa-star" aria-hidden="true"></i></p>
+          {{this.course.AvgRating}} <i class="fa fa-star" aria-hidden="true"></i>/5 <i class="fa fa-star"
+            aria-hidden="true"></i></p>
         <p class="card-text" style="font-size:medium;">Number of rating: {{this.course.CountRating}}</p>
         <p class="card-text" style="font-size:medium;">Number of student: {{this.numOfStudent}}</p>
         <p class="card-text"><small class="text-muted">Last modify:
@@ -290,19 +405,17 @@
                   {{#if (isMatch ../../this.crrVideo.Name video.Name)}}
                   <li class="list-group-item list-group-item-dark">
                     <div style="display: flex; justify-content:space-between"><span class="text">
-                     <script> console.log({{video.isWatched}})</script>
-                      {{#if video.isWatched}}
-                      <input type="checkbox"
-                          name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}} no={{video.No}}
-                          onchange="watched(this, event)" checked/>
-                      {{else}}
-                      <input type="checkbox"
-                          name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}} no={{video.No}}
-                          onchange="watched(this, event)" />
-                          {{/if}}
-                          
-                          <a href="#"
-                          style="text-decoration: none; color: black">&nbsp; {{video.No}} {{video.Name}} </a></span>
+                        <script> console.log({{ video.isWatched }})</script>
+                        {{#if video.isWatched}}
+                        <input type="checkbox" name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}}
+                          no={{video.No}} onchange="watched(this, event)" checked />
+                        {{else}}
+                        <input type="checkbox" name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}}
+                          no={{video.No}} onchange="watched(this, event)" />
+                        {{/if}}
+
+                        <a href="#" style="text-decoration: none; color: black">&nbsp; {{video.No}} {{video.Name}} </a>
+                      </span>
                     </div>
                     <br>
                     <div class="text" style="display: flex;justify-content: flex-end;"><i class="bi bi-clock"></i>
@@ -313,14 +426,12 @@
                     <div style="display: flex; justify-content:space-between"><span class="text">
 
                         {{#if video.isWatched}}
-                      <input type="checkbox"
-                          name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}} no={{video.No}}
-                          onchange="watched(this, event)" checked/>
-                      {{else}}
-                      <input type="checkbox"
-                          name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}} no={{video.No}}
-                          onchange="watched(this, event)" />
-                          {{/if}}
+                        <input type="checkbox" name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}}
+                          no={{video.No}} onchange="watched(this, event)" checked />
+                        {{else}}
+                        <input type="checkbox" name="" id="" course={{video.IDCourse}} chapter={{video.IDChapter}}
+                          no={{video.No}} onchange="watched(this, event)" />
+                        {{/if}}
                         <a href="/course/{{video.IDCourse}}?chapterId={{video.IDChapter}}&lectureId={{video.No}}"
                           style="text-decoration: none; color: black">&nbsp; {{video.No}} {{video.Name}} </a></span>
                     </div>
@@ -348,7 +459,7 @@
       let No = t.getAttribute(`no`);
       $.get(`watched?courseId=${IDCourse}&chapterId=${IDChapter}&No=${No}`)
     }
-    else{
+    else {
       let IDCourse = t.getAttribute(`course`);
       let IDChapter = t.getAttribute(`chapter`);
       let No = t.getAttribute(`no`);

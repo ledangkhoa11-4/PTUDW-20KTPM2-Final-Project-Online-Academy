@@ -196,19 +196,15 @@ export default {
       .offset(offset);
     return list;
   },
-  getCourseByPageAndCatID: async(catId,limit,offset)=>{
+  getCourseByPageAndCatID: async (catId, limit, offset) => {
     const list = await db("courses")
-    .select("courses.*", "user.FullName")
-    .leftJoin("user",
-    function() {
-      this
-        
-        .on('user.IDUser', '=', 'courses.IDInstructor')
-        
-    })
-    .where('courses.IDCategory', '=', catId )
-    .limit(limit)
-    .offset(offset);
+      .select("courses.*", "user.FullName")
+      .leftJoin("user", function () {
+        this.on("user.IDUser", "=", "courses.IDInstructor");
+      })
+      .where("courses.IDCategory", "=", catId)
+      .limit(limit)
+      .offset(offset);
     return list;
   },
   getTotalCourse: async () => {
@@ -216,7 +212,9 @@ export default {
     return total[0].amount;
   },
   getTotalCourseByCatId: async (CatId) => {
-    const total = await db("courses").where("IDCategory",CatId).count({ amount: "ID" });
+    const total = await db("courses")
+      .where("IDCategory", CatId)
+      .count({ amount: "ID" });
     return total[0].amount;
   },
   getParticipant: async (courseId, userId) => {
@@ -315,63 +313,98 @@ export default {
     );
     return result[0];
   },
-  getCourseByPageAndCatID: async(catId,limit,offset)=>{
+  getCourseByPageAndCatID: async (catId, limit, offset) => {
     const list = await db("courses")
-    .select("courses.*", "user.FullName")
-    .leftJoin("user",
-    function() {
-      this
-        
-        .on('user.IDUser', '=', 'courses.IDInstructor')
-        
-    })
-    .where('courses.IDCategory', '=', catId )
-    .limit(limit)
-    .offset(offset);
+      .select("courses.*", "user.FullName")
+      .leftJoin("user", function () {
+        this.on("user.IDUser", "=", "courses.IDInstructor");
+      })
+      .where("courses.IDCategory", "=", catId)
+      .limit(limit)
+      .offset(offset);
     return list;
   },
-  getCourseByPageAndCatIDAndTopicID: async(catId,topicId,limit,offset)=>{
+  getCourseByPageAndCatIDAndTopicID: async (catId, topicId, limit, offset) => {
     const list = await db("courses")
-    .select("courses.*", "user.FullName")
-    .leftJoin("user",
-    function() {
-      this
-        
-        .on('user.IDUser', '=', 'courses.IDInstructor')
-        
-    })
-    .where('courses.IDCategory', '=', catId )
-    .andWhere('courses.Topic',topicId)
-    .limit(limit)
-    .offset(offset);
+      .select("courses.*", "user.FullName")
+      .leftJoin("user", function () {
+        this.on("user.IDUser", "=", "courses.IDInstructor");
+      })
+      .where("courses.IDCategory", "=", catId)
+      .andWhere("courses.Topic", topicId)
+      .limit(limit)
+      .offset(offset);
     return list;
   },
-  getTotalCourseByTopicID: async (catId,topicId)=>{
-    const total = await db("courses").where("IDCategory",catId).andWhere("Topic",topicId).count({ amount: "ID" });
-    return total[0].amount; 
+  getTotalCourseByTopicID: async (catId, topicId) => {
+    const total = await db("courses")
+      .where("IDCategory", catId)
+      .andWhere("Topic", topicId)
+      .count({ amount: "ID" });
+    return total[0].amount;
   },
-  disabledCourse:(ID,status)=>{
-    return db.raw(`Update courses set disable=${status} where courses.ID=${ID}`);
+  disabledCourse: (ID, status) => {
+    return db.raw(
+      `Update courses set disable=${status} where courses.ID=${ID}`
+    );
   },
-  getCourseByPageAndInstructorID:async(intructorID,limit,offset)=>{
-    const list=await db("courses").select("courses.*", "user.FullName")
-    .leftJoin("user",
-    function() {
-      this
-        
-        .on('user.IDUser', '=', 'courses.IDInstructor')
-        
-    }).where("IDInstructor",intructorID).limit(limit).offset(offset);
+  getCourseByPageAndInstructorID: async (intructorID, limit, offset) => {
+    const list = await db("courses")
+      .select("courses.*", "user.FullName")
+      .leftJoin("user", function () {
+        this.on("user.IDUser", "=", "courses.IDInstructor");
+      })
+      .where("IDInstructor", intructorID)
+      .limit(limit)
+      .offset(offset);
     return list;
   },
   getCoursesByStudent: async (IDStudent) => {
-    const result = await db.raw(`SELECT c.ID, p.finish FROM participate p LEFT JOIN courses c on p.IDCourse = c.ID LEFT JOIN discount d on c.IDDiscount = d.ID 
+    const result =
+      await db.raw(`SELECT c.ID, p.finish FROM participate p LEFT JOIN courses c on p.IDCourse = c.ID LEFT JOIN discount d on c.IDDiscount = d.ID 
     where p.IDStudent = '${IDStudent}';`);
     return result[0];
   },
   getCoursesWatchlistByStudent: async (IDStudent) => {
-    const result = await db.raw(`SELECT courses.Name, courses.TinyDesc, courses.CourseFee,courses.ID, discount.PercentDiscount FROM watchlist LEFT JOIN courses ON watchlist.IDCourse = courses.ID LEFT JOIN discount ON discount.ID = courses.IDDiscount
+    const result =
+      await db.raw(`SELECT courses.Name, courses.TinyDesc, courses.CourseFee,courses.ID, discount.PercentDiscount FROM watchlist LEFT JOIN courses ON watchlist.IDCourse = courses.ID LEFT JOIN discount ON discount.ID = courses.IDDiscount
     WHERE watchlist.IDStudent = '${IDStudent}';`);
     return result[0];
-  }
+  },
+  getNumOfVideoWatchedByStudent: async (courseId, userId) => {
+    const list = await db.raw(
+      `SELECT COUNT(*) as num FROM watched as w where w.IDCourse = ${courseId} and w.IDStudent = ${userId}`
+    );
+
+    if (list[0].length != 0) return JSON.parse(JSON.stringify(list[0]));
+    return null;
+  },
+  getAllNumOfVideoByCourse: async (courseId) => {
+    const list = await db.raw(
+      `SELECT COUNT(*) as num FROM circulativevideo as c where c.IDCourse = ${courseId}`
+    );
+
+    if (list[0].length != 0) return JSON.parse(JSON.stringify(list[0]));
+    return null;
+  },
+  setFinishCourseByStudent: async (courseId, userId) => {
+    let result = await db.raw(
+      `update participate set finish = 1 where IDCourse = ${courseId} and IDStudent = ${userId}`
+    );
+    return result[0];
+  },
+  setUnfinishCourseByStudent: async (courseId, userId) => {
+    let result = await db.raw(
+      `update participate set finish = 0 where IDCourse = ${courseId} and IDStudent = ${userId}`
+    );
+    return result[0];
+  },
+  getInfoParticipateByStudentFinishCourse: async (courseId, userId) => {
+    let result = await db.raw(
+      `select * from participate where IDCourse = ${courseId} and IDStudent = ${userId}`
+    );
+
+    if (result[0]) return result[0];
+    return null;
+  },
 };

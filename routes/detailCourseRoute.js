@@ -169,15 +169,49 @@ Router.get("/:courseId", async (req, res) => {
   crrVideo.URL = "https://www.youtube.com/embed/" + crrVideo[0].URL;
   crrVideo.isCrr = true;
   crrVideo.Name = crrVideo[0].Name;
-  //console.log(crrVideo);
 
+  // let numOfStudent = await coursesService.getNumberParticipant(IDcourse);
+  // numOfStudent = numOfStudent[0].num;
+  let numWatchedVideo = await coursesService.getNumOfVideoWatchedByStudent(
+    courseId,
+    res.locals.auth.IDUser
+  );
+  numWatchedVideo = numWatchedVideo[0].num;
+  let numVideoOfCourse = await coursesService.getAllNumOfVideoByCourse(
+    courseId
+  );
+  numVideoOfCourse = numVideoOfCourse[0].num;
+  let progress = 0;
+  if (numWatchedVideo == numVideoOfCourse) {
+    let finish = await coursesService.setFinishCourseByStudent(
+      courseId,
+      res.locals.auth.IDUser
+    );
+    progress = 100;
+  } else {
+    let finish = await coursesService.setUnfinishCourseByStudent(
+      courseId,
+      res.locals.auth.IDUser
+    );
+    progress = parseInt((numWatchedVideo * 100) / numVideoOfCourse);
+  }
+  let isFinish = await coursesService.getInfoParticipateByStudentFinishCourse(
+    courseId,
+    res.locals.auth.IDUser
+  );
+
+  if (isFinish[0].finish == 1) isFinish = true;
+  else isFinish = false;
   const course = await coursesService.getInfoCourse(`${courseId}`);
+
   res.render("vwCourse/videoLecture", {
     layout: "main",
     chapters,
     videos,
     crrVideo,
     course,
+    progress,
+    isFinish,
   });
 });
 

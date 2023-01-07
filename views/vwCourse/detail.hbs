@@ -167,7 +167,9 @@
       </div>
     </div>
     <div class="col-4">
-      {{#ifeq auth.Role 2}}
+      {{#ifeq auth.Role 0}}
+
+        {{else}}
         <div class="buy-course">
             <div class="card" style="width: 18rem;">
               <img src="/public/images/courses/{{course.ID}}.jpg" class="card-img-top" alt="...">
@@ -212,7 +214,7 @@
               </div>
             </div>
           </div>
-      {{else}}
+      
       
     {{/ifeq}}
      

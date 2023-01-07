@@ -11,6 +11,7 @@
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Created Time</th>
+            <th scope="col">Instructor</th>
           </tr>
         </thead>
         <tbody>
@@ -23,8 +24,12 @@
             {{#each this.list}}
             <tr>
               <th scope="col">{{ID}}</th>
-              <td scope="col">{{Name}}</td>
-              <td>{{formatDate CreatedTime}}</td>
+              <td scope="col"><a href="/course?id={{ID}}">
+              <img class="img-thumbnail " src="/public/images/courses/{{ID}}.jpg" alt=""  width="50" 
+              height="500">
+              {{Name}}</a></td>
+              <td scope="col">{{formatDate CreatedTime}}</td>
+              <td scope="col">{{FullName}}</td>
             </tr>
           {{/each}}
           

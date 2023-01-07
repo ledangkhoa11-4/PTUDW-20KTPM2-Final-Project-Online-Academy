@@ -81,7 +81,7 @@ app.engine('hbs', engine({
             return text === "des"
         },
         formatDate(date){
-          return moment(date).format('LLLL');
+          return moment(date).format('LL');
         },
         ifeq: function(a, b, options){
           if (a === b) {
@@ -107,7 +107,6 @@ app.set('view engine', 'hbs');
 app.set('views', './views');
 
 
-
 //res.local
 app.use(async (req, res, next) => {
   const cateList = await categoryServices.getAllCat();
@@ -128,7 +127,6 @@ app.use(async (req, res, next) => {
     res.locals.auth = req.session.passport.user;
     res.cookie("user", req.session.passport.user);
   }
-
   next();
 });
 

@@ -51,7 +51,6 @@ Router.post("/login",async (req, res, next)=>{
   }
   const verified = await userService.isVerified(user.email);
   res.locals.admin=userCheck[0];
-  console.log(res.locals.admin);
   if(verified)
     return next();
   res.locals.temp = user;
@@ -71,15 +70,6 @@ Router.post("/login",async (req, res, next)=>{
 
 Router.post('/register',async (req,res, next)=>{
     const user = req.body;
-    let isEmailExists = await userService.isEmailExists(user.email); 
-    if(isEmailExists){
-        res.render('vwAuth/register',{
-            isAlert : true,
-            icon: 'error',
-            title: 'Your email is already exists'
-        });
-        return;
-    }
     const OTP =  Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
     const hashedPassword = await bcrypt.hash(user.password, 5);
     const result = await userService.addUser({
@@ -89,9 +79,6 @@ Router.post('/register',async (req,res, next)=>{
         Role: 2,
         OTP: OTP
     })
-
-
-    
     var mailOptions = {
       from: 'onlineAcademyKTPM1@gmail.com',
       to: user.email,
@@ -144,4 +131,16 @@ Router.get('/google/callback',
     res.redirect('/');
   });
 
+
+Router.post('/check-valid-pass', async (req, res)=>{
+    const password = req.body.password;
+    const user = await userService.findUserById(res.locals.auth.IDUser);
+    let isValid = await bcrypt.compare(password, user.Password);
+    res.json({isValid});
+  });
+  Router.post('/check-exists-email', async (req, res)=>{
+    const email = req.body.email;
+    let exists = await userService.isEmailExists(email); 
+    res.json({exists});
+  });
 export default Router;

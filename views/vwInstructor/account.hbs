@@ -46,14 +46,19 @@
 			<div class="modal-body">
 				<form action="change-password" method="POST" class="form-2">
 					<div class="container-fluid">
-						<div class="grid">
+						<div class="grid" style="  grid-gap: 0px; grid-template-columns: 1fr;">
 							<div class="form-group ">
-								<label for="password">New password</label>
-								<input id="password" class="password" type="password"  name="password" autocomplete="new-password">
+								<label for="cur-password">Current password</label>
+								<input id="cur-password" class="password" type="password" autocomplete="new-password">
 								<span class="form__group-message email-message"></span>
 							</div>
 							<div class="form-group ">
-								<label for="password">Confirm new password</label>
+								<label for="password">New password</label>
+								<input id="password" class="password new-pass" type="password"  name="password" autocomplete="new-password">
+								<span class="form__group-message email-message"></span>
+							</div>
+							<div class="form-group ">
+								<label for="confirm-password">Confirm new password</label>
 								<input id="confirm-password" class="confirm-password" type="password" autocomplete="new-password">
 								<span class="form__group-message email-message"></span>
 							</div>
@@ -94,11 +99,29 @@
 				Validator.isRequire(".password"),
 				Validator.minLength(".password", 8),
 				Validator.isConfirm(".confirm-password", ()=>{
-                	return document.querySelector(`.form-2 input[type="password"]`).value
+                	return document.querySelector(`.form-2 .new-pass`).value
             }),
 			],
 			onSubmit: function (data) {
-				document.querySelector(".form-2").submit();
+				let currentPassword = document.querySelector("#cur-password").value;
+				console.log(currentPassword);
+				$.post("/auth/check-valid-pass",
+					{
+						password: currentPassword,
+					},
+					function(data, status){
+						if(data.isValid == false){
+							Swal.fire({
+								width: 600,
+								icon:`error`,
+								title: `Your current password not correct. Please type again`,
+								showConfirmButton: false,
+								timer: 2500
+							})
+						}else{
+							document.querySelector(".form-2").submit()
+						}				
+					});
 			}
 		})
 </script>
@@ -111,7 +134,7 @@
 		showConfirmButton: false,
 		timer: 2500
 	}).then(result=>{
-		{{#if reLogin}} window.location.href = '/auth/login'{{/if}}
+		 window.location.href = '/instructor/account'
 	})
 </script>
 {{/if}}
@@ -136,6 +159,9 @@
 			'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
 		],
 	}); 
+	$('#exampleModalCenter').on('hidden.bs.modal', function () {
+		document.querySelector(".form-2").reset();
+})
 </script>
 {{/section}}
 <style>

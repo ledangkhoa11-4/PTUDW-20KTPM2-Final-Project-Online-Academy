@@ -16,7 +16,7 @@
     </div>
     <div class="form__group ">
         <label for="email">Email</label>
-        <input type="email" name="email" class="email" placeholder="Eg. email@domain.com">
+        <input type="email" name="email" class="email" id="email" placeholder="Eg. email@domain.com">
         <i class="fa-solid fa-triangle-exclamation error-icon"></i>
         <span class="form__group-message email-message"></span>
     </div>
@@ -56,7 +56,24 @@
                 }),
             ],
             onSubmit: function (data) {
-                document.querySelector(".form-1").submit();
+                let email = document.querySelector("#email").value;
+				$.post("/auth/check-exists-email",
+					{
+						email
+					},
+					function(data, status){
+						if(data.exists == false){
+							document.querySelector(".form-1").submit()
+						}else{
+                            Swal.fire({
+								width: 600,
+								icon:`error`,
+								title: `Your email already exists. Please use other email!`,
+								showConfirmButton: false,
+								timer: 2500
+							})
+						}				
+					});
             }
         })
 

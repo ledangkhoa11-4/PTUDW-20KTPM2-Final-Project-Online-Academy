@@ -133,6 +133,8 @@ Router.post('/profile',async (req,res)=>{
     const resultUpdate = await userService.updateInfo(res.locals.auth.IDUser,req.body);
     req.cookies.user.FullName = req.body.FullName;
     req.cookies.user.CurrentJob = req.body.CurrentJob;
+    if(req.session.passport)
+        req.session.passport.user = req.cookies.user;
     res.cookie("user", req.cookies.user);
     res.redirect('/instructor/profile')
 })
@@ -247,6 +249,9 @@ Router.post('/change-email',async (req, res, next)=>{
         })
     const resultChange = await userService.changeEmail(res.locals.auth.IDUser,newEmail);
     req.cookies.user.Email = newEmail
+    if(req.session.passport){
+        req.session.passport.user.Email = newEmail;
+    }
     res.cookie("user", req.cookies.user);
     return res.render('vwInstructor/account',{
         layout: 'instructor', 

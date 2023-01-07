@@ -1,7 +1,7 @@
 <div class="row" style="margin-top: 7%;">
   <div class="col-8">
     <div style="margin-left: 5%; border-bottom: 1px solid black;">
-      <iframe width="853" height="480" src={{this.crrVideo.URL}} title="" frameborder="0"
+      <iframe style="width: 100%;" width="853" height="480" src={{this.crrVideo.URL}} title="" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen></iframe>
     </div>
@@ -19,7 +19,7 @@
               <div class="modal-dialog">
                 <div class="modal-content" style="width: fit-content;">
                   <style>
-                    .container {
+                    .feedback-model {
                       position: relative;
                       width: 400px;
                       background: #111;
@@ -32,17 +32,17 @@
                       flex-direction: column;
                     }
 
-                    .container .post {
+                    .feedback-model .post {
                       display: none;
                     }
 
-                    .container .text {
+                    .feedback-model .text {
                       font-size: 25px;
                       color: #666;
                       font-weight: 500;
                     }
 
-                    .container .edit {
+                    .feedback-model .edit {
                       position: absolute;
                       right: 10px;
                       top: 5px;
@@ -52,11 +52,11 @@
                       cursor: pointer;
                     }
 
-                    .container .edit:hover {
+                    .feedback-model .edit:hover {
                       text-decoration: underline;
                     }
 
-                    .container .star-widget input {
+                    .feedback-model .star-widget input {
                       display: none;
                     }
 
@@ -82,35 +82,35 @@
                       text-shadow: 0 0 20px #952;
                     }
 
-                    #rate-1:checked~form header:before {
+                    #rate-1:checked~.form header:before {
                       content: "I just hate it ";
                     }
 
-                    #rate-2:checked~form header:before {
+                    #rate-2:checked~.form header:before {
                       content: "I don't like it ";
                     }
 
-                    #rate-3:checked~form header:before {
+                    #rate-3:checked~.form header:before {
                       content: "It is normal ";
                     }
 
-                    #rate-4:checked~form header:before {
+                    #rate-4:checked~.form header:before {
                       content: "I like it ";
                     }
 
-                    #rate-5:checked~form header:before {
+                    #rate-5:checked~.form header:before {
                       content: "I love it ";
                     }
 
-                    .container form {
+                    .feedback-model .form {
                       display: none;
                     }
 
-                    input:checked~form {
+                    input:checked~.form {
                       display: block;
                     }
 
-                    form header {
+                    .feedback-model .form header {
                       width: 100%;
                       font-size: 25px;
                       color: #fe7;
@@ -120,13 +120,13 @@
                       transition: all 0.2s ease;
                     }
 
-                    form .textarea {
+                    .feedback-model .form .textarea {
                       height: 100px;
                       width: 100%;
                       overflow: hidden;
                     }
 
-                    form .textarea textarea {
+                    .feedback-model .form .textarea textarea {
                       height: 100%;
                       width: 100%;
                       outline: none;
@@ -142,13 +142,13 @@
                       border-color: #444;
                     }
 
-                    form .btn {
+                    .feedback-model .form .btn {
                       height: 45px;
                       width: 100%;
                       margin: 15px 0;
                     }
 
-                    form .btn button {
+                    .feedback-model .form .btn button {
                       height: 100%;
                       width: 100%;
                       border: 1px solid #444;
@@ -162,11 +162,11 @@
                       transition: all 0.3s ease;
                     }
 
-                    form .btn button:hover {
+                    .feedback-model .form .btn button:hover {
                       background: #1b1b1b;
                     }
                   </style>
-                  <div class="container" style="margin: 0;">
+                  <div class="feedback-model" style="margin: 0;">
                     <div class="post">
                       <div class="text">Thanks for rating us!</div>
                       <div class="edit">EDIT</div>
@@ -182,31 +182,40 @@
                       <label for="rate-2" class="fas fa-star"></label>
                       <input type="radio" name="rate" id="rate-1">
                       <label for="rate-1" class="fas fa-star"></label>
-                      <form action="#">
+                      <div class="form">
                         <header></header>
                         <div class="textarea">
-                          <textarea cols="30" placeholder="Describe your experience.."></textarea>
+                          <textarea cols="30" placeholder="Describe your experience.." id="feedback"></textarea>
                         </div>
                         <div class="btn">
-                          <button type="submit">Post</button>
+                          <button onclick="feedback(event)">Post</button>
                         </div>
-                      </form>
+                      </div>
                     </div>
                   </div>
                   <script>
-                    const btn = document.querySelector("button");
-                    const post = document.querySelector(".post");
-                    const widget = document.querySelector(".star-widget");
-                    const editBtn = document.querySelector(".edit");
-                    btn.onclick = () => {
-                      widget.style.display = "none";
-                      post.style.display = "block";
-                      editBtn.onclick = () => {
-                        widget.style.display = "block";
-                        post.style.display = "none";
-                      }
-                      return false;
-                    }
+                    function feedback(e) {
+                          //e.preventDefault();
+                          var star = document.querySelector('input:checked[type="radio"]').value;
+                          var fb = document.querySelector('#feedback').value;
+                        $.post("/course/feedback", {
+                          star,
+                          fb,
+                          
+                        }, function (data) {
+                          const btn = document.querySelector("button");
+                          const post = document.querySelector(".post");
+                          const widget = document.querySelector(".star-widget");
+                          const editBtn = document.querySelector(".edit");
+
+                          widget.style.display = "none";
+                          post.style.display = "block";
+                          editBtn.onclick = () => {
+                            widget.style.display = "block";
+                            post.style.display = "none";
+                          }
+                        })
+                        }
                   </script>
                 </div>
               </div>

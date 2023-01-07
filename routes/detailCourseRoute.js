@@ -5,14 +5,12 @@ const Router = express.Router();
 Router.get("/", async (req, res) => {
   const IDcourse = req.query.id || 0;
   const course = await coursesService.getInfoCourse(`${IDcourse}`);
-  //console.log(course);
+
   if (course === null) {
     return res.redirect("/home");
   }
+  const vw = await coursesService.addViewer(IDcourse);
   const chapters = await coursesService.getAllChapters(`${IDcourse}`);
-  //console.log(chapters);
-  //console.log("----");
-  //console.log(videos);
   const videos = [];
 
   for (let i = 0; i < chapters.length; i++) {
@@ -22,7 +20,7 @@ Router.get("/", async (req, res) => {
     );
     videos.push(videoOfChapter);
   }
-  //console.log(course);
+
   const topicID = course.IDTopic;
   const catID = course.IDCate;
   const page = req.query.p || 1;
@@ -47,7 +45,11 @@ Router.get("/", async (req, res) => {
     coursesList.push(info);
   }
 
-  const feedback = await coursesService.getFeedbackByCourse(IDcourse);
+  const feedback = await coursesService.getFeedbackByCourse(
+    IDcourse,
+    limit,
+    offset
+  );
   //console.log(feedback);
   let isOwn = false;
   let isOnWatchList = false;
@@ -63,6 +65,8 @@ Router.get("/", async (req, res) => {
   }
   let isAuth = false;
   if (res.locals.auth) isAuth = true;
+  let numOfStudent = await coursesService.getNumberParticipant(IDcourse);
+  numOfStudent = numOfStudent[0].num;
   res.render("vwCourse/detail", {
     layout: "main",
     course,
@@ -73,6 +77,7 @@ Router.get("/", async (req, res) => {
     isOwn,
     isAuth,
     isOnWatchList,
+    numOfStudent,
   });
 });
 Router.use(middleware.isStudent);
@@ -107,6 +112,9 @@ Router.get("/removeWatchList", async (req, res) => {
     res.locals.auth.IDUser,
     courseId
   );
+});
+Router.post("/feedback", async (req, res) => {
+  res.json({ cc: "cc" });
 });
 Router.get("/:courseId", async (req, res) => {
   const courseId = req.params.courseId;

@@ -12,6 +12,7 @@
             <th scope="col">Name</th>
             <th scope="col">Created Time</th>
             <th scope="col">Instructor</th>
+            <th scope="col">Disabled</th>
           </tr>
         </thead>
         <tbody>
@@ -30,13 +31,22 @@
               {{Name}}</a></td>
               <td scope="col">{{formatDate CreatedTime}}</td>
               <td scope="col">{{FullName}}</td>
+              <td scope="col" class="d-flex">
+                <form action="/admin/course/disabled?id={{ID}}" method="POST" class="justify-content-center">
+                {{#if disable}}
+                  <button type="submit" name="status" value="enable" class="btn btn-outline-success justify-content-center "> Enable</button>
+                {{else}}
+                 <button type="submit" name="status" value="disable" class="btn btn-outline-danger justify-content-center"> Disable</button>
+              {{/if}}</td>
+                </form>
+               
             </tr>
           {{/each}}
           
           {{/if}}
         </tbody>
       </table>
- 
+ {{#if nPage}}
       <div class="page-container">
                 <a class="first-page">
                 <i class="fas fa-angle-double-left"></i>
@@ -52,6 +62,7 @@
                 <i class="fas fa-angle-double-right"></i>
                 </a>
       </div>
+      {{/if}}
 </div>
   <div class="card-footer text-muted">
     <a name="" id="" class="btn btn-outline-success" href="/admin/user?role=2" role="button">
@@ -62,7 +73,8 @@
 
 </script>
 <script>
-    const valuePage = {
+  {{#if nPage}}
+const valuePage = {
     totalPages: {{this.nPage}},
     curPage: {{this.page}},
     truncate: true,
@@ -70,4 +82,6 @@
         url: `{{url}}`
     };
     pagination(valuePage);
+  {{/if}}
+    
 </script>

@@ -43,10 +43,13 @@
                 {{#each coursesList as |course|}}
                 <div class="col-auto mt-3">
                     <div class="card product-item popover-{{course.ID}}" style="max-width:300px; min-width:300px">
+                        <a href="/course?id={{course.ID}}">
                         <img src="/public/images/courses/{{course.ID}}.jpg" width="250" height="150"
                             style="object-fit: fill;" class="card-img-top" alt="...">
+                            </a>
                         <div class="card-body">
-                            <h5 class="card-title product-title">{{course.Name}}</h5>
+                           
+                            <h5 class="card-title product-title"> <a href="/course?id={{course.ID}}">{{course.Name}}</a></h5>
                             <span class="text-muted product-category">{{course.TopicName}}</span>
                             <small class="text-muted">Ins: {{course.Instructor}}</small>
                             <div class="rating mt-1" rating_score={{#if

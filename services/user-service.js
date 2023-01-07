@@ -87,4 +87,9 @@ export default{
         if(curName[0][0].FullName.localeCompare(name) === 0) return true;
         return false;            
     }
+    ,
+    disabledUser: (IDUser, status)=>{
+        return db.raw(`Update user set disable=${status} where user.IDUser=${IDUser}`); 
+    }
+
 }

@@ -4,7 +4,7 @@
   <div class="card-header">
     Instructor
   </div>
-  <form action="/admin/instructor/del?id={{this.instructor.IDUser}}" method="POST">
+  <form action="/admin/user/disable?id={{this.instructor.IDUser}}" method="POST">
     <div class="card-body">
     <h5>Profile</h5>
      <div class="form-group row">
@@ -36,8 +36,9 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Created Time</th>
+            <th scope="col">Name</th>
+            <th scope="col">Created Time</th>
+            <th scope="col">Disabled</th>
     </tr>
   </thead>
   <tbody>
@@ -49,9 +50,23 @@
       {{else}}
         {{#each this.courses}}
         <tr>
-          <th scope="col">{{ID}}</th>
-          <td scope="col"><a href="/course?id={{ID}}">{{Name}}</a></td>
-          <td>{{formatDate CreatedTime}}</td>
+          <tr>
+              <th scope="col">{{ID}}</th>
+              <td scope="col"><a href="/course?id={{ID}}">
+              <img class="img-thumbnail " src="/public/images/courses/{{ID}}.jpg" alt=""  width="50" 
+              height="500">
+              {{Name}}</a></td>
+              <td scope="col">{{formatDate CreatedTime}}</td>
+              <td scope="col" class="d-flex">
+                
+                {{#if disable}}
+                  <button type="submit" disabled class="btn btn-outline-success justify-content-center "> Enable</button>
+                {{else}}
+                 <button type="submit" disabled class="btn btn-outline-danger justify-content-center"> Disable</button>
+              {{/if}}</td>
+
+               
+            </tr>
         </tr>
       {{/each}}
      
@@ -83,9 +98,18 @@
     <a name="" id="" class="btn btn-outline-success" href="/admin/user?role=1" role="button">
       <i class="fa fa-sign-out" aria-hidden="true"></i>
       Back</a>
-    <button type="submit" name="" id="" class="btn btn-danger mr-4"> 
-        <i class="fa fa-trash-o" aria-hidden="true"></i>
-        Delete </button>
+      {{#if this.instructor.disable}}
+      <button type="submit" name="status" value="enable" id="" class="btn btn-success mr-4"> 
+        <i class="fa fa-check-circle" aria-hidden="true"></i>
+        Enable
+         </button>
+      {{else}}
+      <button type="submit" name="status" value="disable" id="" class="btn btn-danger mr-4"> 
+        <i class="fa fa-ban" aria-hidden="true"></i>
+        Disable
+         </button>  
+      {{/if}}
+    
   </div>
   </form>
 </div>

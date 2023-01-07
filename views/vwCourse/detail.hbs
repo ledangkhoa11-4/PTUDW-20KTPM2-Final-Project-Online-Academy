@@ -1,3 +1,6 @@
+<link rel='stylesheet' href='/public/css/home.css' />
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" type="text/css" href="/public/css/slick.css">
 <div>
   {{#if this.isEmpty}}
   <p>No Data</p>
@@ -5,14 +8,13 @@
   <div class="card mb-3">
     <div class="bgimg" style="display: flex; justify-content:center; background-image:">
       <style>
-        .bgimg{
+        .bgimg {
           background-image: url("https://thietbiketnoi.com/wp-content/uploads/2020/01/tong-hop-hinh-nen-background-vector-designer-dep-do-phan-giai-fhd-2k-4k-moi-nhat-2-1024x683.jpg");
         }
       </style>
-    <img src="/public/images/courses/{{course.ID}}.jpg" class="card-img-top" alt="..."
-       style="max-width: 65%;
-  height: auto;"/>
-</div>
+      <img src="/public/images/courses/{{course.ID}}.jpg" class="card-img-top" alt="..." style="max-width: 65%;
+  height: auto;" />
+    </div>
     <div class="card-body" style="background-color:black;color:white">
       <div style="display:inline-block; font-weight:bold">
         <a href="/categories?catID={{this.course.IDCate}}">{{this.course.CatName}}</a>
@@ -21,28 +23,27 @@
         <br />
         <br />
       </div>
-      <h1 class="card-title">{{this.course.Name}}</h1>
-      <p class="card-text" style="font-size:x-large;">{{this.course.TinyDesc}}</p>
+      <div class="col-8">
+        <h1 class="card-title">{{this.course.Name}}</h1>
+        <p class="card-text" style="font-size:x-large;">{{this.course.TinyDesc}}</p>
 
-      <p class="card-text" style="font-size:medium;">Instructor:
-        {{this.course.Instructor}}</p>
+        <p class="card-text" style="font-size:medium;">Total Lecture:
+          {{this.course.TotalLecture}}
+          lectures
+        </p>
+        <p class="card-text" style="font-size:medium;">
+          Total Length:
+          {{convertMinuteToHour this.course.TotalLength}}
+        </p>
 
-      <p class="card-text" style="font-size:medium;">Total Lecture:
-        {{this.course.TotalLecture}}
-        lectures
-        <br />
-        Total Length:
-        {{this.course.TotalLength}}
-        hours
-      </p>
+        <p class="card-text" style="font-size:medium;">Average rating:
+          {{this.course.AvgRating}} <i class="fa fa-star" aria-hidden="true"></i>/5 <i class="fa fa-star" aria-hidden="true"></i></p>
+        <p class="card-text" style="font-size:medium;">Number of rating: {{this.course.CountRating}}</p>
+        <p class="card-text" style="font-size:medium;">Number of student: {{this.numOfStudent}}</p>
+        <p class="card-text"><small class="text-muted">Last modify:
+            {{this.course.ModifiedTime}}</small></p>
 
-      <p class="card-text" style="font-size:medium;">Average rating:
-        {{this.course.AvgRating}}/5</p>
-      <p class="card-text" style="font-size:medium;">Number of rating: 500k+</p>
-      <p class="card-text" style="font-size:medium;">Number of student: 1m+</p>
-      <p class="card-text"><small class="text-muted">Last modify:
-          {{this.course.ModifiedTime}}mm/dd/yyyy</small></p>
-
+      </div>
     </div>
 
   </div>
@@ -52,12 +53,36 @@
         <div class="card">
           <div class="card-body">
 
-            <h5 class="card-title">&nbsp;<i class="fa-solid fa-check"></i>
+            <h5 class="card-title">&nbsp;<i class="fa fa-graduation-cap" aria-hidden="true"></i>
               &nbsp; What you will learn in this course</h5>
             <p class="card-text">
               {{{this.course.FullDesc}}}
             </p>
 
+          </div>
+        </div>
+        <br>
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h2 class="mb-0">
+                <button style="width: 100%; display: flex; justify-content:flex-start" class="btn btn-light" type="button" data-toggle="collapse"
+                  data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  <h5 class="card-title">&nbsp;<i class="fa fa-address-book" aria-hidden="true"></i>
+                    &nbsp; Instructor Infomation</h5>
+                </button>
+              </h2>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                <div style="height: 400px; overflow: auto">
+                <p class="card-text">
+                  {{{this.ins.Bio}}}
+                </p></div>
+                
+              </div>
+            </div>
           </div>
         </div>
         <br />
@@ -129,8 +154,8 @@
                       {{video.No}}. {{video.Name}} </a></h6>
                   {{#if video.IsPreview}}
                   <div class="preview" style="color: blue; cursor: pointer" data-toggle="modal"
-                    data-target="#exampleModal">Preview</div>
-                  <div class="modal fade" id="exampleModal" aria-hidden="true">
+                    data-target="#exampleModal{{video.URL}}">Preview</div>
+                  <div class="modal fade" id="exampleModal{{video.URL}}" aria-hidden="true">
 
                     <div class="modal-dialog" style="display: flex;justify-content: center;">
                       <div class="modal-content"
@@ -142,6 +167,7 @@
                           </button>
                         </div>
                         <div class="modal-body">
+                          
                           <iframe width="853" height="480" src="https://www.youtube.com/embed/{{video.URL}}" title=""
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -169,64 +195,65 @@
             </div>
           </div>
         </div>
-
         {{/each}}
+        
+
       </div>
     </div>
     <div class="col-4">
       {{#ifeq auth.Role 0}}
 
-        {{else}}
-        <div class="buy-course">
-            <div class="card" style="width: 18rem;">
-              <img src="/public/images/courses/{{course.ID}}.jpg" class="card-img-top" alt="...">
-              <div class="card-body" style="display: flex; justify-content:center; flex-direction: column;">
-                {{#if this.isAuth}}
-                {{#if this.isOwn}}
-                <span class="own" style="font-size: 22px;">You own this course</span>
-                {{else}}
-                {{#if course.PercentDiscount}}
-                <del><span class="old-price ">{{formatCurrency this.course.CourseFee}}</span></del>
-                {{/if}}
-                <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice
-                  this.course.PercentDiscount this.course.CourseFee)}}</span>
-                {{/if}}
-                <br>
-                {{#if this.isOnWatchList}}
-                <a href="./course?id={{course.ID}}" class="btn btn-outline-primary" course="{{course.ID}}"
-                  onclick="removeWatchList(this)" style="cursor: pointer">Remove from watch list </a>
-                {{else}}
-                <a href="./course?id={{course.ID}}" class="btn btn-outline-primary" course="{{course.ID}}"
-                  onclick="addWatchList(this)" style="cursor: pointer">Add to watch list </a>
-                {{/if}}
-                <br>
-                {{#if this.isOwn}}
-                <a href="/course/{{course.ID}}?chapterId=1&lectureId=1" class="btn btn-outline-success">Go to course</a>
-                {{else}}
-                <a href="./course?id={{course.ID}}" class="btn btn-outline-success" course="{{course.ID}}"
-                  onclick="buy(this)" style="cursor: pointer">Buy now</a>
-                {{/if}}
-                {{else}}
-                {{#if course.PercentDiscount}}
-                <del><span class="old-price ">{{formatCurrency this.course.CourseFee}}</span></del>
-                {{/if}}
-                <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice
-                  this.course.PercentDiscount this.course.CourseFee)}}</span>
-                <a href="./auth/login" class="btn btn-outline-primary">Add to watch list </a>
-                <br>
-                <a href="./auth/login" class="btn btn-outline-success">Buy now</a>
-                {{/if}}
-                <br>
-                <p class="card-text">Ensuring refund in 30days</p>
-              </div>
-            </div>
+      {{else}}
+      <div class="buy-course">
+        <div class="card" style="width: 18rem;">
+          <img src="/public/images/courses/{{course.ID}}.jpg" class="card-img-top" alt="...">
+          <div class="card-body" style="display: flex; justify-content:center; flex-direction: column;">
+            {{#if this.isAuth}}
+            {{#if this.isOwn}}
+            <span class="own" style="font-size: 22px;">You own this course</span>
+            {{else}}
+            {{#if course.PercentDiscount}}
+            <del><span class="old-price ">{{formatCurrency this.course.CourseFee}}</span></del>
+            {{/if}}
+            <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice
+              this.course.PercentDiscount this.course.CourseFee)}}</span>
+            {{/if}}
+            <br>
+            {{#if this.isOnWatchList}}
+            <a href="./course?id={{course.ID}}" class="btn btn-outline-danger" course="{{course.ID}}"
+              onclick="removeWatchList(this)" style="cursor: pointer">Remove from watch list &nbsp;<i class="bi bi-x-lg"></i> </a>
+            {{else}}
+            <a href="./course?id={{course.ID}}" class="btn btn-outline-danger" course="{{course.ID}}"
+              onclick="addWatchList(this)" style="cursor: pointer">Add to watch list &nbsp;<i class="bi bi-heart"></i> </a>
+            {{/if}}
+            <br>
+            {{#if this.isOwn}}
+            <a href="/course/{{course.ID}}?chapterId=1&lectureId=1" class="btn btn-outline-success">Go to course &nbsp;<i class="bi bi-book"></i></a>
+            {{else}}
+            <a href="./course?id={{course.ID}}" class="btn btn-outline-success" course="{{course.ID}}"
+              onclick="buy(this)" style="cursor: pointer">Buy now &nbsp;<i class="bi bi-cart"></i></a>
+            {{/if}}
+            {{else}}
+            {{#if course.PercentDiscount}}
+            <del><span class="old-price ">{{formatCurrency this.course.CourseFee}}</span></del>
+            {{/if}}
+            <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice
+              this.course.PercentDiscount this.course.CourseFee)}}</span>
+            <a href="./auth/login" class="btn btn-outline-danger">Add to watch list &nbsp;<i class="bi bi-heart"></i> </a>
+            <br>
+            <a href="./auth/login" class="btn btn-outline-success">Buy now &nbsp;<i class="bi bi-cart"></i></a>
+            {{/if}}
+            <br>
+            <p class="card-text">Ensuring refund in 30days</p>
           </div>
-      
-      
-    {{/ifeq}}
-     
+        </div>
+      </div>
 
-      <div class="feedback">
+
+      {{/ifeq}}
+
+
+      <div class="feedback_container">
         <div class="container justify-content-center mt-5 border-left border-right">
           <h3>Feedback</h3>
           {{#each this.feedback}}
@@ -241,60 +268,99 @@
               <span class="text1">{{Feedback}}</span>
               <div class="rating mt-1" rating_score={{#if Rating}}{{Rating}}{{else}}0{{/if}} rating_count={{Rating}}>
               </div>
-              <script src="/public/script/rating.js"></script>
-              <script> renderRating('.rating')</script>
+
+
             </div>
           </div>
           {{/each}}
         </div>
       </div>
     </div>
-    
-    
+
+
   </div>
 </div>
-<div class='col ml-5'>
-  <div class="outstanding-course mt-5">
-    <p>Relevent Courses</p>
-  </div>
-  <div class="row">
-    {{#if this.isEmpty}}
-    <p>No data</p>
-    {{else}}
-    {{#each coursesList as |course|}}
-    <div class="col-auto mt-3">
-      <div class="card product-item popover-{{course.ID}}" style="max-width:300px; min-width:300px">
-        <img src="/public/images/courses/{{course.ID}}.jpg" width="250" height="150" style="object-fit: fill;"
+
+<div class="container-sm popular-courses ml-4 mr-4" data-aos="zoom-in" style="padding-top: 50px;">
+  <h2 class="slider-title mb-3">Newest Course</h2>
+  <div class="container-sm ml-5 mr-5">
+    <div class="card-deck slick-4">
+
+      {{#each coursesList as |course|}}
+      <div class="card product-item popover-{{course.ID}}" style="position: relative">
+        <a href="/course?id={{course.ID}}" class="anchor-cover"></a>
+        <img src="/public/images/courses/{{course.ID}}.jpg" height="170"
           class="card-img-top" alt="...">
         <div class="card-body">
-          <a href="/course?id={{course.ID}}">
-            <h5 class="card-title product-title">{{course.Name}}</h5>
-          </a>
-          <span class="text-muted product-category">{{course.TopicName}}</span>
-          <small class="text-muted">Ins: {{course.Instructor}}</small>
-          <div class="rating mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}}
-            rating_count={{course.CountRating}}>
+          <h5 class="card-title product-title" style="min-height:38px">{{course.Name}}</h5>
+          <a href="categories/{{course.IDCate}}?topicID={{course.IDTopic}}"><span class="text-muted product-category">{{course.TopicName}}</span></a>
+          <small class="text-muted">{{#if course.Instructor}}{{course.Instructor}}{{else}}Undefined{{/if}}</small>
+          <div class="rating2 mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{CountRating}}> {{!-- chỉ cần thêm attribute như thế này thì script
+            sẽ tự render rating --}}
           </div>
           <div class="product-price-wrapper mt-3">
             {{#if course.PercentDiscount}}
-            <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
+                  <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
             {{/if}}
-            <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice
-              course.PercentDiscount course.CourseFee)}}</span>
+            <span class="new-price float-right">{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</span>
           </div>
         </div>
       </div>
-    </div>
-    {{/each}}
-    {{/if}}
-  </div>
-  <div class="page-container">
-    <div id="pagination"></div>
+      {{/each}}
+    </div>    
   </div>
 </div>
 {{/if}}
 </div>
+<script src="/public/script/rating.js"></script>
+<script> renderRating('.rating')</script>
+{{#section 'script'}}
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script>
+$('.slick-4').slick({
+    dots: true,
+    infinite: true,
+    speed: 400,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    autoplay: true,
+    autoplaySpeed: 2500,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 785,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          dots: false,
+          arrows: false
+        }
+      },
+      {
+        breakpoint: 560,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: false,
+          arrows: false
+        }
+      }
+    ]
+  });
+</script>
+
+{{/section}}
+<script>
+  
+
   function buy(t) {
     let IDCourse = t.getAttribute(`course`);
     $.get(`/course/buy?courseId=${IDCourse}`)
@@ -308,4 +374,6 @@
     let IDCourse = t.getAttribute(`course`);
     $.get(`/course/removeWatchList?courseId=${IDCourse}`)
   }
-</script>
+   renderRating('.rating2')
+   </script>
+

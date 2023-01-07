@@ -1,6 +1,7 @@
 import express from "express";
 import middleware from "../middlewares/middleware.js";
 import coursesService from "../services/courses-service.js";
+import userService from "../services/user-service.js";
 const Router = express.Router();
 Router.get("/", async (req, res) => {
   const IDcourse = req.query.id || 0;
@@ -67,6 +68,10 @@ Router.get("/", async (req, res) => {
   if (res.locals.auth) isAuth = true;
   let numOfStudent = await coursesService.getNumberParticipant(IDcourse);
   numOfStudent = numOfStudent[0].num;
+
+  const idIns = await coursesService.getInsByCourse(IDcourse);
+  const ins = await userService.getInfo(idIns.IDInstructor);
+
   res.render("vwCourse/detail", {
     layout: "main",
     course,
@@ -78,6 +83,7 @@ Router.get("/", async (req, res) => {
     isAuth,
     isOnWatchList,
     numOfStudent,
+    ins,
   });
 });
 Router.use(middleware.isStudent);
@@ -114,7 +120,22 @@ Router.get("/removeWatchList", async (req, res) => {
   );
 });
 Router.post("/feedback", async (req, res) => {
-  res.json({ cc: "cc" });
+  const courseId = req.body.courseId;
+  const star = req.body.star;
+  const fb = req.body.fb;
+
+  const upFeedback = await coursesService.addFeedback(
+    courseId,
+    res.locals.auth.IDUser,
+    fb
+  );
+  const upRating = await coursesService.addRating(
+    courseId,
+    res.locals.auth.IDUser,
+    star
+  );
+
+  res.json({ thankiu: "Thank you" });
 });
 Router.get("/:courseId", async (req, res) => {
   const courseId = req.params.courseId;

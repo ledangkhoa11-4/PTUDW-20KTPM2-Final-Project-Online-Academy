@@ -270,4 +270,16 @@ export default {
     if (list[0].length != 0) return JSON.parse(JSON.stringify(list[0]));
     return null;
   },
+  addFeedback: async (courseId, userId, feedback) => {
+    let result = await db.raw(
+      `update participate set Feedback = '${feedback}' where IDCourse = ${courseId} and IDStudent = ${userId}`
+    );
+    return result[0];
+  },
+  addRating: async (courseId, userId, star) => {
+    let result = await db.raw(
+      `update participate set Rating = ${star} where IDCourse = ${courseId} and IDStudent = ${userId}`
+    );
+    return result[0];
+  },
 };

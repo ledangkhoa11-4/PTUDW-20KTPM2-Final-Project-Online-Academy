@@ -362,16 +362,16 @@ export default {
       .offset(offset);
     return list;
   },
-  getCoursesByStudent: async (IDStudent) => {
+  getCoursesByStudentByPage: async (IDStudent, limit, offset) => {
     const result =
       await db.raw(`SELECT c.ID, p.finish FROM participate p LEFT JOIN courses c on p.IDCourse = c.ID LEFT JOIN discount d on c.IDDiscount = d.ID 
-    where c.disable = 0 and p.IDStudent = '${IDStudent}';`);
+    where c.disable = 0 and p.IDStudent = ${IDStudent} limit ${limit} offset ${offset};`);
     return result[0];
   },
-  getCoursesWatchlistByStudent: async (IDStudent) => {
+  getCoursesWatchlistByStudentByPage: async (IDStudent, limit, offset) => {
     const result =
       await db.raw(`SELECT courses.Name, courses.TinyDesc, courses.CourseFee,courses.ID, discount.PercentDiscount FROM watchlist LEFT JOIN courses ON watchlist.IDCourse = courses.ID LEFT JOIN discount ON discount.ID = courses.IDDiscount
-    WHERE courses.disable = 0 and watchlist.IDStudent = '${IDStudent}';`);
+    WHERE courses.disable = 0 and watchlist.IDStudent = ${IDStudent} limit ${limit} offset ${offset};`);
     return result[0];
   },
   getNumOfVideoWatchedByStudent: async (courseId, userId) => {
@@ -409,6 +409,33 @@ export default {
 
     if (result[0]) return result[0];
     return null;
+  },
+  getTotalCourseByTopicIDDisable: async (catId, topicId) => {
+    const total = await db("courses")
+      .where("IDCategory", catId)
+      .andWhere("Topic", topicId)
+      .andWhere("disable", 0)
+      .count({ amount: "ID" });
+    return total[0].amount;
+  },
+  getTotalCourseByCatIdDisable: async (CatId) => {
+    const total = await db("courses")
+      .where("IDCategory", CatId)
+      .andWhere("disable", 0)
+      .count({ amount: "ID" });
+    return total[0].amount;
+  },
+  getTotalCourseByStudentID: async (id) => {
+    const total = await db.raw(
+      `SELECT COUNT(*) AS count FROM participate LEFT JOIN courses ON participate.IDCourse = courses.ID WHERE courses.disable = 0 AND participate.IDStudent = ${id}`
+    );
+    return total[0][0].count;
+  },
+  getTotalCoursesByStudentIDWatchlist: async (id) => {
+    const total = await db.raw(
+      `SELECT COUNT(*) AS count FROM watchlist LEFT JOIN courses ON courses.ID = watchlist.IDCourse WHERE watchlist.IDStudent = ${id} AND courses.disable = 0;`
+    );
+    return total[0][0].count;
   },
   removeAllProgressByCourse: async (IDCourse) => {
     const del = await db("watched").where({ IDCourse }).del();

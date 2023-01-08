@@ -375,7 +375,3 @@ a:hover{
     right: 0;
     z-index: 99;
 }
-.delete:hover{
-    background-color: #8b98b1;
-    text-decoration: underline;
-}

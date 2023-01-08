@@ -1,6 +1,8 @@
 <link rel='stylesheet' href='/public/css/home.css' />
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 <link rel="stylesheet" type="text/css" href="/public/css/slick.css">
+<link rel="stylesheet" href="/public/css/create-course.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css" />
 <div>
   {{#if this.isEmpty}}
   <p>No Data</p>
@@ -37,7 +39,8 @@
         </p>
 
         <p class="card-text" style="font-size:medium;">Average rating:
-          {{this.course.AvgRating}} <i class="fa fa-star" aria-hidden="true"></i>/5 <i class="fa fa-star" aria-hidden="true"></i></p>
+          {{this.course.AvgRating}} <i class="fa fa-star" aria-hidden="true"></i>/5 <i class="fa fa-star"
+            aria-hidden="true"></i></p>
         <p class="card-text" style="font-size:medium;">Number of rating: {{this.course.CountRating}}</p>
         <p class="card-text" style="font-size:medium;">Number of student: {{this.numOfStudent}}</p>
         <p class="card-text"><small class="text-muted">Last modify:
@@ -65,9 +68,10 @@
         <div class="accordion" id="accordionExample">
           <div class="card">
             <div class="card-header" id="headingOne">
-              <h2 class="mb-0">
-                <button style="width: 100%; display: flex; justify-content:flex-start" class="btn btn-light" type="button" data-toggle="collapse"
-                  data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              <h2 style="margin: 0" class="mb-0">
+                <button style="width: 100%; display: flex; justify-content:flex-start" class="btn btn-light"
+                  type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                  aria-controls="collapseOne">
                   <h5 class="card-title">&nbsp;<i class="fa fa-address-book" aria-hidden="true"></i>
                     &nbsp; Instructor Infomation</h5>
                 </button>
@@ -77,11 +81,11 @@
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="card-body">
                 <div style="height: 400px; overflow: auto">
-                <p class="card-text">
+                  <p class="card-text">
                   <p style="    font-size: 24px;
     font-family: 'Gentleman';
     text-align: center;">{{course.Instructor}}</p>
-                      <span style="display: block;
+                  <span style="display: block;
     font-size: 21px;
     color: #a1a1a1;
     font-family: 'Gentleman';
@@ -89,8 +93,9 @@
     margin: -10px 0 16px 0;
     font-style: italic;">{{this.ins.CurrentJob}}</span>
                   {{{this.ins.Bio}}}
-                </p></div>
-                
+                  </p>
+                </div>
+
               </div>
             </div>
           </div>
@@ -177,7 +182,7 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          
+
                           <iframe width="853" height="480" src="https://www.youtube.com/embed/{{video.URL}}" title=""
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -206,7 +211,7 @@
           </div>
         </div>
         {{/each}}
-        
+
 
       </div>
     </div>
@@ -219,8 +224,102 @@
           <img src="/public/images/courses/{{course.ID}}.jpg" class="card-img-top" alt="...">
           <div class="card-body" style="display: flex; justify-content:center; flex-direction: column;">
             {{#ifeq auth.IDUser course.IDInstructor}}
-                <a href="/instructor/edit/{{course.ID}}" class="btn btn-outline-info mt-3"
-                style="cursor: pointer">Edit this course &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
+            <div class="btn btn-outline-dark" type="button" data-toggle="modal" data-target="#exampleModal">Edit
+              infomation <i class="bi bi-pencil-fill"></i></div>
+            <div class="modal fade" id="exampleModal" aria-hidden="true">
+
+              <div class="modal-dialog" style="display: flex;justify-content: center; min-width:1000px">
+                <div class="modal-content" style="background-color: #fff; color: black;">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/instructor/detail-view-edit" method="POST" enctype="multipart/form-data" id="form_table" class="form-1 mainForm mt-1" novalidate>
+                      <h2 style="color: #000472; margin:0">Course information</h2>
+                      <hr>
+
+                      <input type="text" name="ID" id="" value="{{course.ID}}" style="display: none;">
+
+                      <div class="input-field col s12 mt-4 form__group ">
+                        <input type="text" name="Name" class="name pl-4" id="Name" autocomplete="none"
+                          value="{{course.Name}}">
+                        <label for="Name" class="active">Course title*</label>
+                        
+                        <span class="form__group-message email-message"></span>
+                      </div>
+
+                      <div class="input-field col s12 mt-4 form__group ">
+                        <input type="text" name="TinyDes" class="TinyDes pl-4" id="TinyDes" autocomplete="none"
+                          value="{{course.TinyDesc}}">
+                        <label for="TinyDes" class="active">Course brief description</label>
+                        
+                        <span class="form__group-message email-message"></span>
+                      </div>
+
+                      <div class=" col s12 mt-5 form__group ">
+                        <label for="FullDes">Detail destination</label>
+                        <textarea name="FullDes" id="FullDes" rows="10"
+                          style="width: 100%">{{course.FullDesc}}</textarea>
+                        
+                        <span class="form__group-message email-message"></span>
+                      </div>
+
+                      <div class="row mt-5 ml-1 " style="width: 100%">
+                        <div class="col form__group">
+                          <label>Category*</label>
+                          <select class="custom-select custom-select mb-3 choice-cate" id="cate-input" name="IDCate">
+                            <option value="" selected>Select Category</option>
+                            {{#each listCate as |item|}}
+                            <option value="{{item.IDCate}}">{{item.Name}}</option>
+                            {{/each}}
+                          </select>
+                          
+                          <span class="form__group-message email-message"></span>
+                        </div>
+                        <div class="col form__group">
+                          <label>Topic*</label>
+                          <select class="custom-select custom-select mb-3 choice-topic" id="topic-input" name="IDTopic">
+                            <option value="" selected>Select Topic</option>
+                          </select>
+                          
+                          <span class="form__group-message email-message"></span>
+                        </div>
+                      </div>
+                      <div class=" col s12 mt-2">
+                        <label for="fuMain">Photo</label>
+                        <input type="file" id="image" name="image" accept=".jpg,.png,.gif"
+                          value="C:\Users\GF75\Desktop\dog.jpg">
+
+                      </div>
+
+                      <div class="row mt-5 ml-1 " style="width: 100%">
+                        <div class="input-field col s12 form__group">
+                          <label for="Price" class="active">Price</label>
+                          <input class="required" type="text" name="Price" id="Price"
+                            pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" data-type="currency"
+                            value="{{course.CourseFee}}">
+                          
+                          <span class="form__group-message email-message"></span>
+                        </div>
+                        <div class="col s12 input-field form__group">
+                          <label for="Discount" class="active">Discount Percent</label>
+                          <input type="number" name="Discount" id="Discount" min="0" max="100"
+                            value="{{course.PercentDiscount}}">
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-lg btn-block" style="color: white; background-color: #000472;">Update this course</button>
+
+                  </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <a href="/instructor/edit/{{course.ID}}" class="btn btn-outline-dark mt-3" style="cursor: pointer">Edit this
+              course &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
             {{else}}
             {{#if this.isAuth}}
             {{#if this.isOwn}}
@@ -235,14 +334,17 @@
             <br>
             {{#if this.isOnWatchList}}
             <a href="./course?id={{course.ID}}" class="btn btn-outline-danger" course="{{course.ID}}"
-              onclick="removeWatchList(this)" style="cursor: pointer">Remove from watch list &nbsp;<i class="bi bi-x-lg"></i> </a>
+              onclick="removeWatchList(this)" style="cursor: pointer">Remove from watch list &nbsp;<i
+                class="bi bi-x-lg"></i> </a>
             {{else}}
             <a href="./course?id={{course.ID}}" class="btn btn-outline-danger" course="{{course.ID}}"
-              onclick="addWatchList(this)" style="cursor: pointer">Add to watch list &nbsp;<i class="bi bi-heart"></i> </a>
+              onclick="addWatchList(this)" style="cursor: pointer">Add to watch list &nbsp;<i class="bi bi-heart"></i>
+            </a>
             {{/if}}
             <br>
             {{#if this.isOwn}}
-            <a href="/course/{{course.ID}}?chapterId=1&lectureId=1" class="btn btn-outline-success">Go to course &nbsp;<i class="bi bi-book"></i></a>
+            <a href="/course/{{course.ID}}?chapterId=1&lectureId=1" class="btn btn-outline-success">Go to course
+              &nbsp;<i class="bi bi-book"></i></a>
             {{else}}
             <a href="./course?id={{course.ID}}" class="btn btn-outline-success" course="{{course.ID}}"
               onclick="buy(this)" style="cursor: pointer">Buy now &nbsp;<i class="bi bi-cart"></i></a>
@@ -253,7 +355,8 @@
             {{/if}}
             <span class="new-price float-right" style="font-size: 22px;">{{formatCurrency (calculateNewPrice
               this.course.PercentDiscount this.course.CourseFee)}}</span>
-            <a href="./auth/login" class="btn btn-outline-danger">Add to watch list &nbsp;<i class="bi bi-heart"></i> </a>
+            <a href="./auth/login" class="btn btn-outline-danger">Add to watch list &nbsp;<i class="bi bi-heart"></i>
+            </a>
             <br>
             <a href="./auth/login" class="btn btn-outline-success">Buy now &nbsp;<i class="bi bi-cart"></i></a>
             {{/if}}
@@ -263,7 +366,7 @@
             <span class="card-text"><i class="fa-solid fa-rotate-right mr-1"></i> Ensuring refund in 30 days</span>
             <span class="card-text"><i class="fa-solid fa-infinity mr-1"></i> Full lifetime access</span>
 
-            
+
           </div>
         </div>
       </div>
@@ -301,32 +404,34 @@
 </div>
 
 <div class="container-sm popular-courses ml-4 mr-4" data-aos="zoom-in" style="padding-top: 50px;">
-  <h2 class="slider-title mb-3">Newest Course</h2>
+  <h2 style="margin: 0" class="slider-title mb-3">Relevant Course</h2>
   <div class="container-sm ml-5 mr-5">
     <div class="card-deck slick-4">
 
       {{#each coursesList as |course|}}
       <div class="card product-item popover-{{course.ID}}" style="position: relative; max-width: 300px">
         <a href="/course?id={{course.ID}}" class="anchor-cover"></a>
-        <img src="/public/images/courses/{{course.ID}}.jpg" height="170"
-          class="card-img-top" alt="...">
+        <img src="/public/images/courses/{{course.ID}}.jpg" height="170" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title product-title" style="min-height:38px">{{course.Name}}</h5>
-          <a href="categories/{{course.IDCate}}?topicID={{course.IDTopic}}"><span class="text-muted product-category">{{course.TopicName}}</span></a>
+          <a href="categories/{{course.IDCate}}?topicID={{course.IDTopic}}"><span
+              class="text-muted product-category">{{course.TopicName}}</span></a>
           <small class="text-muted">{{#if course.Instructor}}{{course.Instructor}}{{else}}Undefined{{/if}}</small>
-          <div class="rating rating2 mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}} rating_count={{CountRating}}> {{!-- chỉ cần thêm attribute như thế này thì script
+          <div class="rating rating2 mt-1" rating_score={{#if course.AvgRating}}{{course.AvgRating}}{{else}}0{{/if}}
+            rating_count={{CountRating}}> {{!-- chỉ cần thêm attribute như thế này thì script
             sẽ tự render rating --}}
           </div>
           <div class="product-price-wrapper mt-3">
             {{#if course.PercentDiscount}}
-                  <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
+            <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
             {{/if}}
-            <span class="new-price float-right">{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</span>
+            <span class="new-price float-right">{{formatCurrency (calculateNewPrice course.PercentDiscount
+              course.CourseFee)}}</span>
           </div>
         </div>
       </div>
       {{/each}}
-    </div>    
+    </div>
   </div>
 </div>
 {{/if}}
@@ -336,7 +441,7 @@
 {{#section 'script'}}
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script>
-$('.slick-4').slick({
+  $('.slick-4').slick({
     dots: true,
     infinite: true,
     speed: 400,
@@ -375,10 +480,185 @@ $('.slick-4').slick({
     ]
   });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/buffer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/filetype.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/piexif.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/sortable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/fileinput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/themes/fa4/theme.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/mkaemydy8btg089p8s8hb1ok60gyatj2vdic9oibqqlru367/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+      selector: '#FullDes',
+      menubar: false,
+      plugins: ['paste',  'link', 'autolink', 'lists','table'],
+      toolbar: [
+        'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+      ],
+    }); 
+</script>
+<script>
+    $('#image').fileinput({
+      dropZoneEnabled: false,
+      maxFileCount: 1,
+      theme: 'fa4',
+      allowedFileExtensions: ['jpg', 'png', 'gif'],
+      initialPreview: [
+         "/public/images/courses/{{course.ID}}.jpg"
+      ] ,
+      initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
+    initialPreviewFileType: 'image',
+    
+    });
+  </script>
+  <script>
+    // Jquery Dependency
+
+$("input[data-type='currency']").on({
+    keyup: function() {
+      formatCurrency($(this));
+    },
+    blur: function() { 
+      formatCurrency($(this), "blur");
+    }
+});
+let priceInput = document.querySelector("input[data-type='currency']")
+priceInput.focus();
+priceInput.blur();
+
+function formatNumber(n) {
+  // format number 1000000 to 1,234,567
+  return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
+
+
+function formatCurrency(input, blur) {
+  // appends $ to value, validates decimal side
+  // and puts cursor back in right position.
+  
+  // get input value
+  var input_val = input.val();
+  
+  // don't validate empty input
+  if (input_val === "") { return; }
+  
+  // original length
+  var original_len = input_val.length;
+
+  // initial caret position 
+  var caret_pos = input.prop("selectionStart");
+    
+  // check for decimal
+  if (input_val.indexOf(".") >= 0) {
+
+    // get position of first decimal
+    // this prevents multiple decimals from
+    // being entered
+    var decimal_pos = input_val.indexOf(".");
+
+    // split number by decimal point
+    var left_side = input_val.substring(0, decimal_pos);
+    var right_side = input_val.substring(decimal_pos);
+
+    // add commas to left side of number
+    left_side = formatNumber(left_side);
+
+    // validate right side
+    right_side = formatNumber(right_side);
+    
+    // On blur make sure 2 numbers after decimal
+  
+    
+    // Limit decimal to only 2 digits
+    right_side = right_side.substring(0, 2);
+
+    // join number by .
+    input_val = "$" + left_side + "." + right_side;
+
+  } else {
+    // no decimal entered
+    // add commas to number
+    // remove all non-digits
+    input_val = formatNumber(input_val);
+    input_val =  input_val;
+    
+
+  }
+  
+  // send updated string to input
+  input.val(input_val);
+
+  // put caret back in the right position
+  var updated_len = input_val.length;
+  caret_pos = updated_len - original_len + caret_pos;
+  input[0].setSelectionRange(caret_pos, caret_pos);
+}
+  </script>
+  <script>
+    async function  getTopic(catID){
+        await $.get(`/instructor/cat/${catID}`, function(result){
+            let html = `<option value="" selected>Select Topic</option>`;
+            Array.from(result).forEach(topic=>{
+                let topId = topic.IDTopic;
+                let topName = topic.Name;
+                html += `<option value="${topId}">${topName}</option>`
+            })
+            topicInput.innerHTML = html;
+        })
+    }
+    let cateInput = document.querySelector('#cate-input');
+    let topicInput = document.querySelector("#topic-input")
+    cateInput.onchange = ()=>{
+        let catID = cateInput.value
+        if(catID == 0)
+            return topicInput.innerHTML = `<option value="" selected>Select Topic</option>`;
+        getTopic(catID);
+        
+    }
+    document.querySelector('body').onload = async ()=>{
+        let IDCate = {{course.IDCate}};
+        let IDTopic = {{course.IDTopic}};
+        cateInput.querySelector(`option[value='${IDCate}'`).setAttribute('selected','');
+        await getTopic(IDCate);
+        topicInput.querySelector(`option[value='${IDTopic}'`).setAttribute('selected','');
+    }
+  </script>
+
 
 {{/section}}
+<script src="/public/script/validate.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-  
+    Validator(
+        {
+            form: ".form-1",
+            error_message: ".form__group-message",
+            rules: [
+                Validator.isRequire(".name"),
+                Validator.isRequire(".choice-cate"),
+                Validator.isRequire(".choice-topic"),
+                Validator.isRequire(".required"),
+            ],
+            onSubmit: function (data) {
+                let value = document.querySelector("#Price").value;
+                value = value.replaceAll(",","");
+                document.querySelector("#Price").value = value;
+                document.querySelector(".form-1").submit();
+            }
+        })
+
+        let discountInput = document.querySelector('#Discount');
+    discountInput.onchange = (e)=>{
+        let value = discountInput.value;
+        if(value < 0)
+            discountInput.value = 0;
+        if(value > 100)
+            discountInput.value = 100;
+    }
+</script>
+<script>
+
 
   function buy(t) {
     let IDCourse = t.getAttribute(`course`);
@@ -393,15 +673,34 @@ $('.slick-4').slick({
     let IDCourse = t.getAttribute(`course`);
     $.get(`/course/removeWatchList?courseId=${IDCourse}`)
   }
-   renderRating('.rating2')
-   </script>
+  renderRating('.rating2')
+</script>
 
 <style>
-  span.card-text{
+  span.card-text {
     font-size: 14px;
-    color:#333;
+    color: #333;
   }
-  .card-text + ul li{
-    list-style-type:disc
+
+  .card-text+ul li {
+    list-style-type: disc
   }
 </style>
+<script>
+    function matterialInput(){
+    let inputs = document.querySelectorAll('input[type]:not([type="checkbox"])');
+    Array.from(inputs).forEach(input =>{
+            input.onclick = ()=>{
+                let label = document.querySelector(`label[for='${input.id}']`)
+                if(label)
+                    label.classList.toggle('active', true);}
+        
+            input.onblur = ()=>{
+                let label = document.querySelector(`label[for='${input.id}']`)
+                if(label && input.value.length == 0)
+                    label.classList.toggle('active', false);}
+        }
+    )
+}
+matterialInput()
+</script>

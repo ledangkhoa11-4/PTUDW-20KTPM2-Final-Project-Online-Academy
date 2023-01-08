@@ -2,8 +2,10 @@ import express from "express";
 import middleware from "../middlewares/middleware.js";
 import coursesService from "../services/courses-service.js";
 import userService from "../services/user-service.js";
+import categoryService from "../services/category.services.js";
 const Router = express.Router();
 Router.get("/", async (req, res) => {
+  const listCate = await categoryService.getAllCat();
   const IDcourse = req.query.id || 0;
   const course = await coursesService.getInfoCourse(`${IDcourse}`);
 
@@ -84,10 +86,10 @@ Router.get("/", async (req, res) => {
     isOnWatchList,
     numOfStudent,
     ins,
+    listCate,
   });
 });
-Router.use(middleware.isStudent);
-Router.get("/watched", async (req, res) => {
+Router.get("/watched", middleware.isStudent, async (req, res) => {
   const courseId = req.query.courseId || 0;
   const chapterId = req.query.chapterId || 0;
   const no = req.query.No || 0;
@@ -98,7 +100,7 @@ Router.get("/watched", async (req, res) => {
     no
   );
 });
-Router.get("/removeWatched", async (req, res) => {
+Router.get("/removeWatched", middleware.isStudent, async (req, res) => {
   const courseId = req.query.courseId || 0;
   const chapterId = req.query.chapterId || 0;
   const no = req.query.No || 0;
@@ -109,28 +111,28 @@ Router.get("/removeWatched", async (req, res) => {
     no
   );
 });
-Router.get("/buy", async (req, res) => {
+Router.get("/buy", middleware.isStudent, async (req, res) => {
   const courseId = req.query.courseId || 0;
   const result = await coursesService.addParticipant(
     res.locals.auth.IDUser,
     courseId
   );
 });
-Router.get("/addWatchList", async (req, res) => {
+Router.get("/addWatchList", middleware.isStudent, async (req, res) => {
   const courseId = req.query.courseId || 0;
   const result = await coursesService.addWatchList(
     res.locals.auth.IDUser,
     courseId
   );
 });
-Router.get("/removeWatchList", async (req, res) => {
+Router.get("/removeWatchList", middleware.isStudent, async (req, res) => {
   const courseId = req.query.courseId || 0;
   const result = await coursesService.removeWatchList(
     res.locals.auth.IDUser,
     courseId
   );
 });
-Router.post("/feedback", async (req, res) => {
+Router.post("/feedback", middleware.isStudent, async (req, res) => {
   const courseId = req.body.courseId;
   const star = req.body.star;
   const fb = req.body.fb;
@@ -148,7 +150,7 @@ Router.post("/feedback", async (req, res) => {
 
   res.json({ thankiu: "Thank you" });
 });
-Router.get("/:courseId", async (req, res) => {
+Router.get("/:courseId", middleware.isStudent, async (req, res) => {
   const courseId = req.params.courseId;
   const chapterId = req.query.chapterId || 0;
   const lectureId = req.query.lectureId || 0;

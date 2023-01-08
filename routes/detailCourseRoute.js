@@ -135,8 +135,8 @@ Router.get("/removeWatchList", middleware.isStudent, async (req, res) => {
 Router.post("/feedback", middleware.isStudent, async (req, res) => {
   const courseId = req.body.courseId;
   const star = req.body.star;
-  const fb = req.body.fb;
-
+  let fb = req.body.fb;
+  fb = fb.replaceAll("'","''");
   const upFeedback = await coursesService.addFeedback(
     courseId,
     res.locals.auth.IDUser,

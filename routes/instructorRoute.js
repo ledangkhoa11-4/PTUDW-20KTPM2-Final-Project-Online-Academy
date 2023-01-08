@@ -185,76 +185,114 @@ Router.get("/edit/:id", middleware.isOwnCourse, async (req, res) => {
     videosLength,
   });
 });
-
-Router.post("/edit/:id", uploadEdit.single("image"), async (req, res, next) => {
-  let IDCourse = req.body.ID;
-  let discountPercent = req.body.Discount;
-  let discountRes = await discountService.getDiscount(discountPercent);
-  let ModifiedTime = moment().format("yyyy-M-D");
-  if (!discountRes || discountRes.length == 0) {
-    discountRes = await discountService.addDiscount(discountPercent);
-  } else {
-    discountRes = discountRes.ID;
-  }
-
-  //Xoá tất cả chapter, video cũ
-  const delChap = await chapterService.removeAllChapterOfCourse(IDCourse);
-  const delVideos = await coursesService.removeVideoOfCourse(IDCourse);
-
-  let course = {
-    Name: req.body.Name || "",
-    IDCategory: req.body.IDCate || 0,
-    Topic: req.body.IDTopic || 0,
-    TinyDesc: req.body.TinyDes || "",
-    FullDesc: req.body.FullDes || "",
-    CourseFee: req.body.Price || 0,
-    IDDiscount: discountRes || 0,
-    IDInstructor: res.locals.auth.IDUser,
-    IsCompleted: req.body.isCompleted === "on",
-    ModifiedTime,
-  };
-  let resultUpdateCourse = await coursesService.updateCourse(IDCourse, course);
-
-  let chapters = req.body.chapter;
-  let chapCnt = 1;
-  res.redirect("/instructor/create-course?noti=1");
-  for (let i = 0; i < chapters.length; i++) {
-    let chapter = chapters[i];
-    if (chapter) {
-      let chapterName = chapter.name;
-      delete chapter.name;
-
-      const resultAddChap = await chapterService.addChapter(
-        IDCourse,
-        chapCnt,
-        chapterName
-      );
-      for (const [key, value] of Object.entries(chapter)) {
-        let lectureNum = key;
-        let lectureName = value.name;
-        let lectureUrl = value.url;
-        let videoLength = 0;
-        let IsPreview = value.isPreview === "on";
-        try {
-          const info = await youtubeInfo(`${lectureUrl}`);
-          videoLength = info.duration;
-        } catch (err) {
-          videoLength = 0;
-        }
-        const resultAddVideo = await coursesService.addVideo({
-          IDCourse,
-          IDChapter: chapCnt,
-          No: lectureNum,
-          Name: lectureName,
-          URL: lectureUrl,
-          Length: videoLength,
-          IsPreview,
-        });
-      }
-      chapCnt = chapCnt + 1;
+Router.post(
+  "/detail-view-edit",
+  uploadEdit.single("image"),
+  async (req, res, next) => {
+    let IDCourse = req.body.ID;
+    let discountPercent = req.body.Discount;
+    let discountRes = await discountService.getDiscount(discountPercent);
+    let ModifiedTime = moment().format("yyyy-M-D");
+    if (!discountRes || discountRes.length == 0) {
+      discountRes = await discountService.addDiscount(discountPercent);
+    } else {
+      discountRes = discountRes.ID;
     }
+    let course = {
+      Name: req.body.Name || "",
+      IDCategory: req.body.IDCate || 0,
+      Topic: req.body.IDTopic || 0,
+      TinyDesc: req.body.TinyDes || "",
+      FullDesc: req.body.FullDes || "",
+      CourseFee: req.body.Price || 0,
+      IDDiscount: discountRes || 0,
+      IDInstructor: res.locals.auth.IDUser,
+      IsCompleted: req.body.isCompleted === "on",
+      ModifiedTime,
+    };
+    let resultUpdateCourse = await coursesService.updateCourse(
+      IDCourse,
+      course
+    );
+    res.redirect(`/course?id=${IDCourse}`);
   }
-});
+),
+  Router.post(
+    "/edit/:id",
+    uploadEdit.single("image"),
+    async (req, res, next) => {
+      let IDCourse = req.body.ID;
+      let discountPercent = req.body.Discount;
+      let discountRes = await discountService.getDiscount(discountPercent);
+      let ModifiedTime = moment().format("yyyy-M-D");
+      if (!discountRes || discountRes.length == 0) {
+        discountRes = await discountService.addDiscount(discountPercent);
+      } else {
+        discountRes = discountRes.ID;
+      }
+
+      //Xoá tất cả chapter, video cũ
+      const delChap = await chapterService.removeAllChapterOfCourse(IDCourse);
+      const delVideos = await coursesService.removeVideoOfCourse(IDCourse);
+
+      let course = {
+        Name: req.body.Name || "",
+        IDCategory: req.body.IDCate || 0,
+        Topic: req.body.IDTopic || 0,
+        TinyDesc: req.body.TinyDes || "",
+        FullDesc: req.body.FullDes || "",
+        CourseFee: req.body.Price || 0,
+        IDDiscount: discountRes || 0,
+        IDInstructor: res.locals.auth.IDUser,
+        IsCompleted: req.body.isCompleted === "on",
+        ModifiedTime,
+      };
+      let resultUpdateCourse = await coursesService.updateCourse(
+        IDCourse,
+        course
+      );
+
+      let chapters = req.body.chapter;
+      let chapCnt = 1;
+      res.redirect("/instructor/create-course?noti=1");
+      for (let i = 0; i < chapters.length; i++) {
+        let chapter = chapters[i];
+        if (chapter) {
+          let chapterName = chapter.name;
+          delete chapter.name;
+
+          const resultAddChap = await chapterService.addChapter(
+            IDCourse,
+            chapCnt,
+            chapterName
+          );
+          for (const [key, value] of Object.entries(chapter)) {
+            let lectureNum = key;
+            let lectureName = value.name;
+            let lectureUrl = value.url;
+            let videoLength = 0;
+            let IsPreview = value.isPreview === "on";
+            try {
+              const info = await youtubeInfo(`${lectureUrl}`);
+              videoLength = info.duration;
+            } catch (err) {
+              videoLength = 0;
+            }
+            const resultAddVideo = await coursesService.addVideo({
+              IDCourse,
+              IDChapter: chapCnt,
+              No: lectureNum,
+              Name: lectureName,
+              URL: lectureUrl,
+              Length: videoLength,
+              IsPreview,
+            });
+          }
+          chapCnt = chapCnt + 1;
+        }
+      }
+    }
+  );
 Router.get("/account", (req, res, next) => {
   res.render("vwInstructor/account", {
     layout: "instructor",

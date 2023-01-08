@@ -14,29 +14,50 @@
 				</div>
 				<span class="form__group-message email-message"></span>
 			</div>
-
-			<div class="form-group ">
-				<label for="email"><i class="fa-solid fa-envelope mr-2 ml-3"></i>Email</label>
-				<div class="d-flex" style="position: relative;">
-					<input id="email" class="email" type="text" value="{{auth.Email}}" disabled style="flex: 1;" autocomplete="new-email">
-					<button type="button" class="btn btn-light" style="position: absolute; right: 0; height: 54px"
-						data-toggle="modal" data-target="#exampleModalCenterEmail"><i class="fa-solid fa-pen"></i></button>
-				</div>
-				<span class="form__group-message email-message"></span>
-			</div>
-
-			<div class="form-group">
-				<label for="password"><i class="fa-solid fa-key mr-2 ml-3"></i>Password</label>
-				<div class="d-flex" style="position: relative;">
-					<input type="password" value="*****************" autocomplete="true"
-						disabled style="flex:1" autocomplete="new-password">
-					<button type="button" class="btn btn-light" style="position: absolute; right: 0; height: 54px"
-						data-toggle="modal" data-target="#exampleModalCenterPassword"><i class="fa-solid fa-pen"></i></button>
+			{{#if (isEmpty infos.IDSocial)}}
+				<div class="form-group ">
+					<label for="email"><i class="fa-solid fa-envelope mr-2 ml-3"></i>Email</label>
+					<div class="d-flex" style="position: relative;">
+						<input id="email" class="email" type="text" value="{{auth.Email}}" disabled style="flex: 1;" autocomplete="new-email">
+						<button type="button" class="btn btn-light" style="position: absolute; right: 0; height: 54px"
+							data-toggle="modal" data-target="#exampleModalCenterEmail"><i class="fa-solid fa-pen"></i></button>
+					</div>
+					<span class="form__group-message email-message"></span>
 				</div>
 
-				<span class="form__group-message email-message"></span>
-			</div>
+				<div class="form-group">
+					<label for="password"><i class="fa-solid fa-key mr-2 ml-3"></i>Password</label>
+					<div class="d-flex" style="position: relative;">
+						<input type="password" value="*****************" autocomplete="true"
+							disabled style="flex:1" autocomplete="new-password">
+						<button type="button" class="btn btn-light" style="position: absolute; right: 0; height: 54px"
+							data-toggle="modal" data-target="#exampleModalCenterPassword"><i class="fa-solid fa-pen"></i></button>
+					</div>
 
+					<span class="form__group-message email-message"></span>
+				</div>
+				{{else}}
+					<div class="form-group ">
+						<label for="email"><i class="fa-solid fa-envelope mr-2 ml-3"></i>Email</label>
+						<div class="d-flex" style="position: relative;" title="Login by Third Party cannot change email">
+							<input id="email" class="email" type="text" value="{{auth.Email}}" disabled style="flex: 1;" autocomplete="new-email">
+							<button type="button" class="btn btn-light" style="position: absolute; right: 0; height: 54px"
+								data-toggle="modal" data-target="#exampleModalCenterEmail" disabled><i class="fa-solid fa-pen"></i></button>
+						</div>
+						<span class="form__group-message email-message"></span>
+					</div>
+
+					<div class="form-group">
+						<label for="password"><i class="fa-solid fa-key mr-2 ml-3"></i>Password</label>
+						<div class="d-flex" style="position: relative;" title="Login by Third Party cannot change password">
+							<input type="password" value="*****************" autocomplete="true"
+								disabled style="flex:1" autocomplete="new-password">
+							<button type="button" class="btn btn-light" style="position: absolute; right: 0; height: 54px"
+								data-toggle="modal" data-target="#exampleModalCenterPassword" disabled><i class="fa-solid fa-pen"></i></button>
+						</div>
+						<span class="form__group-message email-message"></span>
+					</div>
+			{{/if}}
 		</div>
 	</div>
 
@@ -242,12 +263,13 @@
 		error_message: ".form__group-message",
 		onSubmit: function (data) {
 			let curPass = document.querySelector("#cur-password").value;
+			console.log(curPass);
 			$.post("/auth/check-valid-pass",
 					{
-						password: curPass
+						password: curPass,
 					},
 					function(data, status){
-						if(data.isValid == true){
+						if(data.isValid == false){
 							Swal.fire({
 								width: 600,
 								icon:`error`,

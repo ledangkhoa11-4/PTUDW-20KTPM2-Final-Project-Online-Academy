@@ -61,7 +61,7 @@ Router.post('/change-email',async (req, res, next)=>{
   }),
   Router.get('/my-learning',async (req,res)=>{
     const page = req.query.p || 1;
-    const limit = 2;
+    const limit = 4;
     const offset = (page - 1) * limit;
     const listID = await coursesService.getCoursesByStudentByPage(res.locals.auth.IDUser,limit,offset);
     let count = await coursesService.getTotalCourseByStudentID(res.locals.auth.IDUser);
@@ -86,7 +86,7 @@ Router.post('/change-email',async (req, res, next)=>{
 
 Router.get('/my-watchlist',async (req,res)=>{
     const page = req.query.p || 1;
-    const limit = 2;
+    const limit = 4;
     const offset = (page - 1) * limit;
     const listID = await coursesService.getCoursesWatchlistByStudentByPage(res.locals.auth.IDUser,limit,offset);
     let count = await coursesService.getTotalCoursesByStudentIDWatchlist(res.locals.auth.IDUser);

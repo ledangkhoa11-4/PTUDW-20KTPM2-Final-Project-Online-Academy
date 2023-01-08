@@ -124,9 +124,13 @@
 .badge.red {
     background: #ed1b24;
 }
-
+.badge.yellow {
+    background: #fffc3f;
+    color: red;
+}
 .badge.orange {
     background: #fa7901;
+    
 }
 
 .badge.pink {

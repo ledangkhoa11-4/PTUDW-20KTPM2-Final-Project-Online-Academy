@@ -18,7 +18,7 @@ Router.use( async(req, res, next)=>{
 Router.get("/", async (req, res, next) => {
   const id = req.query.catID || 1;
   const page = req.query.p || 1;
-  const limit = 2;
+  const limit = 4;
   const offset = (page - 1) * limit;
 
   const list = await coursesService.getCourseIDByCatPage(id, limit, offset);
@@ -57,7 +57,7 @@ Router.get("/:catID", async (req, res, next) => {
   const topicID = req.query.topicID;
   const catID = req.params.catID;
   const page = req.query.p || 1;
-  const limit = 2;
+  const limit = 4;
   const offset = (page - 1) * limit;
 
   const list = await coursesService.getCourseIDByTopicPage(

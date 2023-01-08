@@ -41,7 +41,7 @@ Router.get('/',async (req,res, next)=>{
     }
         
 
-    let listID = [], order1 = null, order2 = null, limit = 3, offset = (currentPage * limit - limit)||0, totalPage = 0;
+    let listID = [], order1 = null, order2 = null, limit = 4, offset = (currentPage * limit - limit)||0, totalPage = 0;
     if(priceOption === 'asc')
         order1 = "(c.CourseFee - c.CourseFee*actualDiscount/100) asc"
     if(priceOption === 'des')

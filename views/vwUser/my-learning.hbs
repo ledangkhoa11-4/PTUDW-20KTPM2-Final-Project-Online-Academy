@@ -39,8 +39,39 @@
                 </div>
                 {{/each}}
                 </div>
+                {{#if this.count}}
+            <div class="page-container">
+                <a class="first-page">
+                <i class="fas fa-angle-double-left"></i>
+                </a>
+                <a class="prev-page">
+                <i class="fas fa-angle-left"></i>
+                </a>
+                <div id="pagination"></div>
+                <a class="next-page">
+                <i class="fas fa-angle-right"></i>
+                </a>
+                <a class="last-page">
+                <i class="fas fa-angle-double-right"></i>
+                </a>
+            </div>
+                {{/if}}
 </div> 
+
 <script src="/public/script/rating.js"></script>
 <script>
 	renderRating(".rating")
+</script>
+<script src="/public/script/pagination.js">
+
+</script>
+<script>
+    const valuePage = {
+    totalPages: {{nPage}},
+    curPage: {{page}},
+    truncate: true,
+    numLinksTwoSide: 1,
+    url: `{{url}}`
+    };
+    pagination(valuePage);
 </script>

@@ -6,7 +6,16 @@
 <link rel='stylesheet' href='/public/css/search.css' />
 <link rel='stylesheet' href='/public/css/badge.css' />
 <link rel="stylesheet" href="/public/css/pagination.css">
-
+<style>
+	.btn-outline-danger{
+		background-color: transparent;
+	}
+	.btn-outline-danger:hover {
+    color: #fff;
+    background-color: #dc3545!important;
+    border-color: #dc3545;
+	}
+</style>
 <div class="container">
                 <div class="row">
                 {{#each listCourse as |course|}}
@@ -27,10 +36,9 @@
 							</a>
 							<form action="delete-watchlist" method="POST" class="form-1" style="display: flex;justify-content: space-between">
 								<input type="text" name="id" value="{{course.ID}}" style="display: none;">
-								<button class="button hovertest" 
-									style="border:none; background: none; font-size: 20px;
-									 display: flex; margin-top: 1rem!important; justify-content: flex-end" type="submit">
-									<span class="delete" style="font-size: 17px;">Delete<i class="fa-solid fa-trash"></i></span>
+								<button class="btn-sm btn-outline-danger" 
+									 type="submit">
+									<i class="fa-solid fa-trash"></i>
 								</button>
 								<div class="product-price-wrapper mt-3">
                             		{{#if course.PercentDiscount}}
@@ -39,19 +47,43 @@
                             			<span class="new-price float-right" style="font-size: 20px;">{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</span>
                             	</div>
 							</form>
-                            {{!-- <div class="product-price-wrapper mt-3">
-                            {{#if course.PercentDiscount}}
-                                <span class="old-price ">{{formatCurrency course.CourseFee}}</span>
-                            {{/if}}
-                            <span class="new-price float-right" style="font-size: 20px;">{{formatCurrency (calculateNewPrice course.PercentDiscount course.CourseFee)}}</span>
-                            </div> --}}
                         </div>
                     </div>                    
                 </div>
                 {{/each}}
                 </div>
+				 {{#if this.count}}
+            <div class="page-container">
+                <a class="first-page">
+                <i class="fas fa-angle-double-left"></i>
+                </a>
+                <a class="prev-page">
+                <i class="fas fa-angle-left"></i>
+                </a>
+                <div id="pagination"></div>
+                <a class="next-page">
+                <i class="fas fa-angle-right"></i>
+                </a>
+                <a class="last-page">
+                <i class="fas fa-angle-double-right"></i>
+                </a>
+            </div>
+                {{/if}}
 </div> 
 <script src="/public/script/rating.js"></script>
 <script>
 	renderRating(".rating")
+</script>
+<script src="/public/script/pagination.js">
+
+</script>
+<script>
+    const valuePage = {
+    totalPages: {{nPage}},
+    curPage: {{page}},
+    truncate: true,
+    numLinksTwoSide: 1,
+    url: `{{url}}`
+    };
+    pagination(valuePage);
 </script>

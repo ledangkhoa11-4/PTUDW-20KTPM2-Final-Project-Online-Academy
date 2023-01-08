@@ -3,6 +3,7 @@ import coursesService from '../services/courses-service.js';
 import categoryServices from '../services/category.services.js';
 import multer from 'multer';
 import middleware from '../middlewares/middleware.js';
+import fs from 'fs'
 const Router = express.Router();
 Router.use(middleware.isAdmin);
 Router.get('/categories',async (req,res, next)=>{
@@ -85,10 +86,15 @@ Router.post('/categories/topic/add',  (req,res)=>{
             const catID=req.body.IDCate||0;
             const topicId=req.body.IDTopic||0;
             const isExist=await categoryServices.findTopic(topicId,catID);
+            var dir=`./public/images/categories/${req.body.IDCate}`;
            if(isExist) {
+           
             return res.redirect(`/admin/categories/topic/add?catid=${catID}&alert=1`)
            }
            else{
+            if(!fs.existsSync(dir)){
+                fs.mkdirSync(dir);
+            }
            cb(null, `./public/images/categories/${req.body.IDCate}`);}
         },
         filename: function (req, file, cb) {

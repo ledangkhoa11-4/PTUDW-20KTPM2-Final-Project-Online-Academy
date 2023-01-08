@@ -205,7 +205,8 @@ Router.get("/:courseId", middleware.isStudent, async (req, res) => {
   if (isFinish[0].finish == 1) isFinish = true;
   else isFinish = false;
   const course = await coursesService.getInfoCourse(`${courseId}`);
-
+  let numOfStudent = await coursesService.getNumberParticipant(courseId);
+  numOfStudent = numOfStudent[0].num;
   res.render("vwCourse/videoLecture", {
     layout: "main",
     chapters,
@@ -214,6 +215,7 @@ Router.get("/:courseId", middleware.isStudent, async (req, res) => {
     course,
     progress,
     isFinish,
+    numOfStudent,
   });
 });
 

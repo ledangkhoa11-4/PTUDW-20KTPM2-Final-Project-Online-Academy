@@ -16,7 +16,6 @@ export default {
     return next();
   },
   isStudent: (req, res, next) => {
-    console.log(123);
     if (res.locals.auth) {
       if (res.locals.auth.Role == 2) return next();
       res.status(403).render("403", { layout: false });

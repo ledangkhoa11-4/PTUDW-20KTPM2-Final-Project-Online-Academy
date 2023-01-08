@@ -355,9 +355,10 @@
       </div>
     </nav>
     <div style="margin-left: 5%; border-bottom: 1px solid black;">
-      <div class="card-body" style="padding-left: 0; padding-top: 0">
+      <div class="card-body col-10" style="padding-left: 0; padding-top: 0">
 
         <h1 class="card-title">{{this.course.Name}}</h1>
+        <p class="card-text" style="font-size:x-large;">{{this.course.TinyDesc}}</p>
         <p class="card-text" style="font-size:medium;">Total Lecture:
           {{this.course.TotalLecture}}
           lectures
@@ -368,7 +369,7 @@
         </p>
 
         <p class="card-text" style="font-size:medium;">Average rating:
-          {{this.course.AvgRating}} <i class="fa fa-star" aria-hidden="true"></i>/5 <i class="fa fa-star"
+          {{#if this.course.AvgRating}} {{this.course.AvgRating}} {{else}} 0 {{/if}} <i class="fa fa-star" aria-hidden="true"></i>/5 <i class="fa fa-star"
             aria-hidden="true"></i></p>
         <p class="card-text" style="font-size:medium;">Number of rating: {{this.course.CountRating}}</p>
         <p class="card-text" style="font-size:medium;">Number of student: {{this.numOfStudent}}</p>
@@ -376,7 +377,11 @@
             {{this.course.ModifiedTime}}</small></p>
 
       </div>
+      <a href="/course?id={{course.ID}}"><button style="margin-bottom:5%" type="button" class="btn btn-outline-dark">Back to detail course <i class="bi bi-box-arrow-left"></i></button>
+    </a>
     </div>
+    
+     
   </div>
   <div class="col-4" style="border-left: 1px solid black;">
     <h3><i class="fa fa-book" aria-hidden="true"></i>

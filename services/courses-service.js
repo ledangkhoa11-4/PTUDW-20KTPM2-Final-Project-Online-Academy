@@ -58,7 +58,7 @@ export default {
       .select("ID")
       .from("courses")
       .where("IDCategory", catID)
-      .andWhere("disable",0)
+      .andWhere("disable", 0)
       .limit(limit)
       .offset(offset);
     // console.log(list);
@@ -409,5 +409,13 @@ export default {
 
     if (result[0]) return result[0];
     return null;
+  },
+  removeAllProgressByCourse: async (IDCourse) => {
+    const del = await db("watched").where({ IDCourse }).del();
+    return true;
+  },
+  removeProgressOfStudentByCourse: async (IDCourse, IDStudent) => {
+    const del = await db("watched").where({ IDCourse, IDStudent }).del();
+    return true;
   },
 };

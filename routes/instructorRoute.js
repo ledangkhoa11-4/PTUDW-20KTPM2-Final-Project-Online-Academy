@@ -198,6 +198,7 @@ Router.post(
     } else {
       discountRes = discountRes.ID;
     }
+
     let course = {
       Name: req.body.Name || "",
       IDCategory: req.body.IDCate || 0,
@@ -230,11 +231,12 @@ Router.post(
       } else {
         discountRes = discountRes.ID;
       }
-
       //Xoá tất cả chapter, video cũ
       const delChap = await chapterService.removeAllChapterOfCourse(IDCourse);
       const delVideos = await coursesService.removeVideoOfCourse(IDCourse);
-
+      const delProgress = await coursesService.removeAllProgressByCourse(
+        IDCourse
+      );
       let course = {
         Name: req.body.Name || "",
         IDCategory: req.body.IDCate || 0,

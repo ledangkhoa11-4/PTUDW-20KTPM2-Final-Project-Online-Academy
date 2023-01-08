@@ -135,8 +135,8 @@ Router.get("/removeWatchList", middleware.isStudent, async (req, res) => {
 Router.post("/feedback", middleware.isStudent, async (req, res) => {
   const courseId = req.body.courseId;
   const star = req.body.star;
-  const fb = req.body.fb;
-
+  let fb = req.body.fb;
+  fb = fb.replaceAll("'", "''");
   const upFeedback = await coursesService.addFeedback(
     courseId,
     res.locals.auth.IDUser,
@@ -183,6 +183,13 @@ Router.get("/:courseId", middleware.isStudent, async (req, res) => {
     courseId
   );
   numVideoOfCourse = numVideoOfCourse[0].num;
+  if (numWatchedVideo > numVideoOfCourse) {
+    let delPro = await coursesService.removeProgressOfStudentByCourse(
+      courseId,
+      res.locals.auth.IDUser
+    );
+    numWatchedVideo = 0;
+  }
   let progress = 0;
   if (numWatchedVideo == numVideoOfCourse) {
     let finish = await coursesService.setFinishCourseByStudent(
@@ -197,6 +204,7 @@ Router.get("/:courseId", middleware.isStudent, async (req, res) => {
     );
     progress = parseInt((numWatchedVideo * 100) / numVideoOfCourse);
   }
+
   let isFinish = await coursesService.getInfoParticipateByStudentFinishCourse(
     courseId,
     res.locals.auth.IDUser

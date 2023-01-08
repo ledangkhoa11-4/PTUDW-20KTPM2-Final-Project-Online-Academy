@@ -66,7 +66,7 @@
         </div>
         <br>
         <div class="accordion" id="accordionExample">
-          <div class="card">
+          <div class="card" style="border: 1px solid rgba(0,0,0,.125);">
             <div class="card-header" id="headingOne">
               <h2 style="margin: 0" class="mb-0">
                 <button style="width: 100%; display: flex; justify-content:flex-start" class="btn btn-light"
@@ -157,11 +157,11 @@
           </div>
           <div class="lecture" id="lecture">
             <br>
-            <div class="card">
+            <div class="card" style="border:none">
 
               {{#each (lookup ../videos @index) as |video|}}
-
-              <li class="list-group-item">
+              <li class="list-group-item" style="border: none; border-bottom: 1px solid rgba(0,0,0,.125);
+    border-top: 1px solid rgba(0,0,0,.125);">
                 <div style="display: flex; justify-content:space-between">
                   <h6 class="text"><a
                       href="/course/{{video.IDCourse}}?chapterId={{video.IDChapter}}&lectureId={{video.No}}"

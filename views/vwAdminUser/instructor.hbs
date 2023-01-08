@@ -38,7 +38,7 @@
       <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Created Time</th>
-            <th scope="col">Status</th>
+            <th scope="col" style="text-align: center;">Status</th>
     </tr>
   </thead>
   <tbody>
@@ -57,13 +57,16 @@
               height="500">
               {{Name}}</a></td>
               <td scope="col">{{formatDate CreatedTime}}</td>
-              <td scope="col" class="d-flex">
+              <td scope="col" class="d-flex justify-content-center">
                 
                 {{#if disable}}
-                <button type="submit" disabled class="btn btn-outline-danger justify-content-center"> Disable</button>
-                  
+                <button type="submit" disabled class="btn btn-outline-danger ">
+                   <i class="fa fa-lock" aria-hidden="true"></i>
+                   Disable</button>
+                 
                 {{else}}
-                 <button type="submit" disabled class="btn btn-outline-success justify-content-center "> Enable</button>
+                 <button type="submit" disabled class="btn btn-outline-success ">
+                  <i class="fa fa-unlock" aria-hidden="true"></i> Enable</button>
               {{/if}}</td>
 
                
@@ -101,12 +104,12 @@
       Back</a>
       {{#if this.instructor.disable}}
       <button type="submit" name="status" value="enable" id="" class="btn btn-success mr-4"> 
-        <i class="fa fa-check-circle" aria-hidden="true"></i>
+        <i class="fa fa-unlock" aria-hidden="true"></i>
         Enable
          </button>
       {{else}}
       <button type="submit" name="status" value="disable" id="" class="btn btn-danger mr-4"> 
-        <i class="fa fa-ban" aria-hidden="true"></i>
+        <i class="fa fa-lock" aria-hidden="true"></i>
         Disable
          </button>  
       {{/if}}

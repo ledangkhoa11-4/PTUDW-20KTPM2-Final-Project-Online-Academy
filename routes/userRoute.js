@@ -7,16 +7,10 @@ import bcrypt from 'bcrypt'
 
 const Router = express.Router();
 
-Router.get('/profile', async (req,res,next) =>{
-    const infos = await userService.getInfo(res.locals.auth.IDUser || 0);
-    res.render('vwUser/nothing',{layout: 'user', infos
-    })
-})
-
 Router.get('/account', async (req,res,next) =>{
     const infos = await userService.getInfo(res.locals.auth.IDUser || 0);
     res.render('vwUser/account',{
-        layout: 'user'
+        layout: 'user',infos
     })
 })
 

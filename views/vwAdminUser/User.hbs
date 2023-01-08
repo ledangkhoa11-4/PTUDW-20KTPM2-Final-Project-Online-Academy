@@ -34,9 +34,13 @@
                  <td scope="col" class="d-flex">
                 
                 {{#if disable}}
-                  <button type="submit" disabled class="btn btn-outline-danger justify-content-center"> Disable</button>
+                  <button type="submit" disabled class="btn btn-outline-danger "> 
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    Disable</button>
                 {{else}}
-                <button type="submit" disabled class="btn btn-outline-success justify-content-center "> Enable</button>
+                <button type="submit" disabled class="btn btn-outline-success  "> 
+                  <i class="fa fa-unlock" aria-hidden="true"></i>
+                  Enable</button>
                  
               {{/if}}</td>
                 <td>

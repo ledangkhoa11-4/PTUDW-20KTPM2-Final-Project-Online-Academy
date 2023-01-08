@@ -37,14 +37,15 @@ export default function (passport, strategy){
       }
       process.nextTick(async function () {
         const user = await userService.getUserByEmail(email);
-        if(user[0].disable == 1){
-          return done(null, {status: 'disabled'});
-        }
+        
         // user chưa tồn tại -> Tạo user mới
         if(user.length == 0){
           const result = await userService.addUser(userDat)
           userDat.IDUser = result
         }else{
+          if(user[0].disable == 1){
+            return done(null, {status: 'disabled'});
+          }
           userDat.IDUser = user[0].IDUser;
         }
         delete userDat.Bio;
@@ -97,14 +98,15 @@ export default function (passport, strategy){
       }
       process.nextTick(async function () {
         const user = await userService.getUserByEmail(email);
-        if(user[0].disable == 1){
-          return done(null, {status: 'disabled'});
-        }
+       
         // user chưa tồn tại -> Tạo user mới
         if(user.length == 0){
           const result = await userService.addUser(userDat)
           userDat.IDUser = result
         }else{
+          if(user[0].disable == 1){
+            return done(null, {status: 'disabled'});
+          }
           userDat.IDUser = user[0].IDUser;
         }
         delete userDat.Bio;

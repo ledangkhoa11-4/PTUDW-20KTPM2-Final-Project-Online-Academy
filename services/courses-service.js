@@ -58,6 +58,7 @@ export default {
       .select("ID")
       .from("courses")
       .where("IDCategory", catID)
+      .andWhere("disable",0)
       .limit(limit)
       .offset(offset);
     // console.log(list);
@@ -67,7 +68,7 @@ export default {
   getCourseIDByTopicPage: async (catID, topicID, limit, offset) => {
     // const list = await db.select('ID').from('courses').where('IDCategory',catID).andWhere('Topic',topicID).limit(limit).offset(offset);
     const list = await db.raw(
-      `SELECT c.ID From courses c Where c.IDCategory = '${catID}' and c.Topic = '${topicID}' limit ${limit} offset ${offset}`
+      `SELECT c.ID From courses c Where c.IDCategory = '${catID}' and c.Topic = '${topicID}' and c.disable = 0 limit ${limit} offset ${offset}`
     );
     // console.log(list[0]);
     if (list) return list[0];
@@ -364,13 +365,13 @@ export default {
   getCoursesByStudent: async (IDStudent) => {
     const result =
       await db.raw(`SELECT c.ID, p.finish FROM participate p LEFT JOIN courses c on p.IDCourse = c.ID LEFT JOIN discount d on c.IDDiscount = d.ID 
-    where p.IDStudent = '${IDStudent}';`);
+    where c.disable = 0 and p.IDStudent = '${IDStudent}';`);
     return result[0];
   },
   getCoursesWatchlistByStudent: async (IDStudent) => {
     const result =
       await db.raw(`SELECT courses.Name, courses.TinyDesc, courses.CourseFee,courses.ID, discount.PercentDiscount FROM watchlist LEFT JOIN courses ON watchlist.IDCourse = courses.ID LEFT JOIN discount ON discount.ID = courses.IDDiscount
-    WHERE watchlist.IDStudent = '${IDStudent}';`);
+    WHERE courses.disable = 0 and watchlist.IDStudent = '${IDStudent}';`);
     return result[0];
   },
   getNumOfVideoWatchedByStudent: async (courseId, userId) => {

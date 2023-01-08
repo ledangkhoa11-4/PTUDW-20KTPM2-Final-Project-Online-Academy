@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { query, request } from 'express'
 import middleware from '../middlewares/middleware.js';
 import userService from '../services/user-service.js';
 import coursesService from '../services/courses-service.js';
@@ -54,25 +54,53 @@ Router.post('/change-email',async (req, res, next)=>{
      })
   }),
   Router.get('/my-learning',async (req,res)=>{
-    const listID = await coursesService.getCoursesByStudent(res.locals.auth.IDUser);
+    const page = req.query.p || 1;
+    const limit = 2;
+    const offset = (page - 1) * limit;
+    const listID = await coursesService.getCoursesByStudentByPage(res.locals.auth.IDUser,limit,offset);
+    let count = await coursesService.getTotalCourseByStudentID(res.locals.auth.IDUser);
+    let nPage = Math.ceil(count / limit)
     let listCourse = [];
     for(let i = 0; i< listID.length;i++){
         const info = await coursesService.getInfoCourse(listID[i].ID);
         info.finish = listID[i].finish;
         listCourse.push(info);
     }
-    res.render('vwUser/my-learning',{layout: 'user', listCourse})
+    let url = `/user/my-learning?`
+    // res.render('vwUser/my-learning',{layout: 'user', listCourse});
+    res.render('vwUser/my-learning',{
+        layout: 'user',
+        listCourse,
+        nPage,
+        page,
+        url,
+        count,
+    })
 })
 
 Router.get('/my-watchlist',async (req,res)=>{
-    const listID = await coursesService.getCoursesWatchlistByStudent(res.locals.auth.IDUser);
+    const page = req.query.p || 1;
+    const limit = 2;
+    const offset = (page - 1) * limit;
+    const listID = await coursesService.getCoursesWatchlistByStudentByPage(res.locals.auth.IDUser,limit,offset);
+    let count = await coursesService.getTotalCoursesByStudentIDWatchlist(res.locals.auth.IDUser);
+    let nPage = Math.ceil(count / limit);
     let listCourse = [];
     for(let i = 0; i< listID.length;i++){
         const info = await coursesService.getInfoCourse(listID[i].ID);
         info.finish = listID[i].finish;
         listCourse.push(info);
     }
-    res.render('vwUser/my-watchlist',{layout: 'user', listCourse})
+    let url = `/user/my-watchlist?`
+    // res.render('vwUser/my-learning',{layout: 'user', listCourse});
+    res.render('vwUser/my-watchlist',{
+        layout: 'user',
+        listCourse,
+        nPage,
+        page,
+        url,
+        count,
+    })
 })
 
 Router.post('/delete-watchlist', async (req,res,next) => {

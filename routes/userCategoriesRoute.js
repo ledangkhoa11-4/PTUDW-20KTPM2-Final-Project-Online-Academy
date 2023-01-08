@@ -22,11 +22,11 @@ Router.get("/", async (req, res, next) => {
   const offset = (page - 1) * limit;
 
   const list = await coursesService.getCourseIDByCatPage(id, limit, offset);
-  const temp = await coursesService.getCourseIDByCat(id);
+  // const temp = await coursesService.getCourseIDByCat(id);
+  const count = await coursesService.getTotalCourseByCatIdDisable(id);
   const name = await coursesService.getCourseNameByCat(id);
-  const count = temp.length;
-  let nPage = Math.floor(count / limit);
-  if (count % limit > 0) nPage++;
+  // const count = temp.length;
+  let nPage = Math.ceil(count / limit);
   let coursesList = [];
 
   for (let i = 0; i < list.length; i++) {
@@ -66,12 +66,13 @@ Router.get("/:catID", async (req, res, next) => {
     limit,
     offset
   );
-  // console.log(list);
-  const temp = await coursesService.getCourseIDByTopic(catID, topicID);
+  console.log(list);
+  // const temp = await coursesService.getCourseIDByTopic(catID, topicID);
+  const count = await coursesService.getTotalCourseByTopicIDDisable(catID,topicID);
+  console.log(count);
   let name = await coursesService.getCourseNameByCat(catID);
-  const count = temp.length;
-  let nPage = Math.floor(count / limit);
-  if (count % limit > 0) nPage++;
+  // const count = temp.length;
+  let nPage = Math.ceil(count / limit);
   let coursesList = [];
 
   for (let i = 0; i < list.length; i++) {

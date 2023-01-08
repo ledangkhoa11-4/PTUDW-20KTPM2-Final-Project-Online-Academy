@@ -371,12 +371,12 @@ export default {
   getCoursesWatchlistByStudentByPage: async (IDStudent, limit, offset) => {
     const result =
       await db.raw(`SELECT courses.Name, courses.TinyDesc, courses.CourseFee,courses.ID, discount.PercentDiscount FROM watchlist LEFT JOIN courses ON watchlist.IDCourse = courses.ID LEFT JOIN discount ON discount.ID = courses.IDDiscount
-    WHERE courses.disable = 0 and watchlist.IDStudent = ${IDStudent} limit ${limit} offset ${offset};`);
+    WHERE courses.disable = 0 and watchlist.IDStudent = '${IDStudent}' limit ${limit} offset ${offset};`);
     return result[0];
   },
   getNumOfVideoWatchedByStudent: async (courseId, userId) => {
     const list = await db.raw(
-      `SELECT COUNT(*) as num FROM watched as w where w.IDCourse = ${courseId} and w.IDStudent = ${userId}`
+      `SELECT COUNT(*) as num FROM watched as w where w.IDCourse = '${courseId}' and w.IDStudent = '${userId}'`
     );
 
     if (list[0].length != 0) return JSON.parse(JSON.stringify(list[0]));
@@ -384,7 +384,7 @@ export default {
   },
   getAllNumOfVideoByCourse: async (courseId) => {
     const list = await db.raw(
-      `SELECT COUNT(*) as num FROM circulativevideo as c where c.IDCourse = ${courseId}`
+      `SELECT COUNT(*) as num FROM circulativevideo as c where c.IDCourse = '${courseId}'`
     );
 
     if (list[0].length != 0) return JSON.parse(JSON.stringify(list[0]));

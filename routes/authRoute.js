@@ -159,9 +159,7 @@ Router.post('/check-exists-email', async (req, res)=>{
 });
 Router.post('/check-current-name', async (req, res) =>{
   const name = req.body.name;
-  console.log(name);
   let exists = await userService.isNameExists(req.body.id, name);
-  console.log(exists);
   res.json({exists});
 })
 export default Router;

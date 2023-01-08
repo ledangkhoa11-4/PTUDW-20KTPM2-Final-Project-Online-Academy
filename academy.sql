@@ -311,8 +311,8 @@ CREATE TABLE `courses` (
   `IDDiscount` int(11) NOT NULL,
   `IDInstructor` int(11) NOT NULL,
   `IsCompleted` tinyint(1) NOT NULL,
-  `CreatedTime` date NOT NULL DEFAULT current_timestamp(),
-  `ModifiedTime` date NOT NULL DEFAULT current_timestamp(),
+  `CreatedTime` datetime NOT NULL DEFAULT current_timestamp(),
+  `ModifiedTime` datetime NOT NULL DEFAULT current_timestamp(),
   `Viewer` int(11) NOT NULL,
   `disable` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

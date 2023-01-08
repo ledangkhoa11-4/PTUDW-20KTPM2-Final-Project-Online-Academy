@@ -85,6 +85,10 @@ export default{
             check=0;
         }
         return  check;
+    },
+    maxTopicID:async(catId)=>{
+        const max=await db.raw(`select MAX(IDTopic) as max from topic where IDcate=${catId}`);
+        return max[0][0].max;
     }
     
 }

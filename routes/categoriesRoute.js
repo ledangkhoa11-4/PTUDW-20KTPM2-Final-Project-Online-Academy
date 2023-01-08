@@ -45,6 +45,10 @@ Router.post('/categories/del', async (req,res)=>{
         res.redirect(`/admin/categories/edit?id=${catId}&alert=1`);
     }
     else{
+        fs.rm(`./public/images/categories/${catId}`, { recursive: true, force: true }, (err) => {
+                if(err)
+                    console.log(err);
+          });
         const ret=await categoryServices.del(catId);
         res.redirect('/admin/categories');
     }
@@ -72,12 +76,15 @@ Router.get('/categories/topic/add', async (req,res)=>{
     const catId=req.query.catid||0;
     let isAlert=false;
     if(req.query.alert) isAlert=true;
+    const max=await categoryServices.maxTopicID(catId)+1;
+    
     res.render('vwCategory/addTopic',{
         layout:'admin',
         catId,
         isAlert,
         icon:'error',
-        title:'ID or Topic Name has been existed'
+        title:'ID topic or Topic Name has been existed',
+        max
         });
 })
 Router.post('/categories/topic/add',  (req,res)=>{
@@ -85,7 +92,9 @@ Router.post('/categories/topic/add',  (req,res)=>{
         destination: async function (req, file, cb) {
             const catID=req.body.IDCate||0;
             const topicId=req.body.IDTopic||0;
+            
             const isExist=await categoryServices.findTopic(topicId,catID);
+           
             var dir=`./public/images/categories/${req.body.IDCate}`;
            if(isExist) {
            
@@ -153,6 +162,11 @@ Router.post('/categories/topic/del', async(req,res)=>{
     else
     {
     const ret=await categoryServices.delTopic(catId,topicId);
+
+    fs.unlink(`./public/images/categories/${catId}/${topicId}.jpg`, (err)=>{
+        if(err)
+            console.log(err);
+    });
     res.redirect(`/admin/categories/topic?id=${catId}`);
     }
 })

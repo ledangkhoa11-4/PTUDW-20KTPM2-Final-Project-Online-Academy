@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
           <label for="txtTopicID"> Topic ID</label>
-          <input type="text" name="IDTopic" id="txtTopicID" class="form-control" required>
+          <input type="text" name="IDTopic" value="{{max}}" readonly id="txtTopicID" class="form-control" required>
         </div>
         <div class="form-group">
           <label for="txtTopicName"> Topic Name</label>
@@ -41,7 +41,7 @@
         </div>
         <div class="form-group">
           <label for="fuMain">Photo</label>
-          <input type="file" id="fuMain" name="fuMain" required>
+          <input type="file" id="fuMain" name="fuMain" accept="image/png, image/gif, image/jpeg" required>
       </div>
     </div>
     <div class="card-footer text-muted">

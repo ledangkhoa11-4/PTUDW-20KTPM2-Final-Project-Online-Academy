@@ -66,10 +66,10 @@ Router.get("/:catID", async (req, res, next) => {
     limit,
     offset
   );
-  console.log(list);
+
   // const temp = await coursesService.getCourseIDByTopic(catID, topicID);
   const count = await coursesService.getTotalCourseByTopicIDDisable(catID,topicID);
-  console.log(count);
+
   let name = await coursesService.getCourseNameByCat(catID);
   // const count = temp.length;
   let nPage = Math.ceil(count / limit);

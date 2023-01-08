@@ -16,20 +16,23 @@ Router.get('/account', async (req,res,next) =>{
 
 Router.post('/change-name', async(req,res,next) => {
     const newName = req.body.name;
+    const infos = await userService.getInfo(res.locals.auth.IDUser || 0);
     const resultChange = await userService.changeName(res.locals.auth.IDUser, newName);
     req.cookies.user.FullName = newName;
-    if(req.session.passport) req.session.passport.user = newName;
+    if(req.session.passport) req.session.passport.user = req.cookies.user;
     res.cookie("user", req.cookies.user);
     return res.render('vwUser/account',{
         layout: 'user',
         isAlert: true,
         icon: 'success',
         title: 'Name changed successfully.',
+        infos
     })
 })
 
 Router.post('/change-email',async (req, res, next)=>{
     const newEmail = req.body.email;
+    const infos = await userService.getInfo(res.locals.auth.IDUser || 0);
     const resultChange = await userService.changeEmail(res.locals.auth.IDUser,newEmail);
     req.cookies.user.Email = newEmail;
     if(req.session.passport) req.session.passport.user.Email = newEmail;
@@ -39,10 +42,12 @@ Router.post('/change-email',async (req, res, next)=>{
         isAlert: true,
         icon: 'success',
         title: 'Email changed successfully.',
+        infos
     })
  })
 
  Router.post('/change-password',async (req, res, next)=>{
+     const infos = await userService.getInfo(res.locals.auth.IDUser || 0);
      const password = req.body.password;
      const hashedPassword = await bcrypt.hash(password,5);
      const resultChange = await userService.changePassword(res.locals.auth.IDUser, hashedPassword);
@@ -51,6 +56,7 @@ Router.post('/change-email',async (req, res, next)=>{
          isAlert: true,
          icon: 'success',
          title: 'Password changed successfully.',
+         infos
      })
   }),
   Router.get('/my-learning',async (req,res)=>{

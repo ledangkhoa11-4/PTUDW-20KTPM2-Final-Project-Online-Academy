@@ -6,7 +6,7 @@
   <p>No Data</p>
   {{else}}
   <div class="card mb-3">
-    <div class="bgimg" style="display: flex; justify-content:center; height: 45vh">
+    <div class="bgimg" style="display: flex; justify-content:center;">
       <style>
         .bgimg {
           background-image: url("https://thietbiketnoi.com/wp-content/uploads/2020/01/tong-hop-hinh-nen-background-vector-designer-dep-do-phan-giai-fhd-2k-4k-moi-nhat-2-1024x683.jpg");
@@ -221,7 +221,7 @@
             {{#ifeq auth.IDUser course.IDInstructor}}
                 <a href="/instructor/edit/{{course.ID}}" class="btn btn-outline-info mt-3"
                 style="cursor: pointer">Edit this course &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
-                {{else}}
+            {{else}}
             {{#if this.isAuth}}
             {{#if this.isOwn}}
             <span class="own" style="font-size: 22px;">You own this course</span>
@@ -400,5 +400,8 @@ $('.slick-4').slick({
   span.card-text{
     font-size: 14px;
     color:#333;
+  }
+  .card-text + ul li{
+    list-style-type:disc
   }
 </style>

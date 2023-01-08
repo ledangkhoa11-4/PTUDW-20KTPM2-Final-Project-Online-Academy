@@ -200,7 +200,7 @@ Router.post("/edit/:id", uploadEdit.single("image"), async (req, res, next) => {
   //Xoá tất cả chapter, video cũ
   const delChap = await chapterService.removeAllChapterOfCourse(IDCourse);
   const delVideos = await coursesService.removeVideoOfCourse(IDCourse);
-
+  
   let course = {
     Name: req.body.Name || "",
     IDCategory: req.body.IDCate || 0,

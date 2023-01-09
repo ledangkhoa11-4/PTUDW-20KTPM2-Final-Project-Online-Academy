@@ -93,7 +93,7 @@ Router.post('/categories/topic/add',  (req,res)=>{
             const catID=req.body.IDCate||0;
             const topicId=req.body.IDTopic||0;
             
-            const isExist=await categoryServices.findTopic(topicId,catID);
+            const isExist=await categoryServices.isExistTopicName(topicId,catID,req.body.Name);
            
             var dir=`./public/images/categories/${req.body.IDCate}`;
            if(isExist) {

@@ -89,6 +89,14 @@ export default{
     maxTopicID:async(catId)=>{
         const max=await db.raw(`select MAX(IDTopic) as max from topic where IDcate=${catId}`);
         return max[0][0].max;
+    },
+    isExistTopicName: async (topicId,catID,Name)=>{
+        const list=await db.raw(`Select * from topic t where t.IDCate='${catID}' and t.Name LIKE '${Name}';`);
+        if(list){
+            return list[0][0];
+        }
+        return null;
     }
+    
     
 }

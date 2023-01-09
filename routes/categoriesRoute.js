@@ -83,7 +83,7 @@ Router.get('/categories/topic/add', async (req,res)=>{
         catId,
         isAlert,
         icon:'error',
-        title:'ID topic or Topic Name has been existed',
+        title:'Topic Name has been existed',
         max
         });
 })

@@ -10,8 +10,8 @@ var transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-      user: 'onlineacademyktpm1@gmail.com',
-      pass: 'zohreguhsrvxwwce'
+      user: 'udemall.ktpm1@gmail.com',
+      pass: 'nlwbxlevmbkeryui'
     }
   });
 

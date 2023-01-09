@@ -7,7 +7,7 @@ export default {
             FROM courses c LEFT JOIN participate p on c.ID = p.IDCourse
             WHERE c.disable = 0
             GROUP by c.ID
-            ORDER by SUM(p.Rating) desc, COUNT(c.ID) desc
+            ORDER by DATEDIFF(CURDATE(), c.ModifiedTime) asc,  SUM(p.Rating) desc, COUNT(c.ID) desc
             LIMIT ${limit} OFFSET 0`
     );
     if (list) return list[0];

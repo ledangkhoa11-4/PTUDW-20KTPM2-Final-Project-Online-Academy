@@ -72,7 +72,9 @@ app.engine('hbs', engine({
             return (price - (price*percent)/100).toPrecision(4);
         },
         isEmpty(array){
+          if(array)
             return array.length === 0;
+          return true
         },
         isAsc(text){
             return text === "asc"

@@ -47,6 +47,7 @@ export default function (passport, strategy){
             return done(null, {status: 'disabled'});
           }
           userDat.IDUser = user[0].IDUser;
+          userDat.FullName = user[0].FullName;
         }
         delete userDat.Bio;
         delete userDat.Password;
@@ -108,6 +109,7 @@ export default function (passport, strategy){
             return done(null, {status: 'disabled'});
           }
           userDat.IDUser = user[0].IDUser;
+          userDat.FullName = user[0].FullName;
         }
         delete userDat.Bio;
         delete userDat.Password;
